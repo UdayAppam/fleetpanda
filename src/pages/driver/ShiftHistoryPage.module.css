@@ -1,0 +1,32 @@
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.item {
+  padding: var(--sp-4);
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+.date {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-md);
+}
+.sub {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+.badges {
+  display: flex;
+  gap: 6px;
+}

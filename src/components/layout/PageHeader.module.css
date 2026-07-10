@@ -1,0 +1,16 @@
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+  flex-wrap: wrap;
+}
+.title {
+  font-size: var(--fs-2xl);
+}
+.actions {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}

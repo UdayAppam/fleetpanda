@@ -1,0 +1,96 @@
+/* FleetPanda design tokens — see docs/UI_UX.md.
+   Warm = meaning (fuel/status); chrome = cool petrol on graphite. */
+:root {
+  /* type */
+  --font-display: 'Barlow Semi Condensed', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* type scale (1.25) */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5625rem;
+  --fs-2xl: 1.953rem;
+  --fs-3xl: 2.441rem;
+
+  /* spacing (4px base) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* radius */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-full: 999px;
+
+  /* brand (theme-independent) */
+  --brand-deep: #0b3d4f;
+
+  /* semantic (warm = meaning) */
+  --ok: #23a455;
+  --warn: #e8912b;
+  --crit: #dc3b34;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.28);
+  --focus: 0 0 0 3px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+
+/* ---- light (default surface set) ---- */
+:root {
+  --brand: #0b7c86;
+  --brand-ink: #ffffff;
+  --bg: #f4f6f6;
+  --surface: #ffffff;
+  --surface-2: #eaeeee;
+  --border: #d4dbdb;
+  --text: #0e1a1e;
+  --text-muted: #5a6b70;
+  --info: var(--brand);
+  color-scheme: light;
+}
+
+/* ---- dark: default via OS, plus explicit toggle override ---- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand: #12a2ad;
+    --brand-ink: #04252a;
+    --bg: #0d1417;
+    --surface: #131e22;
+    --surface-2: #1a272c;
+    --border: #27383e;
+    --text: #e7eef0;
+    --text-muted: #9db0b6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='light'] {
+  --brand: #0b7c86;
+  --brand-ink: #ffffff;
+  --bg: #f4f6f6;
+  --surface: #ffffff;
+  --surface-2: #eaeeee;
+  --border: #d4dbdb;
+  --text: #0e1a1e;
+  --text-muted: #5a6b70;
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  --brand: #12a2ad;
+  --brand-ink: #04252a;
+  --bg: #0d1417;
+  --surface: #131e22;
+  --surface-2: #1a272c;
+  --border: #27383e;
+  --text: #e7eef0;
+  --text-muted: #9db0b6;
+  color-scheme: dark;
+}

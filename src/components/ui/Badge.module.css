@@ -1,0 +1,39 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: var(--r-full);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.badge[data-tone='ok'] {
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 15%, transparent);
+  border-color: color-mix(in srgb, var(--ok) 35%, transparent);
+}
+.badge[data-tone='warn'] {
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 15%, transparent);
+  border-color: color-mix(in srgb, var(--warn) 35%, transparent);
+}
+.badge[data-tone='crit'] {
+  color: var(--crit);
+  background: color-mix(in srgb, var(--crit) 15%, transparent);
+  border-color: color-mix(in srgb, var(--crit) 35%, transparent);
+}
+.badge[data-tone='info'] {
+  color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 15%, transparent);
+  border-color: color-mix(in srgb, var(--brand) 35%, transparent);
+}
+.badge[data-tone='neutral'] {
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border-color: var(--border);
+}

@@ -1,0 +1,62 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { OrderForm } from './OrderForm';
+import { renderWithProviders } from '@/test/renderWithProviders';
+import { resetDb } from '@/test/mswServer';
+
+beforeEach(() => resetDb());
+
+describe('OrderForm', () => {
+  it('renders hub options once lookups load', async () => {
+    renderWithProviders(<OrderForm onSubmit={() => {}} />);
+    // Each hub appears as an option in both the source and destination selects.
+    expect(await screen.findAllByRole('option', { name: 'Downtown' })).toHaveLength(2);
+    expect(screen.getAllByRole('option', { name: 'Northgate' })).toHaveLength(2);
+  });
+
+  it('confirms when the source hub can cover the order', async () => {
+    renderWithProviders(<OrderForm onSubmit={() => {}} />);
+    await screen.findAllByRole('option', { name: 'Downtown' });
+    await userEvent.selectOptions(screen.getByLabelText('Source hub'), 'hub-1');
+    await userEvent.selectOptions(screen.getByLabelText('Product'), 'diesel');
+    await userEvent.type(screen.getByLabelText(/quantity/i), '5000');
+    expect(await screen.findByText(/can cover this order/i)).toBeInTheDocument();
+  });
+
+  it('warns when the source hub is short on stock', async () => {
+    renderWithProviders(<OrderForm onSubmit={() => {}} />);
+    await screen.findAllByRole('option', { name: 'Downtown' });
+    await userEvent.selectOptions(screen.getByLabelText('Source hub'), 'hub-1');
+    await userEvent.selectOptions(screen.getByLabelText('Product'), 'diesel');
+    await userEvent.type(screen.getByLabelText(/quantity/i), '99000');
+    expect(await screen.findByText(/short by/i)).toBeInTheDocument();
+  });
+
+  it('submits valid values', async () => {
+    const onSubmit = vi.fn();
+    renderWithProviders(<OrderForm onSubmit={onSubmit} />);
+    await screen.findAllByRole('option', { name: 'Downtown' });
+    await userEvent.selectOptions(screen.getByLabelText('Source hub'), 'hub-1');
+    await userEvent.selectOptions(screen.getByLabelText('Destination'), 'hub-3');
+    await userEvent.selectOptions(screen.getByLabelText('Product'), 'diesel');
+    await userEvent.type(screen.getByLabelText(/quantity/i), '5000');
+    await userEvent.click(screen.getByRole('button', { name: /create order/i }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalled());
+    const [values] = onSubmit.mock.calls[0];
+    expect(values).toMatchObject({ sourceId: 'hub-1', destinationId: 'hub-3', product: 'diesel', quantity: 5000 });
+  });
+
+  it('blocks submission when source equals destination', async () => {
+    const onSubmit = vi.fn();
+    renderWithProviders(<OrderForm onSubmit={onSubmit} />);
+    await screen.findAllByRole('option', { name: 'Downtown' });
+    await userEvent.selectOptions(screen.getByLabelText('Source hub'), 'hub-1');
+    await userEvent.selectOptions(screen.getByLabelText('Destination'), 'hub-1');
+    await userEvent.selectOptions(screen.getByLabelText('Product'), 'diesel');
+    await userEvent.type(screen.getByLabelText(/quantity/i), '5000');
+    await userEvent.click(screen.getByRole('button', { name: /create order/i }));
+    expect(await screen.findByText(/source and destination must differ/i)).toBeInTheDocument();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+});

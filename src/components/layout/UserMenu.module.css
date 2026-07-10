@@ -1,0 +1,92 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  position: relative;
+}
+.themeBtn {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-full);
+  background: var(--brand);
+  color: var(--brand-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+.name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+.role {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-float);
+  padding: 5px;
+  min-width: 160px;
+}
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 9px 11px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: var(--fs-sm);
+}
+.menu button:hover {
+  background: var(--surface-2);
+}
+@media (max-width: 720px) {
+  .meta {
+    display: none;
+  }
+}

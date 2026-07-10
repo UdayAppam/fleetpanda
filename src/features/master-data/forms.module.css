@@ -1,0 +1,126 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+.inventory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.pickerWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pickerMap {
+  height: 220px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  z-index: 0;
+}
+.pickerHint {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.pickerSearch {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 8px 10px;
+  color: var(--text-muted);
+}
+.pickerSearch input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+}
+.pickerResults {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  max-height: 180px;
+  overflow-y: auto;
+}
+.pickerResults button {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 7px 9px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: var(--fs-sm);
+}
+.pickerResults button:hover {
+  background: var(--surface-2);
+}
+.pickerResults span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.subLabel {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+.subHint {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+  padding-top: var(--sp-2);
+}
+.opWarn,
+.opOk {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  padding: var(--sp-3);
+  border-radius: var(--r-sm);
+}
+.opWarn {
+  color: var(--warn);
+  background: color-mix(in srgb, var(--warn) 12%, transparent);
+}
+.opOk {
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 12%, transparent);
+}
+.opWarn svg,
+.opOk svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

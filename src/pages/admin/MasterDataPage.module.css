@@ -1,0 +1,122 @@
+.layout {
+  display: grid;
+  grid-template-columns: 216px 1fr;
+  gap: var(--sp-5);
+  align-items: start;
+}
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 6px;
+  position: sticky;
+  top: var(--sp-4);
+}
+.railBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  background: none;
+  cursor: pointer;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-md);
+  width: 100%;
+  text-align: left;
+}
+.railBtn:hover {
+  background: var(--surface-2);
+}
+.railBtn[data-active='true'] {
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+.railBtn svg {
+  flex-shrink: 0;
+}
+.count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border-radius: var(--r-full);
+  padding: 1px 8px;
+  min-width: 24px;
+  text-align: center;
+}
+.railBtn[data-active='true'] .count {
+  background: var(--brand);
+  color: var(--brand-ink);
+}
+.content {
+  min-width: 0;
+}
+.contentHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.contentTitle {
+  font-size: var(--fs-xl);
+}
+.invChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.invChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--fs-xs);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.invChip .num {
+  font-family: var(--font-mono);
+}
+.invDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.invDot[data-level='ok'] {
+  background: var(--ok);
+}
+.invDot[data-level='warn'] {
+  background: var(--warn);
+}
+.invDot[data-level='crit'] {
+  background: var(--crit);
+}
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .rail {
+    flex-direction: row;
+    overflow-x: auto;
+    position: static;
+  }
+  .railBtn {
+    white-space: nowrap;
+  }
+  .contentTitle {
+    display: none;
+  }
+}

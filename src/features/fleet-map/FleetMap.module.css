@@ -1,0 +1,121 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.updated {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+.filters {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-4);
+}
+.filters > * {
+  max-width: 190px;
+}
+.body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--sp-4);
+  flex: 1;
+  min-height: 420px;
+}
+.mapArea {
+  min-height: 420px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.panel {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+}
+.count {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--brand);
+}
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  max-height: 460px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm);
+  width: 100%;
+  border: 1px solid transparent;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+.row:hover {
+  background: var(--surface-2);
+}
+.row[data-selected='true'] {
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  border-color: var(--brand);
+}
+.rowIcon {
+  color: var(--text-muted);
+}
+.rowMain {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.reg {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+.driver {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.dest {
+  font-size: var(--fs-xs);
+  color: var(--brand);
+}
+.emptyRow {
+  padding: var(--sp-4);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+}

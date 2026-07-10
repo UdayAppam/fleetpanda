@@ -1,0 +1,123 @@
+@import '@fontsource/barlow-semi-condensed/400.css';
+@import '@fontsource/barlow-semi-condensed/500.css';
+@import '@fontsource/barlow-semi-condensed/600.css';
+@import '@fontsource/barlow-semi-condensed/700.css';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import 'leaflet/dist/leaflet.css';
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+a {
+  color: var(--brand);
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: var(--r-sm);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* thin scrollbars in panels */
+.scroll {
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+/* Map markers use Leaflet CircleMarker (SVG, anchor-free → always exactly on the coordinate).
+   Tooltips carry the labels. */
+.leaflet-tooltip {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11px;
+}
+/* animated route — big bright dashes flow toward the destination to signal motion */
+.fp-route {
+  stroke-dasharray: 14 16;
+  stroke-linecap: round;
+  animation: fp-flow 0.7s linear infinite;
+}
+@keyframes fp-flow {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fp-route {
+    animation: none;
+  }
+}
+.leaflet-container {
+  font-family: var(--font-body);
+}
+.spin {
+  animation: fp-spin 0.8s linear infinite;
+}
+@keyframes fp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
