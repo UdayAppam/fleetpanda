@@ -9,9 +9,13 @@ export function FuelGauge({ qty, product }: { qty: number; product: Product }) {
   const tick = Math.max(0, Math.min(1, product.lowStockThreshold / product.tankCapacity));
   return (
     <div className={styles.wrap} title={`${qty.toLocaleString()} / ${product.tankCapacity.toLocaleString()} ${product.unit}`}>
-      <div className={styles.track} data-level={level}>
-        <div className={styles.fill} style={{ width: `${fill * 100}%` }} />
-        <div className={styles.tick} style={{ left: `${tick * 100}%` }} />
+      <div
+        className={styles.track}
+        data-level={level}
+        style={{ ['--fill' as string]: `${fill * 100}%`, ['--tick' as string]: `${tick * 100}%` }}
+      >
+        <div className={styles.fill} />
+        <div className={styles.tick} />
       </div>
       <span className={`${styles.val} num`}>{qty.toLocaleString()}</span>
     </div>

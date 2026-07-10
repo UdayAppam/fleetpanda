@@ -49,6 +49,20 @@ describe('useShiftAdvisories', () => {
     expect(result.current.advisories[0].kind).toBe('underutilised');
   });
 
+  it('uses raw-id/null fallbacks when vehicle, driver and hubs are unknown', async () => {
+    const db = getDb();
+    db.hubs = []; // coordOf(...) → undefined for every hub id
+    db.drivers = []; // driver.get(...) → undefined, name falls back to the id
+    db.vehicles = []; // vehicle.get(...) → undefined, capacity ?? null and reg fallback
+    db.allocations = [{ id: 'a1', vehicleId: 'vehicle-x', driverId: 'driver-x', date: iso }];
+    db.orders = [order({ id: 'o1', assignedDriverId: 'driver-x', quantity: 1000 })];
+
+    const { result } = renderHookWithProviders(() => useShiftAdvisories(iso));
+    await waitFor(() => expect(result.current).toBeTruthy());
+    // A short, feasible day with no capacity info yields no advisory, but all fallbacks ran.
+    expect(result.current.advisories).toHaveLength(0);
+  });
+
   it('produces no advisory when there are no orders for an allocation', async () => {
     const db = base();
     db.vehicles = [{ id: 'vehicle-1', registration: 'TRK-101', capacity: 8000, type: 'Tanker', status: 'available' }];

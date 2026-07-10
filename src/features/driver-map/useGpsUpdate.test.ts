@@ -26,6 +26,20 @@ describe('useGpsUpdate', () => {
     expect(saved?.trail?.length).toBe(1); // the previous point becomes a breadcrumb
   });
 
+  it('starts a fresh trail when the position has none', async () => {
+    const { trail: _drop, ...noTrail } = position;
+    const { result } = renderHookWithProviders(() => useGpsUpdate());
+    result.current.mutate({
+      position: noTrail,
+      source: { lat: 40, lng: -74 },
+      dest: { lat: 40.7, lng: -73.9 },
+    });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    const saved = getDb().vehiclePositions.find((p) => p.id === 'pos-1');
+    expect(saved?.trail?.length).toBe(1); // seeded from an undefined trail
+  });
+
   it('reports an error when the position does not exist', async () => {
     const { result } = renderHookWithProviders(() => useGpsUpdate());
     result.current.mutate({

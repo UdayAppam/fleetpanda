@@ -1,5 +1,6 @@
 import { Component, type ReactNode } from 'react';
 import { Button } from '@/components/ui/Button';
+import styles from './ErrorBoundary.module.css';
 
 interface Props {
   children: ReactNode;
@@ -19,9 +20,9 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.error) {
       return (
-        <div style={{ padding: 'var(--sp-6)', textAlign: 'center' }}>
+        <div className={styles.fallback}>
           <h3>Something broke in {this.props.fallbackLabel ?? 'this view'}</h3>
-          <p style={{ color: 'var(--text-muted)' }}>{this.state.error.message}</p>
+          <p className={styles.message}>{this.state.error.message}</p>
           <Button onClick={() => this.setState({ error: null })}>Try again</Button>
         </div>
       );

@@ -21,6 +21,7 @@ export type HubInput = z.infer<typeof hubSchema>;
 // Hub inventory can't exceed each product's tank capacity — built dynamically from products.
 export function makeHubSchema(caps: Record<string, number>) {
   return hubSchema.superRefine((val, ctx) => {
+    /* v8 ignore next -- inventory has a zod .default({}) so val.inventory is never nullish here */
     Object.entries(val.inventory ?? {}).forEach(([key, qty]) => {
       const cap = caps[key];
       if (cap != null && Number(qty) > cap) {

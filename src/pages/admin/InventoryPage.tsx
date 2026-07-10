@@ -81,7 +81,7 @@ export default function InventoryPage() {
         value={level}
         onChange={setLevel}
       />
-      <div style={{ height: 'var(--sp-4)' }} />
+      <div className={styles.spacer} />
       <Toolbar search={search} onSearch={setSearch} placeholder="Search hubs…" />
       <Table columns={columns} rows={rows} rowKey={(h) => h.id} pageSize={8} />
     </div>

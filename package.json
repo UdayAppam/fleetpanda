@@ -7,8 +7,11 @@
     "dev": "vite",
     "mock": "node server.js",
     "dev:all": "concurrently -n web,api -c cyan,magenta \"npm:dev\" \"npm:mock\"",
+    "dev:mock": "VITE_MOCK=true vite",
     "seed": "node seed.js",
+    "seed:snapshot": "SEED_DATE=2026-07-10 node seed.js && cp db.json src/mocks/db.seed.json",
     "build": "tsc -b && vite build",
+    "build:mock": "VITE_MOCK=true VITE_DEMO_DATE=2026-07-10 npm run build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -51,5 +54,10 @@
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vitest": "^2.1.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

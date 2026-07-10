@@ -1,0 +1,28 @@
+.route {
+  font-size: var(--fs-sm);
+}
+.driverSelect {
+  min-width: 130px;
+}
+.rowActions {
+  display: inline-flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.spacer {
+  height: var(--sp-4);
+}
+.readinessChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--brand);
+  background: color-mix(in srgb, var(--brand) 14%, transparent);
+  color: var(--brand);
+  border-radius: var(--r-full);
+  padding: 5px 12px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}

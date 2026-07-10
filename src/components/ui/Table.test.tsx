@@ -64,4 +64,27 @@ describe('Table', () => {
     render(<Table columns={columns} rows={makeRows(12)} rowKey={rowKey} pageSize={10} />);
     expect(screen.getByRole('button', { name: /previous page/i })).toBeDisabled();
   });
+
+  it('navigates back to the previous page', async () => {
+    render(<Table columns={columns} rows={makeRows(12)} rowKey={rowKey} pageSize={10} />);
+    await userEvent.click(screen.getByRole('button', { name: /next page/i }));
+    expect(screen.getByText('Row 10')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: /previous page/i }));
+    expect(screen.getByText('Row 0')).toBeInTheDocument();
+    expect(screen.queryByText('Row 10')).not.toBeInTheDocument();
+  });
+
+  it('applies an explicit column width and alignment', () => {
+    const alignedColumns: Column<Row>[] = [
+      { key: 'name', header: 'Name', render: (r) => r.name, align: 'right', width: '120px' },
+    ];
+    const { container } = render(
+      <Table columns={alignedColumns} rows={makeRows(2)} rowKey={rowKey} />,
+    );
+    const header = container.querySelector('th') as HTMLElement;
+    expect(header).toHaveAttribute('data-align', 'right');
+    expect(header.style.getPropertyValue('--col-w')).toBe('120px');
+    expect(container.querySelector('td')).toHaveAttribute('data-align', 'right');
+  });
 });

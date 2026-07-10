@@ -76,7 +76,7 @@ export function DeliveryManager({
             <div className={styles.meta}>
               <span>
                 <Package size={14} /> <strong>{fmtQty(o.quantity)}</strong>{' '}
-                <span style={{ textTransform: 'capitalize' }}>{o.product}</span>
+                <span className="capitalize">{o.product}</span>
               </span>
               <span>
                 <MapPin size={14} /> ~{Math.round(legKm(o, (id) => hub.get(id)?.coordinates))} km
@@ -129,9 +129,7 @@ export function DeliveryManager({
           </>
         }
       >
-        <p style={{ marginTop: 0, color: 'var(--text-muted)', fontSize: 'var(--fs-sm)' }}>
-          {failing ? `Delivery to ${hub.get(failing.destinationId)?.name}` : ''}
-        </p>
+        <p className={styles.failHint}>{failing ? `Delivery to ${hub.get(failing.destinationId)?.name}` : ''}</p>
         <Field label="What went wrong?" error={!reason.trim() ? 'A reason is required' : undefined}>
           <Input value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g. Customer site closed" autoFocus />
         </Field>

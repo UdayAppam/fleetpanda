@@ -45,7 +45,7 @@ export function Table<T>({ columns, rows, rowKey, loading, error, onRetry, empty
           <thead>
             <tr>
               {columns.map((c) => (
-                <th key={c.key} style={{ textAlign: c.align ?? 'left', width: c.width }}>
+                <th key={c.key} data-align={c.align ?? 'left'} style={c.width ? { ['--col-w' as string]: c.width } : undefined}>
                   {c.header}
                 </th>
               ))}
@@ -55,7 +55,7 @@ export function Table<T>({ columns, rows, rowKey, loading, error, onRetry, empty
             {visible.map((row) => (
               <tr key={rowKey(row)}>
                 {columns.map((c) => (
-                  <td key={c.key} style={{ textAlign: c.align ?? 'left' }}>
+                  <td key={c.key} data-align={c.align ?? 'left'}>
                     {c.render(row)}
                   </td>
                 ))}

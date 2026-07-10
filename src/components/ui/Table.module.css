@@ -22,11 +22,20 @@
   top: 0;
   background: var(--surface);
   z-index: 1;
+  width: var(--col-w, auto);
 }
 .table td {
   padding: var(--sp-3) var(--sp-4);
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
+}
+.table th[data-align='right'],
+.table td[data-align='right'] {
+  text-align: right;
+}
+.table th[data-align='center'],
+.table td[data-align='center'] {
+  text-align: center;
 }
 .table tbody tr:last-child td {
   border-bottom: none;

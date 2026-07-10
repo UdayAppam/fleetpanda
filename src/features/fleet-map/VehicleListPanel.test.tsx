@@ -20,15 +20,25 @@ const vehicles: FleetVehicle[] = [
     driverName: 'Mary',
     status: 'idle',
   },
+  {
+    // A destination without product/quantity — the ` · qty product` suffix is omitted.
+    position: { id: 'pos-3', vehicleId: 'vehicle-3', driverId: 'driver-3', lat: 42, lng: -72, updatedAt: '', status: 'loading' },
+    vehicleReg: 'TRK-303',
+    driverName: 'Sam',
+    status: 'loading',
+    destName: 'Eastside',
+  },
 ];
 
 describe('VehicleListPanel', () => {
   it('shows the count and each vehicle row', () => {
     render(<VehicleListPanel vehicles={vehicles} selectedId={null} onSelect={() => {}} />);
-    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(screen.getByText('3')).toBeInTheDocument();
     expect(screen.getByText('TRK-101')).toBeInTheDocument();
     expect(screen.getByText('John')).toBeInTheDocument();
     expect(screen.getByText(/Northgate/)).toBeInTheDocument();
+    // Destination shown without the product/quantity suffix.
+    expect(screen.getByText(/Eastside/)).toBeInTheDocument();
   });
 
   it('reflects the selected vehicle via aria-pressed', () => {

@@ -53,4 +53,31 @@ describe('AllocationCalendar', () => {
     const next = format(addMonths(new Date(todayIso + 'T00:00:00'), 1), 'MMMM yyyy');
     expect(screen.getByRole('heading', { name: next })).toBeInTheDocument();
   });
+
+  it('goes back to the previous month and returns via the Today button', async () => {
+    renderCal();
+    await userEvent.click(screen.getByRole('button', { name: /previous month/i }));
+    const prev = format(addMonths(new Date(todayIso + 'T00:00:00'), -1), 'MMMM yyyy');
+    expect(screen.getByRole('heading', { name: prev })).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    const current = format(new Date(todayIso + 'T00:00:00'), 'MMMM yyyy');
+    expect(screen.getByRole('heading', { name: current })).toBeInTheDocument();
+  });
+
+  it('caps chips at three, showing a +N overflow and the raw id when a vehicle is unknown', () => {
+    const many: Allocation[] = [
+      { id: 'm1', vehicleId: 'vehicle-1', driverId: 'driver-1', date: todayIso },
+      { id: 'm2', vehicleId: 'vehicle-2', driverId: 'driver-1', date: todayIso },
+      { id: 'm3', vehicleId: 'vehicle-3', driverId: 'driver-1', date: todayIso },
+      { id: 'm4', vehicleId: 'vehicle-4', driverId: 'driver-1', date: todayIso },
+    ];
+    render(
+      <AllocationCalendar allocations={many} vehicle={vehicle} driver={driver} onPickDay={vi.fn()} />,
+    );
+    // Four allocations on one day → three chips + a "+1" overflow marker.
+    expect(screen.getByText('+1')).toBeInTheDocument();
+    // Unknown vehicle ids fall back to the raw id string.
+    expect(screen.getByText('vehicle-2')).toBeInTheDocument();
+  });
 });

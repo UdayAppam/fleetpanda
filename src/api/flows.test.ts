@@ -20,14 +20,21 @@ describe('auth', () => {
 
 describe('allocation double-booking', () => {
   it('blocks a second allocation of the same vehicle+date with 409', async () => {
-    // seed already has vehicle-1 on 2025-11-24
+    // a first (future-dated) allocation succeeds…
+    await api.createAllocation({ vehicleId: 'vehicle-1', driverId: 'driver-1', date: '2999-11-24' });
+    // …the same vehicle+date again is rejected (past-date guard is checked separately below)
     await expect(
-      api.createAllocation({ vehicleId: 'vehicle-1', driverId: 'driver-1', date: '2025-11-24' }),
+      api.createAllocation({ vehicleId: 'vehicle-1', driverId: 'driver-1', date: '2999-11-24' }),
     ).rejects.toSatisfy((e: unknown) => e instanceof ApiError && e.status === 409);
   });
   it('allows a different date', async () => {
-    const a = await api.createAllocation({ vehicleId: 'vehicle-1', driverId: 'driver-1', date: '2025-11-30' });
+    const a = await api.createAllocation({ vehicleId: 'vehicle-1', driverId: 'driver-1', date: '2999-11-30' });
     expect(a.id).toBeTruthy();
+  });
+  it('rejects an allocation in the past with 422', async () => {
+    await expect(
+      api.createAllocation({ vehicleId: 'vehicle-1', driverId: 'driver-1', date: '2000-01-01' }),
+    ).rejects.toSatisfy((e: unknown) => e instanceof ApiError && e.status === 422);
   });
 });
 

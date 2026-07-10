@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DeliveryManager } from './DeliveryManager';
 import { renderWithProviders } from '@/test/renderWithProviders';
@@ -66,5 +66,16 @@ describe('DeliveryManager', () => {
 
     await userEvent.type(screen.getByLabelText(/what went wrong/i), 'Customer site closed');
     expect(submit).toBeEnabled();
+  });
+
+  it('submits the failure reason and closes the modal on success', async () => {
+    renderWithProviders(<DeliveryManager orders={[makeOrder()]} hub={hub} active />);
+    await userEvent.click(screen.getByRole('button', { name: /report failure/i }));
+    const submit = screen.getByRole('button', { name: /mark failed/i });
+    await userEvent.type(screen.getByLabelText(/what went wrong/i), 'Customer site closed');
+    await userEvent.click(submit);
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: /report a failed delivery/i })).not.toBeInTheDocument(),
+    );
   });
 });

@@ -10,6 +10,9 @@
   padding: 6px 12px;
   border-radius: var(--r-full);
 }
+.spacer {
+  height: var(--sp-4);
+}
 .hubCell {
   display: flex;
   flex-direction: column;

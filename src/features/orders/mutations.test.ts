@@ -1,8 +1,9 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { waitFor } from '@testing-library/react';
 import { useOrderMutations } from './mutations';
 import { renderHookWithProviders } from '@/test/renderWithProviders';
 import { resetDb, getDb } from '@/test/mswServer';
+import { api } from '@/api/endpoints';
 import type { OrderInput } from '@/lib/schemas';
 
 const input: OrderInput = {
@@ -11,6 +12,7 @@ const input: OrderInput = {
 };
 
 beforeEach(() => resetDb());
+afterEach(() => vi.restoreAllMocks());
 
 describe('useOrderMutations', () => {
   it('creates an order (pending when unassigned)', async () => {
@@ -52,5 +54,12 @@ describe('useOrderMutations', () => {
     // by patching a missing order via update.
     result.current.update.mutate({ id: 'missing-order', input });
     await waitFor(() => expect(result.current.update.isError).toBe(true));
+  });
+
+  it('falls back to a generic message for a non-ApiError failure', async () => {
+    vi.spyOn(api.orders, 'remove').mockRejectedValue(new Error('boom'));
+    const { result } = renderHookWithProviders(() => useOrderMutations());
+    result.current.remove.mutate('order-1');
+    await waitFor(() => expect(result.current.remove.isError).toBe(true));
   });
 });

@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { render, renderHook, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { ConfirmProvider, useConfirm } from './ConfirmContext';
@@ -55,5 +55,19 @@ describe('ConfirmContext', () => {
     await userEvent.click(screen.getByText('open'));
     await userEvent.click(screen.getByRole('button', { name: /cancel/i }));
     expect(await screen.findByText('cancelled')).toBeInTheDocument();
+  });
+
+  it('resolves false when the dialog is dismissed with Escape', async () => {
+    renderProbe();
+    await userEvent.click(screen.getByText('open'));
+    expect(screen.getByRole('dialog', { name: 'Delete order?' })).toBeInTheDocument();
+    await userEvent.keyboard('{Escape}');
+    expect(await screen.findByText('cancelled')).toBeInTheDocument();
+  });
+
+  it('throws when useConfirm is called outside a ConfirmProvider', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    expect(() => renderHook(() => useConfirm())).toThrow(/within ConfirmProvider/);
+    vi.restoreAllMocks();
   });
 });

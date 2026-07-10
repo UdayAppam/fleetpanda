@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { screen, waitFor, renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useAuth, roleHome } from './AuthContext';
 import { renderWithProviders } from '@/test/renderWithProviders';
@@ -41,6 +41,12 @@ describe('AuthContext', () => {
     await waitFor(() => expect(screen.getByTestId('authed')).toHaveTextContent('true'));
     await userEvent.click(screen.getByText('logout'));
     expect(screen.getByTestId('authed')).toHaveTextContent('false');
+  });
+
+  it('throws when useAuth is called outside an AuthProvider', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    expect(() => renderHook(() => useAuth())).toThrow(/within AuthProvider/);
+    vi.restoreAllMocks();
   });
 });
 

@@ -29,11 +29,15 @@ export function Field({
 }
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  (props, ref) => <input ref={ref} className={styles.input} {...props} />,
+  ({ className, ...props }, ref) => (
+    <input ref={ref} className={[styles.input, className].filter(Boolean).join(' ')} {...props} />
+  ),
 );
 Input.displayName = 'Input';
 
 export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
-  (props, ref) => <select ref={ref} className={styles.input} {...props} />,
+  ({ className, ...props }, ref) => (
+    <select ref={ref} className={[styles.input, className].filter(Boolean).join(' ')} {...props} />
+  ),
 );
 Select.displayName = 'Select';

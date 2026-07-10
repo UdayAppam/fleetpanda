@@ -1,10 +1,12 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { waitFor } from '@testing-library/react';
 import { useEntityMutations } from './mutations';
 import { renderHookWithProviders } from '@/test/renderWithProviders';
 import { resetDb, getDb } from '@/test/mswServer';
+import { api } from '@/api/endpoints';
 
 beforeEach(() => resetDb());
+afterEach(() => vi.restoreAllMocks());
 
 describe('useEntityMutations', () => {
   it('creates, updates and removes for each resource label', async () => {
@@ -31,5 +33,12 @@ describe('useEntityMutations', () => {
     const { result } = renderHookWithProviders(() => useEntityMutations('vehicles'));
     result.current.update.mutate({ id: 'nope', body: { type: 'x' } });
     await waitFor(() => expect(result.current.update.isError).toBe(true));
+  });
+
+  it('falls back to a generic message for a non-ApiError failure', async () => {
+    vi.spyOn(api.drivers, 'create').mockRejectedValue(new Error('boom'));
+    const { result } = renderHookWithProviders(() => useEntityMutations('drivers'));
+    result.current.create.mutate({ name: 'X', license: 'DL-9', phone: '+9' });
+    await waitFor(() => expect(result.current.create.isError).toBe(true));
   });
 });

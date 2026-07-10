@@ -1,0 +1,7 @@
+.fallback {
+  padding: var(--sp-6);
+  text-align: center;
+}
+.message {
+  color: var(--text-muted);
+}

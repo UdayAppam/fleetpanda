@@ -5,6 +5,10 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Serverless demo: run the mock API in the browser via MSW (no backend to host).
+  VITE_MOCK = "true"
+  # Pin "today" to the frozen seed's base date so the demo stays coherent across time.
+  VITE_DEMO_DATE = "2026-07-10"
 
 # SPA fallback: serve index.html for client-side routes (existing files like /assets/* are
 # served first, so this does NOT affect JS/CSS asset MIME types).

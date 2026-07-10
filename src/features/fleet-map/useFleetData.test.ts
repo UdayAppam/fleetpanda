@@ -1,8 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { waitFor } from '@testing-library/react';
+import { http, HttpResponse } from 'msw';
+import { API_URL } from '@/config/env';
 import { useFleetData } from './useFleetData';
 import { renderHookWithProviders, makeStore } from '@/test/renderWithProviders';
-import { resetDb, getDb } from '@/test/mswServer';
+import { resetDb, getDb, server } from '@/test/mswServer';
 import { setMapFilter } from '@/store/slices/mapFiltersSlice';
 
 function seedInTransit() {
@@ -43,6 +45,18 @@ describe('useFleetData', () => {
     expect(result.current.all[0].vehicleReg).toBe('ghost-v');
     expect(result.current.all[0].driverName).toBe('ghost-d');
     expect(result.current.all[0].status).toBe('idle');
+  });
+
+  it('treats an undefined orders result as no orders', async () => {
+    server.use(http.get(`${API_URL}/orders`, () => HttpResponse.json({ error: 'boom' }, { status: 500 })));
+    const db = getDb();
+    db.vehiclePositions = [
+      { id: 'pos-1', vehicleId: 'vehicle-1', driverId: 'driver-1', lat: 40, lng: -74, updatedAt: '', status: 'idle' },
+    ];
+    const { result } = renderHookWithProviders(() => useFleetData());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.all).toHaveLength(1);
+    expect(result.current.all[0].status).toBe('idle'); // no orders → idle
   });
 
   it('applies the redux map filters', async () => {

@@ -136,6 +136,15 @@
 .stockHub {
   font-weight: 600;
 }
+.stockQty {
+  margin-left: auto;
+}
+.stockQty[data-level='crit'] {
+  color: var(--crit);
+}
+.stockQty[data-level='warn'] {
+  color: var(--warn);
+}
 .stockFoot {
   padding: var(--sp-3) var(--sp-4);
 }

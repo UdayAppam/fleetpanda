@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
+import styles from './ConfirmContext.module.css';
 
 interface ConfirmOpts {
   title: string;
@@ -45,7 +46,7 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
           </>
         }
       >
-        <p style={{ margin: 0, color: 'var(--text-muted)' }}>{opts?.message}</p>
+        <p className={styles.message}>{opts?.message}</p>
       </Modal>
     </Ctx.Provider>
   );

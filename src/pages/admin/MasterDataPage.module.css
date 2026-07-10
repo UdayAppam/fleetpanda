@@ -104,6 +104,20 @@
 .invDot[data-level='crit'] {
   background: var(--crit);
 }
+.rowActions {
+  display: inline-flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.nameCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.bold {
+  font-weight: 600;
+}
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;

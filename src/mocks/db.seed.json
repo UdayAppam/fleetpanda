@@ -1,0 +1,4639 @@
+{
+  "users": [
+    {
+      "id": "user-admin",
+      "email": "admin@fleetpanda.com",
+      "password": "admin123",
+      "name": "Dana Ops",
+      "role": "admin"
+    },
+    {
+      "id": "user-driver",
+      "email": "driver@fleetpanda.com",
+      "password": "driver123",
+      "name": "John Smith",
+      "role": "driver",
+      "driverId": "driver-1"
+    },
+    {
+      "id": "user-driver2",
+      "email": "maria@fleetpanda.com",
+      "password": "driver123",
+      "name": "Maria Ruiz",
+      "role": "driver",
+      "driverId": "driver-2"
+    },
+    {
+      "id": "user-driver4",
+      "email": "amina@fleetpanda.com",
+      "password": "driver123",
+      "name": "Amina Bello",
+      "role": "driver",
+      "driverId": "driver-4"
+    },
+    {
+      "id": "user-driver7",
+      "email": "sam@fleetpanda.com",
+      "password": "driver123",
+      "name": "Sam Okoye",
+      "role": "driver",
+      "driverId": "driver-7"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-diesel",
+      "key": "diesel",
+      "name": "Diesel",
+      "unit": "L",
+      "lowStockThreshold": 5000,
+      "tankCapacity": 20000
+    },
+    {
+      "id": "prod-petrol",
+      "key": "petrol",
+      "name": "Petrol (Regular)",
+      "unit": "L",
+      "lowStockThreshold": 5000,
+      "tankCapacity": 20000
+    },
+    {
+      "id": "prod-premium",
+      "key": "premium",
+      "name": "Premium Petrol",
+      "unit": "L",
+      "lowStockThreshold": 3000,
+      "tankCapacity": 12000
+    }
+  ],
+  "hubs": [
+    {
+      "id": "hub-1",
+      "name": "Downtown Distribution Hub",
+      "locationType": "hub",
+      "address": "123 Main St",
+      "coordinates": {
+        "lat": 40.7128,
+        "lng": -74.006
+      },
+      "inventory": {
+        "diesel": 12000,
+        "petrol": 12000,
+        "premium": 3100
+      }
+    },
+    {
+      "id": "hub-2",
+      "name": "Harbor Terminal",
+      "locationType": "terminal",
+      "address": "88 Dockside Ave",
+      "coordinates": {
+        "lat": 40.6626,
+        "lng": -74.045
+      },
+      "inventory": {
+        "diesel": 2400,
+        "petrol": 18700,
+        "premium": 6900
+      }
+    },
+    {
+      "id": "hub-3",
+      "name": "Northgate Depot",
+      "locationType": "hub",
+      "address": "400 North Rd",
+      "coordinates": {
+        "lat": 40.8601,
+        "lng": -73.9
+      },
+      "inventory": {
+        "diesel": 9800,
+        "petrol": 4300,
+        "premium": 8200
+      }
+    },
+    {
+      "id": "hub-4",
+      "name": "Airport Fuel Terminal",
+      "locationType": "terminal",
+      "address": "Cargo Loop 2",
+      "coordinates": {
+        "lat": 40.6413,
+        "lng": -73.7781
+      },
+      "inventory": {
+        "diesel": 20000,
+        "petrol": 15000,
+        "premium": 2100
+      }
+    },
+    {
+      "id": "hub-5",
+      "name": "Westside Storage",
+      "locationType": "hub",
+      "address": "77 River Blvd",
+      "coordinates": {
+        "lat": 40.758,
+        "lng": -74.13
+      },
+      "inventory": {
+        "diesel": 4600,
+        "petrol": 9100,
+        "premium": 5400
+      }
+    },
+    {
+      "id": "hub-6",
+      "name": "Southbay Terminal",
+      "locationType": "terminal",
+      "address": "9 Bay St",
+      "coordinates": {
+        "lat": 40.59,
+        "lng": -73.94
+      },
+      "inventory": {
+        "diesel": 13400,
+        "petrol": 800,
+        "premium": 4700
+      }
+    },
+    {
+      "id": "hub-7",
+      "name": "Eastport Terminal",
+      "locationType": "terminal",
+      "address": "5 Sound Rd",
+      "coordinates": {
+        "lat": 40.73,
+        "lng": -73.68
+      },
+      "inventory": {
+        "diesel": 8000,
+        "petrol": 6000,
+        "premium": 2000
+      }
+    },
+    {
+      "id": "loc-1",
+      "name": "Westside Terminal 1",
+      "locationType": "terminal",
+      "address": "833 Bay St",
+      "coordinates": {
+        "lat": 40.5533,
+        "lng": -73.81
+      },
+      "inventory": {
+        "diesel": 9500,
+        "petrol": 17500,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-2",
+      "name": "Eastport Hub 2",
+      "locationType": "hub",
+      "address": "772 Main St",
+      "coordinates": {
+        "lat": 40.8673,
+        "lng": -74.0261
+      },
+      "inventory": {
+        "diesel": 2500,
+        "petrol": 17500,
+        "premium": 10000
+      }
+    },
+    {
+      "id": "loc-3",
+      "name": "Eastport Terminal 3",
+      "locationType": "terminal",
+      "address": "31 Harbor Blvd",
+      "coordinates": {
+        "lat": 40.926,
+        "lng": -73.9167
+      },
+      "inventory": {
+        "diesel": 11500,
+        "petrol": 5000,
+        "premium": 10000
+      }
+    },
+    {
+      "id": "loc-4",
+      "name": "Downtown Hub 4",
+      "locationType": "hub",
+      "address": "530 Bay St",
+      "coordinates": {
+        "lat": 40.7584,
+        "lng": -73.8163
+      },
+      "inventory": {
+        "diesel": 14000,
+        "petrol": 15500,
+        "premium": 11500
+      }
+    },
+    {
+      "id": "loc-5",
+      "name": "Eastport Hub 5",
+      "locationType": "hub",
+      "address": "539 North Rd",
+      "coordinates": {
+        "lat": 40.5864,
+        "lng": -74.1109
+      },
+      "inventory": {
+        "diesel": 2500,
+        "petrol": 16500,
+        "premium": 4500
+      }
+    },
+    {
+      "id": "loc-6",
+      "name": "Lakeside Terminal 6",
+      "locationType": "terminal",
+      "address": "797 Fuel Ln",
+      "coordinates": {
+        "lat": 40.8963,
+        "lng": -73.7844
+      },
+      "inventory": {
+        "diesel": 1000,
+        "petrol": 19000,
+        "premium": 1500
+      }
+    },
+    {
+      "id": "loc-7",
+      "name": "Westside Terminal 7",
+      "locationType": "terminal",
+      "address": "96 North Rd",
+      "coordinates": {
+        "lat": 40.6263,
+        "lng": -74.0151
+      },
+      "inventory": {
+        "diesel": 5500,
+        "petrol": 11000,
+        "premium": 10500
+      }
+    },
+    {
+      "id": "loc-8",
+      "name": "Northgate Hub 8",
+      "locationType": "hub",
+      "address": "606 River Rd",
+      "coordinates": {
+        "lat": 40.6828,
+        "lng": -74.0539
+      },
+      "inventory": {
+        "diesel": 2500,
+        "petrol": 20000,
+        "premium": 4000
+      }
+    },
+    {
+      "id": "loc-9",
+      "name": "Midvale Terminal 9",
+      "locationType": "terminal",
+      "address": "82 Fuel Ln",
+      "coordinates": {
+        "lat": 40.7754,
+        "lng": -73.8428
+      },
+      "inventory": {
+        "diesel": 10000,
+        "petrol": 19000,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-10",
+      "name": "Fairview Hub 10",
+      "locationType": "hub",
+      "address": "177 Fuel Ln",
+      "coordinates": {
+        "lat": 40.6991,
+        "lng": -73.9291
+      },
+      "inventory": {
+        "diesel": 13500,
+        "petrol": 14500,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-11",
+      "name": "Harbor Hub 11",
+      "locationType": "hub",
+      "address": "340 Fuel Ln",
+      "coordinates": {
+        "lat": 40.8232,
+        "lng": -73.7452
+      },
+      "inventory": {
+        "diesel": 16500,
+        "petrol": 1500,
+        "premium": 1000
+      }
+    },
+    {
+      "id": "loc-12",
+      "name": "Airport Terminal 12",
+      "locationType": "terminal",
+      "address": "759 Gantry St",
+      "coordinates": {
+        "lat": 40.8181,
+        "lng": -73.8878
+      },
+      "inventory": {
+        "diesel": 9500,
+        "petrol": 14000,
+        "premium": 9000
+      }
+    },
+    {
+      "id": "loc-13",
+      "name": "Lakeside Terminal 13",
+      "locationType": "terminal",
+      "address": "649 Dock Ave",
+      "coordinates": {
+        "lat": 40.6881,
+        "lng": -74.0881
+      },
+      "inventory": {
+        "diesel": 12000,
+        "petrol": 10500,
+        "premium": 10500
+      }
+    },
+    {
+      "id": "loc-14",
+      "name": "Southbay Hub 14",
+      "locationType": "hub",
+      "address": "280 Bay St",
+      "coordinates": {
+        "lat": 40.9269,
+        "lng": -73.7606
+      },
+      "inventory": {
+        "diesel": 5000,
+        "petrol": 14500,
+        "premium": 7500
+      }
+    },
+    {
+      "id": "loc-15",
+      "name": "Airport Terminal 15",
+      "locationType": "terminal",
+      "address": "42 Harbor Blvd",
+      "coordinates": {
+        "lat": 40.836,
+        "lng": -74.1863
+      },
+      "inventory": {
+        "diesel": 13500,
+        "petrol": 4000,
+        "premium": 8000
+      }
+    },
+    {
+      "id": "loc-16",
+      "name": "Downtown Hub 16",
+      "locationType": "hub",
+      "address": "447 River Rd",
+      "coordinates": {
+        "lat": 40.5392,
+        "lng": -73.9665
+      },
+      "inventory": {
+        "diesel": 17000,
+        "petrol": 14500,
+        "premium": 2000
+      }
+    },
+    {
+      "id": "loc-17",
+      "name": "Oakmont Terminal 17",
+      "locationType": "terminal",
+      "address": "257 Fuel Ln",
+      "coordinates": {
+        "lat": 40.522,
+        "lng": -74.1805
+      },
+      "inventory": {
+        "diesel": 17500,
+        "petrol": 10500,
+        "premium": 9500
+      }
+    },
+    {
+      "id": "loc-18",
+      "name": "Westside Hub 18",
+      "locationType": "hub",
+      "address": "641 Bay St",
+      "coordinates": {
+        "lat": 40.6495,
+        "lng": -74.0115
+      },
+      "inventory": {
+        "diesel": 12500,
+        "petrol": 10000,
+        "premium": 2000
+      }
+    },
+    {
+      "id": "loc-19",
+      "name": "Eastport Hub 19",
+      "locationType": "hub",
+      "address": "263 North Rd",
+      "coordinates": {
+        "lat": 40.7312,
+        "lng": -73.8577
+      },
+      "inventory": {
+        "diesel": 18000,
+        "petrol": 11000,
+        "premium": 5500
+      }
+    },
+    {
+      "id": "loc-20",
+      "name": "Downtown Hub 20",
+      "locationType": "hub",
+      "address": "929 Gantry St",
+      "coordinates": {
+        "lat": 40.6297,
+        "lng": -73.6502
+      },
+      "inventory": {
+        "diesel": 4500,
+        "petrol": 6500,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-21",
+      "name": "Lakeside Terminal 21",
+      "locationType": "terminal",
+      "address": "243 Depot Way",
+      "coordinates": {
+        "lat": 40.636,
+        "lng": -73.8286
+      },
+      "inventory": {
+        "diesel": 500,
+        "petrol": 9000,
+        "premium": 11000
+      }
+    },
+    {
+      "id": "loc-22",
+      "name": "Harbor Hub 22",
+      "locationType": "hub",
+      "address": "920 Main St",
+      "coordinates": {
+        "lat": 40.8801,
+        "lng": -73.8609
+      },
+      "inventory": {
+        "diesel": 18500,
+        "petrol": 9500,
+        "premium": 7000
+      }
+    },
+    {
+      "id": "loc-23",
+      "name": "Southbay Terminal 23",
+      "locationType": "terminal",
+      "address": "382 Depot Way",
+      "coordinates": {
+        "lat": 40.703,
+        "lng": -74.2185
+      },
+      "inventory": {
+        "diesel": 2000,
+        "petrol": 6500,
+        "premium": 3000
+      }
+    },
+    {
+      "id": "loc-24",
+      "name": "Westside Hub 24",
+      "locationType": "hub",
+      "address": "288 Cargo Loop",
+      "coordinates": {
+        "lat": 40.7936,
+        "lng": -73.6711
+      },
+      "inventory": {
+        "diesel": 7000,
+        "petrol": 9000,
+        "premium": 7500
+      }
+    },
+    {
+      "id": "loc-25",
+      "name": "Lakeside Hub 25",
+      "locationType": "hub",
+      "address": "371 Depot Way",
+      "coordinates": {
+        "lat": 40.7809,
+        "lng": -73.8437
+      },
+      "inventory": {
+        "diesel": 6000,
+        "petrol": 19500,
+        "premium": 9500
+      }
+    },
+    {
+      "id": "loc-26",
+      "name": "Downtown Hub 26",
+      "locationType": "hub",
+      "address": "590 Harbor Blvd",
+      "coordinates": {
+        "lat": 40.7806,
+        "lng": -73.7831
+      },
+      "inventory": {
+        "diesel": 18000,
+        "petrol": 1000,
+        "premium": 9500
+      }
+    },
+    {
+      "id": "loc-27",
+      "name": "Northgate Terminal 27",
+      "locationType": "terminal",
+      "address": "518 Fuel Ln",
+      "coordinates": {
+        "lat": 40.8168,
+        "lng": -74.1674
+      },
+      "inventory": {
+        "diesel": 13000,
+        "petrol": 4500,
+        "premium": 7000
+      }
+    },
+    {
+      "id": "loc-28",
+      "name": "Northgate Terminal 28",
+      "locationType": "terminal",
+      "address": "985 Main St",
+      "coordinates": {
+        "lat": 40.539,
+        "lng": -73.8802
+      },
+      "inventory": {
+        "diesel": 12500,
+        "petrol": 8000,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-29",
+      "name": "Lakeside Terminal 29",
+      "locationType": "terminal",
+      "address": "805 Cargo Loop",
+      "coordinates": {
+        "lat": 40.8921,
+        "lng": -73.6987
+      },
+      "inventory": {
+        "diesel": 2000,
+        "petrol": 6000,
+        "premium": 7000
+      }
+    },
+    {
+      "id": "loc-30",
+      "name": "Harbor Hub 30",
+      "locationType": "hub",
+      "address": "422 Main St",
+      "coordinates": {
+        "lat": 40.7005,
+        "lng": -73.7205
+      },
+      "inventory": {
+        "diesel": 18000,
+        "petrol": 19500,
+        "premium": 8000
+      }
+    },
+    {
+      "id": "loc-31",
+      "name": "Fairview Terminal 31",
+      "locationType": "terminal",
+      "address": "994 Fuel Ln",
+      "coordinates": {
+        "lat": 40.6731,
+        "lng": -73.7439
+      },
+      "inventory": {
+        "diesel": 6000,
+        "petrol": 2500,
+        "premium": 5500
+      }
+    },
+    {
+      "id": "loc-32",
+      "name": "Downtown Hub 32",
+      "locationType": "hub",
+      "address": "431 Cargo Loop",
+      "coordinates": {
+        "lat": 40.6546,
+        "lng": -74.2449
+      },
+      "inventory": {
+        "diesel": 12500,
+        "petrol": 3000,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-33",
+      "name": "Southbay Hub 33",
+      "locationType": "hub",
+      "address": "966 Fuel Ln",
+      "coordinates": {
+        "lat": 40.6958,
+        "lng": -73.898
+      },
+      "inventory": {
+        "diesel": 16500,
+        "petrol": 14500,
+        "premium": 5500
+      }
+    },
+    {
+      "id": "loc-34",
+      "name": "Oakmont Hub 34",
+      "locationType": "hub",
+      "address": "613 Gantry St",
+      "coordinates": {
+        "lat": 40.8909,
+        "lng": -74.2228
+      },
+      "inventory": {
+        "diesel": 1000,
+        "petrol": 8500,
+        "premium": 12000
+      }
+    },
+    {
+      "id": "loc-35",
+      "name": "Airport Terminal 35",
+      "locationType": "terminal",
+      "address": "727 Cargo Loop",
+      "coordinates": {
+        "lat": 40.687,
+        "lng": -73.7849
+      },
+      "inventory": {
+        "diesel": 14500,
+        "petrol": 6000,
+        "premium": 2500
+      }
+    },
+    {
+      "id": "loc-36",
+      "name": "Southbay Terminal 36",
+      "locationType": "terminal",
+      "address": "742 Harbor Blvd",
+      "coordinates": {
+        "lat": 40.5909,
+        "lng": -74.214
+      },
+      "inventory": {
+        "diesel": 18000,
+        "petrol": 11500,
+        "premium": 8000
+      }
+    },
+    {
+      "id": "loc-37",
+      "name": "Airport Hub 37",
+      "locationType": "hub",
+      "address": "47 Dock Ave",
+      "coordinates": {
+        "lat": 40.6656,
+        "lng": -73.8847
+      },
+      "inventory": {
+        "diesel": 16500,
+        "petrol": 19000,
+        "premium": 7000
+      }
+    },
+    {
+      "id": "loc-38",
+      "name": "Airport Hub 38",
+      "locationType": "hub",
+      "address": "116 Fuel Ln",
+      "coordinates": {
+        "lat": 40.8235,
+        "lng": -73.9416
+      },
+      "inventory": {
+        "diesel": 500,
+        "petrol": 15500,
+        "premium": 9000
+      }
+    },
+    {
+      "id": "loc-39",
+      "name": "Westside Hub 39",
+      "locationType": "hub",
+      "address": "167 North Rd",
+      "coordinates": {
+        "lat": 40.7137,
+        "lng": -74.0404
+      },
+      "inventory": {
+        "diesel": 3500,
+        "petrol": 7500,
+        "premium": 8000
+      }
+    },
+    {
+      "id": "loc-40",
+      "name": "Fairview Hub 40",
+      "locationType": "hub",
+      "address": "665 Bay St",
+      "coordinates": {
+        "lat": 40.8921,
+        "lng": -74.1148
+      },
+      "inventory": {
+        "diesel": 14500,
+        "petrol": 18500,
+        "premium": 3500
+      }
+    },
+    {
+      "id": "loc-41",
+      "name": "Northgate Terminal 41",
+      "locationType": "terminal",
+      "address": "682 Cargo Loop",
+      "coordinates": {
+        "lat": 40.9072,
+        "lng": -73.7643
+      },
+      "inventory": {
+        "diesel": 16500,
+        "petrol": 19500,
+        "premium": 1000
+      }
+    },
+    {
+      "id": "loc-42",
+      "name": "Oakmont Terminal 42",
+      "locationType": "terminal",
+      "address": "508 River Rd",
+      "coordinates": {
+        "lat": 40.7792,
+        "lng": -73.8217
+      },
+      "inventory": {
+        "diesel": 2500,
+        "petrol": 4000,
+        "premium": 11500
+      }
+    },
+    {
+      "id": "loc-43",
+      "name": "Lakeside Terminal 43",
+      "locationType": "terminal",
+      "address": "218 Depot Way",
+      "coordinates": {
+        "lat": 40.6416,
+        "lng": -74.1996
+      },
+      "inventory": {
+        "diesel": 16500,
+        "petrol": 19000,
+        "premium": 500
+      }
+    },
+    {
+      "id": "loc-44",
+      "name": "Eastport Terminal 44",
+      "locationType": "terminal",
+      "address": "350 Depot Way",
+      "coordinates": {
+        "lat": 40.8155,
+        "lng": -73.9991
+      },
+      "inventory": {
+        "diesel": 15000,
+        "petrol": 10500,
+        "premium": 8500
+      }
+    },
+    {
+      "id": "loc-45",
+      "name": "Eastport Terminal 45",
+      "locationType": "terminal",
+      "address": "67 Depot Way",
+      "coordinates": {
+        "lat": 40.7329,
+        "lng": -73.8724
+      },
+      "inventory": {
+        "diesel": 18500,
+        "petrol": 8500,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-46",
+      "name": "Eastport Hub 46",
+      "locationType": "hub",
+      "address": "479 Gantry St",
+      "coordinates": {
+        "lat": 40.5128,
+        "lng": -73.8802
+      },
+      "inventory": {
+        "diesel": 3000,
+        "petrol": 2500,
+        "premium": 11500
+      }
+    },
+    {
+      "id": "loc-47",
+      "name": "Downtown Hub 47",
+      "locationType": "hub",
+      "address": "233 Dock Ave",
+      "coordinates": {
+        "lat": 40.7082,
+        "lng": -74.0325
+      },
+      "inventory": {
+        "diesel": 6000,
+        "petrol": 5500,
+        "premium": 1000
+      }
+    },
+    {
+      "id": "loc-48",
+      "name": "Fairview Hub 48",
+      "locationType": "hub",
+      "address": "443 Gantry St",
+      "coordinates": {
+        "lat": 40.5092,
+        "lng": -73.9025
+      },
+      "inventory": {
+        "diesel": 18000,
+        "petrol": 12500,
+        "premium": 7000
+      }
+    },
+    {
+      "id": "loc-49",
+      "name": "Oakmont Terminal 49",
+      "locationType": "terminal",
+      "address": "508 North Rd",
+      "coordinates": {
+        "lat": 40.6772,
+        "lng": -74.1656
+      },
+      "inventory": {
+        "diesel": 500,
+        "petrol": 3000,
+        "premium": 2500
+      }
+    },
+    {
+      "id": "loc-50",
+      "name": "Riverton Hub 50",
+      "locationType": "hub",
+      "address": "759 Harbor Blvd",
+      "coordinates": {
+        "lat": 40.9316,
+        "lng": -73.8129
+      },
+      "inventory": {
+        "diesel": 18000,
+        "petrol": 5000,
+        "premium": 7500
+      }
+    },
+    {
+      "id": "loc-51",
+      "name": "Southbay Hub 51",
+      "locationType": "hub",
+      "address": "10 Depot Way",
+      "coordinates": {
+        "lat": 40.5347,
+        "lng": -73.7991
+      },
+      "inventory": {
+        "diesel": 2500,
+        "petrol": 1000,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-52",
+      "name": "Harbor Hub 52",
+      "locationType": "hub",
+      "address": "689 Depot Way",
+      "coordinates": {
+        "lat": 40.8104,
+        "lng": -74.2336
+      },
+      "inventory": {
+        "diesel": 7500,
+        "petrol": 13500,
+        "premium": 4000
+      }
+    },
+    {
+      "id": "loc-53",
+      "name": "Lakeside Terminal 53",
+      "locationType": "terminal",
+      "address": "198 Bay St",
+      "coordinates": {
+        "lat": 40.9425,
+        "lng": -73.7622
+      },
+      "inventory": {
+        "diesel": 16500,
+        "petrol": 2000,
+        "premium": 500
+      }
+    },
+    {
+      "id": "loc-54",
+      "name": "Westside Hub 54",
+      "locationType": "hub",
+      "address": "76 North Rd",
+      "coordinates": {
+        "lat": 40.6709,
+        "lng": -73.8198
+      },
+      "inventory": {
+        "diesel": 5500,
+        "petrol": 1000,
+        "premium": 3500
+      }
+    },
+    {
+      "id": "loc-55",
+      "name": "Southbay Hub 55",
+      "locationType": "hub",
+      "address": "408 Gantry St",
+      "coordinates": {
+        "lat": 40.7102,
+        "lng": -73.8289
+      },
+      "inventory": {
+        "diesel": 14000,
+        "petrol": 500,
+        "premium": 3000
+      }
+    },
+    {
+      "id": "loc-56",
+      "name": "Riverton Terminal 56",
+      "locationType": "terminal",
+      "address": "4 Main St",
+      "coordinates": {
+        "lat": 40.8101,
+        "lng": -73.9581
+      },
+      "inventory": {
+        "diesel": 16000,
+        "petrol": 8000,
+        "premium": 8500
+      }
+    },
+    {
+      "id": "loc-57",
+      "name": "Midvale Hub 57",
+      "locationType": "hub",
+      "address": "718 Main St",
+      "coordinates": {
+        "lat": 40.9491,
+        "lng": -74.1121
+      },
+      "inventory": {
+        "diesel": 2500,
+        "petrol": 13500,
+        "premium": 2000
+      }
+    },
+    {
+      "id": "loc-58",
+      "name": "Oakmont Terminal 58",
+      "locationType": "terminal",
+      "address": "454 Main St",
+      "coordinates": {
+        "lat": 40.9294,
+        "lng": -73.9892
+      },
+      "inventory": {
+        "diesel": 12000,
+        "petrol": 14000,
+        "premium": 7000
+      }
+    },
+    {
+      "id": "loc-59",
+      "name": "Riverton Terminal 59",
+      "locationType": "terminal",
+      "address": "986 Gantry St",
+      "coordinates": {
+        "lat": 40.7461,
+        "lng": -74.1256
+      },
+      "inventory": {
+        "diesel": 15000,
+        "petrol": 9500,
+        "premium": 11000
+      }
+    },
+    {
+      "id": "loc-60",
+      "name": "Midvale Terminal 60",
+      "locationType": "terminal",
+      "address": "715 Gantry St",
+      "coordinates": {
+        "lat": 40.8702,
+        "lng": -73.9936
+      },
+      "inventory": {
+        "diesel": 6000,
+        "petrol": 16000,
+        "premium": 1000
+      }
+    },
+    {
+      "id": "loc-61",
+      "name": "Harbor Hub 61",
+      "locationType": "hub",
+      "address": "536 River Rd",
+      "coordinates": {
+        "lat": 40.5045,
+        "lng": -73.8231
+      },
+      "inventory": {
+        "diesel": 4000,
+        "petrol": 9500,
+        "premium": 8500
+      }
+    },
+    {
+      "id": "loc-62",
+      "name": "Downtown Terminal 62",
+      "locationType": "terminal",
+      "address": "948 River Rd",
+      "coordinates": {
+        "lat": 40.7704,
+        "lng": -73.7325
+      },
+      "inventory": {
+        "diesel": 5000,
+        "petrol": 9000,
+        "premium": 6500
+      }
+    },
+    {
+      "id": "loc-63",
+      "name": "Midvale Hub 63",
+      "locationType": "hub",
+      "address": "803 Main St",
+      "coordinates": {
+        "lat": 40.6069,
+        "lng": -73.7977
+      },
+      "inventory": {
+        "diesel": 17000,
+        "petrol": 11000,
+        "premium": 9000
+      }
+    },
+    {
+      "id": "loc-64",
+      "name": "Harbor Terminal 64",
+      "locationType": "terminal",
+      "address": "431 Depot Way",
+      "coordinates": {
+        "lat": 40.6658,
+        "lng": -74.1808
+      },
+      "inventory": {
+        "diesel": 11500,
+        "petrol": 13000,
+        "premium": 4500
+      }
+    },
+    {
+      "id": "loc-65",
+      "name": "Southbay Terminal 65",
+      "locationType": "terminal",
+      "address": "508 Bay St",
+      "coordinates": {
+        "lat": 40.7413,
+        "lng": -73.9231
+      },
+      "inventory": {
+        "diesel": 20000,
+        "petrol": 500,
+        "premium": 500
+      }
+    },
+    {
+      "id": "loc-66",
+      "name": "Eastport Hub 66",
+      "locationType": "hub",
+      "address": "634 River Rd",
+      "coordinates": {
+        "lat": 40.5295,
+        "lng": -74.1081
+      },
+      "inventory": {
+        "diesel": 1000,
+        "petrol": 18000,
+        "premium": 11500
+      }
+    },
+    {
+      "id": "loc-67",
+      "name": "Oakmont Terminal 67",
+      "locationType": "terminal",
+      "address": "259 Fuel Ln",
+      "coordinates": {
+        "lat": 40.7621,
+        "lng": -73.8703
+      },
+      "inventory": {
+        "diesel": 12500,
+        "petrol": 9500,
+        "premium": 5500
+      }
+    },
+    {
+      "id": "loc-68",
+      "name": "Downtown Hub 68",
+      "locationType": "hub",
+      "address": "730 Dock Ave",
+      "coordinates": {
+        "lat": 40.6126,
+        "lng": -73.9472
+      },
+      "inventory": {
+        "diesel": 3000,
+        "petrol": 3000,
+        "premium": 7500
+      }
+    },
+    {
+      "id": "loc-69",
+      "name": "Lakeside Hub 69",
+      "locationType": "hub",
+      "address": "167 Dock Ave",
+      "coordinates": {
+        "lat": 40.6136,
+        "lng": -74.0837
+      },
+      "inventory": {
+        "diesel": 11500,
+        "petrol": 7000,
+        "premium": 6000
+      }
+    },
+    {
+      "id": "loc-70",
+      "name": "Riverton Hub 70",
+      "locationType": "hub",
+      "address": "432 Depot Way",
+      "coordinates": {
+        "lat": 40.7076,
+        "lng": -74.028
+      },
+      "inventory": {
+        "diesel": 16000,
+        "petrol": 14000,
+        "premium": 6500
+      }
+    },
+    {
+      "id": "loc-71",
+      "name": "Downtown Hub 71",
+      "locationType": "hub",
+      "address": "634 Dock Ave",
+      "coordinates": {
+        "lat": 40.5417,
+        "lng": -73.9798
+      },
+      "inventory": {
+        "diesel": 12500,
+        "petrol": 3500,
+        "premium": 11000
+      }
+    },
+    {
+      "id": "loc-72",
+      "name": "Westside Hub 72",
+      "locationType": "hub",
+      "address": "641 Gantry St",
+      "coordinates": {
+        "lat": 40.5264,
+        "lng": -73.7271
+      },
+      "inventory": {
+        "diesel": 19000,
+        "petrol": 18500,
+        "premium": 11000
+      }
+    },
+    {
+      "id": "loc-73",
+      "name": "Southbay Terminal 73",
+      "locationType": "terminal",
+      "address": "297 Bay St",
+      "coordinates": {
+        "lat": 40.8256,
+        "lng": -74.0871
+      },
+      "inventory": {
+        "diesel": 13500,
+        "petrol": 9500,
+        "premium": 7000
+      }
+    },
+    {
+      "id": "loc-74",
+      "name": "Midvale Terminal 74",
+      "locationType": "terminal",
+      "address": "91 River Rd",
+      "coordinates": {
+        "lat": 40.7163,
+        "lng": -73.6844
+      },
+      "inventory": {
+        "diesel": 3500,
+        "petrol": 15500,
+        "premium": 5500
+      }
+    },
+    {
+      "id": "loc-75",
+      "name": "Northgate Terminal 75",
+      "locationType": "terminal",
+      "address": "710 Gantry St",
+      "coordinates": {
+        "lat": 40.7647,
+        "lng": -74.0049
+      },
+      "inventory": {
+        "diesel": 8500,
+        "petrol": 1500,
+        "premium": 1500
+      }
+    }
+  ],
+  "drivers": [
+    {
+      "id": "driver-1",
+      "name": "John Smith",
+      "license": "DL-123456",
+      "phone": "+1-555-0100",
+      "status": "available"
+    },
+    {
+      "id": "driver-2",
+      "name": "Maria Ruiz",
+      "license": "DL-223344",
+      "phone": "+1-555-0101",
+      "status": "available"
+    },
+    {
+      "id": "driver-3",
+      "name": "Wei Chen",
+      "license": "DL-334455",
+      "phone": "+1-555-0102",
+      "status": "available"
+    },
+    {
+      "id": "driver-4",
+      "name": "Amina Bello",
+      "license": "DL-445566",
+      "phone": "+1-555-0103",
+      "status": "available"
+    },
+    {
+      "id": "driver-5",
+      "name": "Carlos Diaz",
+      "license": "DL-556677",
+      "phone": "+1-555-0104",
+      "status": "available"
+    },
+    {
+      "id": "driver-6",
+      "name": "Priya Nair",
+      "license": "DL-667788",
+      "phone": "+1-555-0105",
+      "status": "available"
+    },
+    {
+      "id": "driver-7",
+      "name": "Sam Okoye",
+      "license": "DL-778899",
+      "phone": "+1-555-0106",
+      "status": "on_shift"
+    },
+    {
+      "id": "drv-1",
+      "name": "Hugo Costa",
+      "license": "DL-700001",
+      "phone": "+1-555-2001",
+      "status": "available"
+    },
+    {
+      "id": "drv-2",
+      "name": "Sara Blum",
+      "license": "DL-700002",
+      "phone": "+1-555-2002",
+      "status": "available"
+    },
+    {
+      "id": "drv-3",
+      "name": "Lena Mora",
+      "license": "DL-700003",
+      "phone": "+1-555-2003",
+      "status": "available"
+    },
+    {
+      "id": "drv-4",
+      "name": "Ivan Ford",
+      "license": "DL-700004",
+      "phone": "+1-555-2004",
+      "status": "available"
+    },
+    {
+      "id": "drv-5",
+      "name": "Kofi Park",
+      "license": "DL-700005",
+      "phone": "+1-555-2005",
+      "status": "available"
+    },
+    {
+      "id": "drv-6",
+      "name": "Ethan Park",
+      "license": "DL-700006",
+      "phone": "+1-555-2006",
+      "status": "available"
+    },
+    {
+      "id": "drv-7",
+      "name": "Cyrus Rossi",
+      "license": "DL-700007",
+      "phone": "+1-555-2007",
+      "status": "available"
+    },
+    {
+      "id": "drv-8",
+      "name": "Noah Costa",
+      "license": "DL-700008",
+      "phone": "+1-555-2008",
+      "status": "available"
+    },
+    {
+      "id": "drv-9",
+      "name": "Rhea Costa",
+      "license": "DL-700009",
+      "phone": "+1-555-2009",
+      "status": "available"
+    },
+    {
+      "id": "drv-10",
+      "name": "Hugo Vega",
+      "license": "DL-700010",
+      "phone": "+1-555-2010",
+      "status": "available"
+    },
+    {
+      "id": "drv-11",
+      "name": "Noah Blum",
+      "license": "DL-700011",
+      "phone": "+1-555-2011",
+      "status": "available"
+    },
+    {
+      "id": "drv-12",
+      "name": "Yara Park",
+      "license": "DL-700012",
+      "phone": "+1-555-2012",
+      "status": "available"
+    },
+    {
+      "id": "drv-13",
+      "name": "Cyrus Bauer",
+      "license": "DL-700013",
+      "phone": "+1-555-2013",
+      "status": "available"
+    },
+    {
+      "id": "drv-14",
+      "name": "Zoe Sato",
+      "license": "DL-700014",
+      "phone": "+1-555-2014",
+      "status": "available"
+    },
+    {
+      "id": "drv-15",
+      "name": "Cyrus Rossi",
+      "license": "DL-700015",
+      "phone": "+1-555-2015",
+      "status": "available"
+    },
+    {
+      "id": "drv-16",
+      "name": "Noah Quinn",
+      "license": "DL-700016",
+      "phone": "+1-555-2016",
+      "status": "available"
+    },
+    {
+      "id": "drv-17",
+      "name": "Hugo Bauer",
+      "license": "DL-700017",
+      "phone": "+1-555-2017",
+      "status": "available"
+    },
+    {
+      "id": "drv-18",
+      "name": "Ivan Sato",
+      "license": "DL-700018",
+      "phone": "+1-555-2018",
+      "status": "available"
+    },
+    {
+      "id": "drv-19",
+      "name": "Sara Rossi",
+      "license": "DL-700019",
+      "phone": "+1-555-2019",
+      "status": "available"
+    },
+    {
+      "id": "drv-20",
+      "name": "Omar Reed",
+      "license": "DL-700020",
+      "phone": "+1-555-2020",
+      "status": "available"
+    },
+    {
+      "id": "drv-21",
+      "name": "Tara Blum",
+      "license": "DL-700021",
+      "phone": "+1-555-2021",
+      "status": "available"
+    },
+    {
+      "id": "drv-22",
+      "name": "Tara Quinn",
+      "license": "DL-700022",
+      "phone": "+1-555-2022",
+      "status": "available"
+    },
+    {
+      "id": "drv-23",
+      "name": "Noah Bauer",
+      "license": "DL-700023",
+      "phone": "+1-555-2023",
+      "status": "available"
+    },
+    {
+      "id": "drv-24",
+      "name": "Noah Vega",
+      "license": "DL-700024",
+      "phone": "+1-555-2024",
+      "status": "available"
+    },
+    {
+      "id": "drv-25",
+      "name": "Kofi Roy",
+      "license": "DL-700025",
+      "phone": "+1-555-2025",
+      "status": "available"
+    },
+    {
+      "id": "drv-26",
+      "name": "Cyrus Rossi",
+      "license": "DL-700026",
+      "phone": "+1-555-2026",
+      "status": "available"
+    },
+    {
+      "id": "drv-27",
+      "name": "Ivan Khan",
+      "license": "DL-700027",
+      "phone": "+1-555-2027",
+      "status": "available"
+    },
+    {
+      "id": "drv-28",
+      "name": "Leo Nash",
+      "license": "DL-700028",
+      "phone": "+1-555-2028",
+      "status": "available"
+    },
+    {
+      "id": "drv-29",
+      "name": "Zoe Rossi",
+      "license": "DL-700029",
+      "phone": "+1-555-2029",
+      "status": "available"
+    },
+    {
+      "id": "drv-30",
+      "name": "Rhea Mora",
+      "license": "DL-700030",
+      "phone": "+1-555-2030",
+      "status": "available"
+    },
+    {
+      "id": "drv-31",
+      "name": "Dev Osei",
+      "license": "DL-700031",
+      "phone": "+1-555-2031",
+      "status": "available"
+    },
+    {
+      "id": "drv-32",
+      "name": "Rhea Wong",
+      "license": "DL-700032",
+      "phone": "+1-555-2032",
+      "status": "available"
+    },
+    {
+      "id": "drv-33",
+      "name": "Cyrus Khan",
+      "license": "DL-700033",
+      "phone": "+1-555-2033",
+      "status": "available"
+    },
+    {
+      "id": "drv-34",
+      "name": "Kofi Osei",
+      "license": "DL-700034",
+      "phone": "+1-555-2034",
+      "status": "available"
+    },
+    {
+      "id": "drv-35",
+      "name": "Cyrus Ali",
+      "license": "DL-700035",
+      "phone": "+1-555-2035",
+      "status": "available"
+    },
+    {
+      "id": "drv-36",
+      "name": "Cyrus Rossi",
+      "license": "DL-700036",
+      "phone": "+1-555-2036",
+      "status": "available"
+    },
+    {
+      "id": "drv-37",
+      "name": "Mia Blum",
+      "license": "DL-700037",
+      "phone": "+1-555-2037",
+      "status": "available"
+    },
+    {
+      "id": "drv-38",
+      "name": "Noah Osei",
+      "license": "DL-700038",
+      "phone": "+1-555-2038",
+      "status": "available"
+    },
+    {
+      "id": "drv-39",
+      "name": "Yara Wong",
+      "license": "DL-700039",
+      "phone": "+1-555-2039",
+      "status": "available"
+    },
+    {
+      "id": "drv-40",
+      "name": "Rhea Reed",
+      "license": "DL-700040",
+      "phone": "+1-555-2040",
+      "status": "available"
+    },
+    {
+      "id": "drv-41",
+      "name": "Ava Nash",
+      "license": "DL-700041",
+      "phone": "+1-555-2041",
+      "status": "available"
+    },
+    {
+      "id": "drv-42",
+      "name": "Yara Vega",
+      "license": "DL-700042",
+      "phone": "+1-555-2042",
+      "status": "available"
+    },
+    {
+      "id": "drv-43",
+      "name": "Sara Roy",
+      "license": "DL-700043",
+      "phone": "+1-555-2043",
+      "status": "available"
+    },
+    {
+      "id": "drv-44",
+      "name": "Cyrus Ito",
+      "license": "DL-700044",
+      "phone": "+1-555-2044",
+      "status": "available"
+    },
+    {
+      "id": "drv-45",
+      "name": "Sara Wong",
+      "license": "DL-700045",
+      "phone": "+1-555-2045",
+      "status": "available"
+    },
+    {
+      "id": "drv-46",
+      "name": "Mia Ito",
+      "license": "DL-700046",
+      "phone": "+1-555-2046",
+      "status": "available"
+    },
+    {
+      "id": "drv-47",
+      "name": "Rhea Nash",
+      "license": "DL-700047",
+      "phone": "+1-555-2047",
+      "status": "available"
+    },
+    {
+      "id": "drv-48",
+      "name": "Kofi Nash",
+      "license": "DL-700048",
+      "phone": "+1-555-2048",
+      "status": "available"
+    },
+    {
+      "id": "drv-49",
+      "name": "Tara Khan",
+      "license": "DL-700049",
+      "phone": "+1-555-2049",
+      "status": "available"
+    },
+    {
+      "id": "drv-50",
+      "name": "Leo Park",
+      "license": "DL-700050",
+      "phone": "+1-555-2050",
+      "status": "available"
+    },
+    {
+      "id": "drv-51",
+      "name": "Noah Osei",
+      "license": "DL-700051",
+      "phone": "+1-555-2051",
+      "status": "available"
+    },
+    {
+      "id": "drv-52",
+      "name": "Nina Mora",
+      "license": "DL-700052",
+      "phone": "+1-555-2052",
+      "status": "available"
+    },
+    {
+      "id": "drv-53",
+      "name": "Ivan Bauer",
+      "license": "DL-700053",
+      "phone": "+1-555-2053",
+      "status": "available"
+    },
+    {
+      "id": "drv-54",
+      "name": "Hugo Khan",
+      "license": "DL-700054",
+      "phone": "+1-555-2054",
+      "status": "available"
+    },
+    {
+      "id": "drv-55",
+      "name": "Lena Roy",
+      "license": "DL-700055",
+      "phone": "+1-555-2055",
+      "status": "available"
+    },
+    {
+      "id": "drv-56",
+      "name": "Lena Nash",
+      "license": "DL-700056",
+      "phone": "+1-555-2056",
+      "status": "available"
+    },
+    {
+      "id": "drv-57",
+      "name": "Mia Diaz",
+      "license": "DL-700057",
+      "phone": "+1-555-2057",
+      "status": "available"
+    },
+    {
+      "id": "drv-58",
+      "name": "Mia Mora",
+      "license": "DL-700058",
+      "phone": "+1-555-2058",
+      "status": "available"
+    },
+    {
+      "id": "drv-59",
+      "name": "Kofi Wong",
+      "license": "DL-700059",
+      "phone": "+1-555-2059",
+      "status": "available"
+    },
+    {
+      "id": "drv-60",
+      "name": "Zoe Diaz",
+      "license": "DL-700060",
+      "phone": "+1-555-2060",
+      "status": "available"
+    },
+    {
+      "id": "drv-61",
+      "name": "Noah Costa",
+      "license": "DL-700061",
+      "phone": "+1-555-2061",
+      "status": "available"
+    },
+    {
+      "id": "drv-62",
+      "name": "Leo Sato",
+      "license": "DL-700062",
+      "phone": "+1-555-2062",
+      "status": "available"
+    },
+    {
+      "id": "drv-63",
+      "name": "Cyrus Roy",
+      "license": "DL-700063",
+      "phone": "+1-555-2063",
+      "status": "available"
+    },
+    {
+      "id": "drv-64",
+      "name": "Hugo Haas",
+      "license": "DL-700064",
+      "phone": "+1-555-2064",
+      "status": "available"
+    },
+    {
+      "id": "drv-65",
+      "name": "Ines Quinn",
+      "license": "DL-700065",
+      "phone": "+1-555-2065",
+      "status": "available"
+    },
+    {
+      "id": "drv-66",
+      "name": "Omar Haas",
+      "license": "DL-700066",
+      "phone": "+1-555-2066",
+      "status": "available"
+    },
+    {
+      "id": "drv-67",
+      "name": "Liam Vega",
+      "license": "DL-700067",
+      "phone": "+1-555-2067",
+      "status": "available"
+    },
+    {
+      "id": "drv-68",
+      "name": "Ethan Haas",
+      "license": "DL-700068",
+      "phone": "+1-555-2068",
+      "status": "available"
+    },
+    {
+      "id": "drv-69",
+      "name": "Ethan Ali",
+      "license": "DL-700069",
+      "phone": "+1-555-2069",
+      "status": "available"
+    },
+    {
+      "id": "drv-70",
+      "name": "Ivan Bauer",
+      "license": "DL-700070",
+      "phone": "+1-555-2070",
+      "status": "available"
+    },
+    {
+      "id": "drv-71",
+      "name": "Mia Rossi",
+      "license": "DL-700071",
+      "phone": "+1-555-2071",
+      "status": "available"
+    },
+    {
+      "id": "drv-72",
+      "name": "Ines Roy",
+      "license": "DL-700072",
+      "phone": "+1-555-2072",
+      "status": "available"
+    },
+    {
+      "id": "drv-73",
+      "name": "Ivan Ali",
+      "license": "DL-700073",
+      "phone": "+1-555-2073",
+      "status": "available"
+    },
+    {
+      "id": "drv-74",
+      "name": "Yara Osei",
+      "license": "DL-700074",
+      "phone": "+1-555-2074",
+      "status": "available"
+    },
+    {
+      "id": "drv-75",
+      "name": "Ivan Rossi",
+      "license": "DL-700075",
+      "phone": "+1-555-2075",
+      "status": "available"
+    },
+    {
+      "id": "drv-76",
+      "name": "Hugo Osei",
+      "license": "DL-700076",
+      "phone": "+1-555-2076",
+      "status": "available"
+    },
+    {
+      "id": "drv-77",
+      "name": "Ava Ford",
+      "license": "DL-700077",
+      "phone": "+1-555-2077",
+      "status": "available"
+    },
+    {
+      "id": "drv-78",
+      "name": "Tara Reed",
+      "license": "DL-700078",
+      "phone": "+1-555-2078",
+      "status": "available"
+    },
+    {
+      "id": "drv-79",
+      "name": "Noah Costa",
+      "license": "DL-700079",
+      "phone": "+1-555-2079",
+      "status": "available"
+    },
+    {
+      "id": "drv-80",
+      "name": "Omar Nash",
+      "license": "DL-700080",
+      "phone": "+1-555-2080",
+      "status": "available"
+    },
+    {
+      "id": "drv-81",
+      "name": "Lena Nash",
+      "license": "DL-700081",
+      "phone": "+1-555-2081",
+      "status": "available"
+    },
+    {
+      "id": "drv-82",
+      "name": "Sara Khan",
+      "license": "DL-700082",
+      "phone": "+1-555-2082",
+      "status": "available"
+    },
+    {
+      "id": "drv-83",
+      "name": "Cyrus Ito",
+      "license": "DL-700083",
+      "phone": "+1-555-2083",
+      "status": "available"
+    },
+    {
+      "id": "drv-84",
+      "name": "Kofi Wong",
+      "license": "DL-700084",
+      "phone": "+1-555-2084",
+      "status": "available"
+    },
+    {
+      "id": "drv-85",
+      "name": "Lena Costa",
+      "license": "DL-700085",
+      "phone": "+1-555-2085",
+      "status": "available"
+    },
+    {
+      "id": "drv-86",
+      "name": "Omar Ali",
+      "license": "DL-700086",
+      "phone": "+1-555-2086",
+      "status": "available"
+    },
+    {
+      "id": "drv-87",
+      "name": "Tara Costa",
+      "license": "DL-700087",
+      "phone": "+1-555-2087",
+      "status": "available"
+    },
+    {
+      "id": "drv-88",
+      "name": "Yara Roy",
+      "license": "DL-700088",
+      "phone": "+1-555-2088",
+      "status": "available"
+    },
+    {
+      "id": "drv-89",
+      "name": "Yara Quinn",
+      "license": "DL-700089",
+      "phone": "+1-555-2089",
+      "status": "available"
+    },
+    {
+      "id": "drv-90",
+      "name": "Ines Bauer",
+      "license": "DL-700090",
+      "phone": "+1-555-2090",
+      "status": "available"
+    },
+    {
+      "id": "drv-91",
+      "name": "Tara Park",
+      "license": "DL-700091",
+      "phone": "+1-555-2091",
+      "status": "available"
+    },
+    {
+      "id": "drv-92",
+      "name": "Sara Ito",
+      "license": "DL-700092",
+      "phone": "+1-555-2092",
+      "status": "available"
+    },
+    {
+      "id": "drv-93",
+      "name": "Ines Reed",
+      "license": "DL-700093",
+      "phone": "+1-555-2093",
+      "status": "available"
+    },
+    {
+      "id": "drv-94",
+      "name": "Ethan Blum",
+      "license": "DL-700094",
+      "phone": "+1-555-2094",
+      "status": "available"
+    },
+    {
+      "id": "drv-95",
+      "name": "Yara Quinn",
+      "license": "DL-700095",
+      "phone": "+1-555-2095",
+      "status": "available"
+    },
+    {
+      "id": "drv-96",
+      "name": "Tara Rossi",
+      "license": "DL-700096",
+      "phone": "+1-555-2096",
+      "status": "available"
+    },
+    {
+      "id": "drv-97",
+      "name": "Liam Bauer",
+      "license": "DL-700097",
+      "phone": "+1-555-2097",
+      "status": "available"
+    },
+    {
+      "id": "drv-98",
+      "name": "Mia Haas",
+      "license": "DL-700098",
+      "phone": "+1-555-2098",
+      "status": "available"
+    },
+    {
+      "id": "drv-99",
+      "name": "Lena Bauer",
+      "license": "DL-700099",
+      "phone": "+1-555-2099",
+      "status": "available"
+    },
+    {
+      "id": "drv-100",
+      "name": "Noah Sato",
+      "license": "DL-700100",
+      "phone": "+1-555-2100",
+      "status": "available"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "vehicle-1",
+      "registration": "TRK-101",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "vehicle-2",
+      "registration": "TRK-104",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "vehicle-3",
+      "registration": "TRK-108",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "vehicle-4",
+      "registration": "TRK-112",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "vehicle-5",
+      "registration": "TRK-119",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "vehicle-6",
+      "registration": "TRK-123",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "vehicle-7",
+      "registration": "TRK-130",
+      "capacity": 9000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "vehicle-8",
+      "registration": "TRK-141",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "on_shift"
+    },
+    {
+      "id": "veh-1",
+      "registration": "TRK-301",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-2",
+      "registration": "TRK-302",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-3",
+      "registration": "TRK-303",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-4",
+      "registration": "TRK-304",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-5",
+      "registration": "TRK-305",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-6",
+      "registration": "TRK-306",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-7",
+      "registration": "TRK-307",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-8",
+      "registration": "TRK-308",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-9",
+      "registration": "TRK-309",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-10",
+      "registration": "TRK-310",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-11",
+      "registration": "TRK-311",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-12",
+      "registration": "TRK-312",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-13",
+      "registration": "TRK-313",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-14",
+      "registration": "TRK-314",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-15",
+      "registration": "TRK-315",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-16",
+      "registration": "TRK-316",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-17",
+      "registration": "TRK-317",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-18",
+      "registration": "TRK-318",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-19",
+      "registration": "TRK-319",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-20",
+      "registration": "TRK-320",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-21",
+      "registration": "TRK-321",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-22",
+      "registration": "TRK-322",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-23",
+      "registration": "TRK-323",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-24",
+      "registration": "TRK-324",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-25",
+      "registration": "TRK-325",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-26",
+      "registration": "TRK-326",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-27",
+      "registration": "TRK-327",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-28",
+      "registration": "TRK-328",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-29",
+      "registration": "TRK-329",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-30",
+      "registration": "TRK-330",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-31",
+      "registration": "TRK-331",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-32",
+      "registration": "TRK-332",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-33",
+      "registration": "TRK-333",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-34",
+      "registration": "TRK-334",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-35",
+      "registration": "TRK-335",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-36",
+      "registration": "TRK-336",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-37",
+      "registration": "TRK-337",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-38",
+      "registration": "TRK-338",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-39",
+      "registration": "TRK-339",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-40",
+      "registration": "TRK-340",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-41",
+      "registration": "TRK-341",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-42",
+      "registration": "TRK-342",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-43",
+      "registration": "TRK-343",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-44",
+      "registration": "TRK-344",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-45",
+      "registration": "TRK-345",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-46",
+      "registration": "TRK-346",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-47",
+      "registration": "TRK-347",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-48",
+      "registration": "TRK-348",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-49",
+      "registration": "TRK-349",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-50",
+      "registration": "TRK-350",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-51",
+      "registration": "TRK-351",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-52",
+      "registration": "TRK-352",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-53",
+      "registration": "TRK-353",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-54",
+      "registration": "TRK-354",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-55",
+      "registration": "TRK-355",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-56",
+      "registration": "TRK-356",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-57",
+      "registration": "TRK-357",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-58",
+      "registration": "TRK-358",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-59",
+      "registration": "TRK-359",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-60",
+      "registration": "TRK-360",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-61",
+      "registration": "TRK-361",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-62",
+      "registration": "TRK-362",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-63",
+      "registration": "TRK-363",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-64",
+      "registration": "TRK-364",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-65",
+      "registration": "TRK-365",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-66",
+      "registration": "TRK-366",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-67",
+      "registration": "TRK-367",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-68",
+      "registration": "TRK-368",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-69",
+      "registration": "TRK-369",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-70",
+      "registration": "TRK-370",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-71",
+      "registration": "TRK-371",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-72",
+      "registration": "TRK-372",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-73",
+      "registration": "TRK-373",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-74",
+      "registration": "TRK-374",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-75",
+      "registration": "TRK-375",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-76",
+      "registration": "TRK-376",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-77",
+      "registration": "TRK-377",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-78",
+      "registration": "TRK-378",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-79",
+      "registration": "TRK-379",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-80",
+      "registration": "TRK-380",
+      "capacity": 8000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-81",
+      "registration": "TRK-381",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-82",
+      "registration": "TRK-382",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-83",
+      "registration": "TRK-383",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-84",
+      "registration": "TRK-384",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-85",
+      "registration": "TRK-385",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "maintenance"
+    },
+    {
+      "id": "veh-86",
+      "registration": "TRK-386",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-87",
+      "registration": "TRK-387",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-88",
+      "registration": "TRK-388",
+      "capacity": 10000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-89",
+      "registration": "TRK-389",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-90",
+      "registration": "TRK-390",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-91",
+      "registration": "TRK-391",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-92",
+      "registration": "TRK-392",
+      "capacity": 6000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-93",
+      "registration": "TRK-393",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-94",
+      "registration": "TRK-394",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-95",
+      "registration": "TRK-395",
+      "capacity": 15000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-96",
+      "registration": "TRK-396",
+      "capacity": 18000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-97",
+      "registration": "TRK-397",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-98",
+      "registration": "TRK-398",
+      "capacity": 20000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-99",
+      "registration": "TRK-399",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    },
+    {
+      "id": "veh-100",
+      "registration": "TRK-400",
+      "capacity": 12000,
+      "type": "Tanker",
+      "status": "available"
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-1",
+      "sourceId": "hub-1",
+      "destinationId": "hub-3",
+      "product": "diesel",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-1",
+      "status": "assigned"
+    },
+    {
+      "id": "order-2",
+      "sourceId": "hub-1",
+      "destinationId": "hub-5",
+      "product": "petrol",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-1",
+      "status": "assigned"
+    },
+    {
+      "id": "order-3",
+      "sourceId": "hub-4",
+      "destinationId": "hub-6",
+      "product": "diesel",
+      "quantity": 8000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-2",
+      "status": "assigned"
+    },
+    {
+      "id": "order-4",
+      "sourceId": "hub-2",
+      "destinationId": "hub-3",
+      "product": "petrol",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "order-5",
+      "sourceId": "hub-3",
+      "destinationId": "hub-6",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-3",
+      "status": "assigned"
+    },
+    {
+      "id": "order-6",
+      "sourceId": "hub-6",
+      "destinationId": "hub-1",
+      "product": "petrol",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-5",
+      "status": "assigned"
+    },
+    {
+      "id": "order-7",
+      "sourceId": "hub-4",
+      "destinationId": "hub-5",
+      "product": "diesel",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-4",
+      "status": "assigned"
+    },
+    {
+      "id": "order-8",
+      "sourceId": "hub-4",
+      "destinationId": "hub-3",
+      "product": "diesel",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-4",
+      "status": "assigned"
+    },
+    {
+      "id": "order-9",
+      "sourceId": "hub-4",
+      "destinationId": "hub-1",
+      "product": "diesel",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-4",
+      "status": "assigned"
+    },
+    {
+      "id": "order-10",
+      "sourceId": "hub-4",
+      "destinationId": "hub-6",
+      "product": "diesel",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-4",
+      "status": "assigned"
+    },
+    {
+      "id": "order-11",
+      "sourceId": "hub-1",
+      "destinationId": "hub-2",
+      "product": "diesel",
+      "quantity": 800,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-6",
+      "status": "assigned"
+    },
+    {
+      "id": "order-12",
+      "sourceId": "hub-1",
+      "destinationId": "hub-2",
+      "product": "diesel",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "driver-1",
+      "status": "delivered",
+      "completedAt": "2026-07-09T15:20:00"
+    },
+    {
+      "id": "order-13",
+      "sourceId": "hub-5",
+      "destinationId": "hub-4",
+      "product": "petrol",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "driver-2",
+      "status": "failed",
+      "failureReason": "Customer site closed on arrival"
+    },
+    {
+      "id": "order-14",
+      "sourceId": "hub-6",
+      "destinationId": "hub-1",
+      "product": "premium",
+      "quantity": 1800,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "driver-1",
+      "status": "delivered",
+      "completedAt": "2026-07-08T11:05:00"
+    },
+    {
+      "id": "order-15",
+      "sourceId": "hub-2",
+      "destinationId": "hub-3",
+      "product": "petrol",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-11",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "order-16",
+      "sourceId": "hub-4",
+      "destinationId": "hub-1",
+      "product": "premium",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "order-17",
+      "sourceId": "hub-3",
+      "destinationId": "hub-6",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "driver-3",
+      "status": "assigned"
+    },
+    {
+      "id": "order-18",
+      "sourceId": "hub-2",
+      "destinationId": "hub-5",
+      "product": "diesel",
+      "quantity": 5200,
+      "deliveryDate": "2026-07-13",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "order-19",
+      "sourceId": "hub-1",
+      "destinationId": "hub-4",
+      "product": "diesel",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "driver-7",
+      "status": "in_transit"
+    },
+    {
+      "id": "ord-1",
+      "sourceId": "loc-32",
+      "destinationId": "loc-59",
+      "product": "petrol",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-17",
+      "assignedDriverId": "drv-45",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-2",
+      "sourceId": "loc-15",
+      "destinationId": "loc-29",
+      "product": "petrol",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-07",
+      "assignedDriverId": "drv-20",
+      "status": "failed",
+      "failureReason": "Recipient refused delivery"
+    },
+    {
+      "id": "ord-3",
+      "sourceId": "loc-50",
+      "destinationId": "loc-38",
+      "product": "premium",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-87",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-4",
+      "sourceId": "loc-13",
+      "destinationId": "hub-3",
+      "product": "diesel",
+      "quantity": 7500,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": "drv-36",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-5",
+      "sourceId": "loc-61",
+      "destinationId": "loc-43",
+      "product": "petrol",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-17",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-6",
+      "sourceId": "loc-70",
+      "destinationId": "loc-44",
+      "product": "diesel",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-34",
+      "status": "delivered",
+      "completedAt": "2026-07-05T14:00:00"
+    },
+    {
+      "id": "ord-7",
+      "sourceId": "loc-51",
+      "destinationId": "loc-12",
+      "product": "diesel",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-28",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-8",
+      "sourceId": "loc-47",
+      "destinationId": "loc-22",
+      "product": "petrol",
+      "quantity": 5500,
+      "deliveryDate": "2026-07-13",
+      "assignedDriverId": "drv-13",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-9",
+      "sourceId": "loc-15",
+      "destinationId": "loc-36",
+      "product": "premium",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-14",
+      "assignedDriverId": "drv-8",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-10",
+      "sourceId": "loc-5",
+      "destinationId": "loc-2",
+      "product": "petrol",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-88",
+      "status": "delivered",
+      "completedAt": "2026-07-05T14:00:00"
+    },
+    {
+      "id": "ord-11",
+      "sourceId": "loc-48",
+      "destinationId": "loc-22",
+      "product": "premium",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-14",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-12",
+      "sourceId": "loc-21",
+      "destinationId": "loc-65",
+      "product": "premium",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-17",
+      "assignedDriverId": "drv-1",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-13",
+      "sourceId": "loc-41",
+      "destinationId": "loc-29",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": "drv-94",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-14",
+      "sourceId": "loc-3",
+      "destinationId": "loc-67",
+      "product": "diesel",
+      "quantity": 5500,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-82",
+      "status": "delivered",
+      "completedAt": "2026-07-05T14:00:00"
+    },
+    {
+      "id": "ord-15",
+      "sourceId": "loc-2",
+      "destinationId": "loc-62",
+      "product": "premium",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-07",
+      "assignedDriverId": "drv-92",
+      "status": "delivered",
+      "completedAt": "2026-07-07T14:00:00"
+    },
+    {
+      "id": "ord-16",
+      "sourceId": "loc-27",
+      "destinationId": "loc-55",
+      "product": "petrol",
+      "quantity": 500,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-86",
+      "status": "delivered",
+      "completedAt": "2026-07-08T14:00:00"
+    },
+    {
+      "id": "ord-17",
+      "sourceId": "loc-50",
+      "destinationId": "loc-11",
+      "product": "diesel",
+      "quantity": 3500,
+      "deliveryDate": "2026-07-07",
+      "assignedDriverId": "drv-73",
+      "status": "failed",
+      "failureReason": "Access blocked on arrival"
+    },
+    {
+      "id": "ord-18",
+      "sourceId": "loc-75",
+      "destinationId": "loc-5",
+      "product": "diesel",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "drv-70",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-19",
+      "sourceId": "loc-19",
+      "destinationId": "loc-47",
+      "product": "diesel",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-85",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-20",
+      "sourceId": "loc-46",
+      "destinationId": "loc-37",
+      "product": "petrol",
+      "quantity": 8000,
+      "deliveryDate": "2026-07-17",
+      "assignedDriverId": "drv-14",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-21",
+      "sourceId": "loc-10",
+      "destinationId": "loc-67",
+      "product": "premium",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-70",
+      "status": "delivered",
+      "completedAt": "2026-07-08T14:00:00"
+    },
+    {
+      "id": "ord-22",
+      "sourceId": "loc-51",
+      "destinationId": "loc-18",
+      "product": "premium",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-06",
+      "assignedDriverId": "drv-58",
+      "status": "delivered",
+      "completedAt": "2026-07-06T14:00:00"
+    },
+    {
+      "id": "ord-23",
+      "sourceId": "loc-40",
+      "destinationId": "hub-6",
+      "product": "diesel",
+      "quantity": 1000,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-9",
+      "status": "delivered",
+      "completedAt": "2026-07-05T14:00:00"
+    },
+    {
+      "id": "ord-24",
+      "sourceId": "loc-16",
+      "destinationId": "hub-4",
+      "product": "premium",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-14",
+      "assignedDriverId": "drv-98",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-25",
+      "sourceId": "loc-53",
+      "destinationId": "loc-51",
+      "product": "diesel",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-14",
+      "assignedDriverId": "drv-47",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-26",
+      "sourceId": "loc-52",
+      "destinationId": "loc-38",
+      "product": "petrol",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "drv-69",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-27",
+      "sourceId": "loc-73",
+      "destinationId": "loc-40",
+      "product": "petrol",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": "drv-74",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-28",
+      "sourceId": "loc-64",
+      "destinationId": "loc-75",
+      "product": "petrol",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "drv-68",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-29",
+      "sourceId": "loc-42",
+      "destinationId": "loc-68",
+      "product": "diesel",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-30",
+      "sourceId": "loc-60",
+      "destinationId": "hub-5",
+      "product": "premium",
+      "quantity": 6000,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "drv-75",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-31",
+      "sourceId": "loc-67",
+      "destinationId": "loc-57",
+      "product": "premium",
+      "quantity": 6000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "drv-5",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-32",
+      "sourceId": "loc-36",
+      "destinationId": "loc-17",
+      "product": "diesel",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-84",
+      "status": "delivered",
+      "completedAt": "2026-07-08T14:00:00"
+    },
+    {
+      "id": "ord-33",
+      "sourceId": "loc-61",
+      "destinationId": "loc-67",
+      "product": "petrol",
+      "quantity": 7500,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "drv-1",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-34",
+      "sourceId": "loc-23",
+      "destinationId": "hub-6",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-12",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-35",
+      "sourceId": "loc-30",
+      "destinationId": "loc-72",
+      "product": "petrol",
+      "quantity": 6000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-36",
+      "sourceId": "loc-4",
+      "destinationId": "loc-53",
+      "product": "premium",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": "drv-16",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-37",
+      "sourceId": "loc-27",
+      "destinationId": "loc-14",
+      "product": "premium",
+      "quantity": 5500,
+      "deliveryDate": "2026-07-04",
+      "assignedDriverId": "drv-77",
+      "status": "delivered",
+      "completedAt": "2026-07-04T14:00:00"
+    },
+    {
+      "id": "ord-38",
+      "sourceId": "loc-28",
+      "destinationId": "loc-43",
+      "product": "petrol",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-04",
+      "assignedDriverId": "drv-60",
+      "status": "delivered",
+      "completedAt": "2026-07-04T14:00:00"
+    },
+    {
+      "id": "ord-39",
+      "sourceId": "loc-20",
+      "destinationId": "loc-3",
+      "product": "diesel",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-22",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-40",
+      "sourceId": "loc-54",
+      "destinationId": "hub-1",
+      "product": "petrol",
+      "quantity": 500,
+      "deliveryDate": "2026-07-11",
+      "assignedDriverId": "drv-78",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-41",
+      "sourceId": "loc-5",
+      "destinationId": "loc-10",
+      "product": "petrol",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-17",
+      "status": "failed",
+      "failureReason": "Access blocked on arrival"
+    },
+    {
+      "id": "ord-42",
+      "sourceId": "loc-21",
+      "destinationId": "loc-16",
+      "product": "diesel",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-91",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-43",
+      "sourceId": "loc-10",
+      "destinationId": "loc-19",
+      "product": "petrol",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-04",
+      "assignedDriverId": "drv-34",
+      "status": "delivered",
+      "completedAt": "2026-07-04T14:00:00"
+    },
+    {
+      "id": "ord-44",
+      "sourceId": "loc-2",
+      "destinationId": "hub-3",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-17",
+      "assignedDriverId": "drv-8",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-45",
+      "sourceId": "loc-60",
+      "destinationId": "loc-66",
+      "product": "premium",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-11",
+      "assignedDriverId": "drv-44",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-46",
+      "sourceId": "loc-18",
+      "destinationId": "loc-42",
+      "product": "premium",
+      "quantity": 5500,
+      "deliveryDate": "2026-07-04",
+      "assignedDriverId": "drv-44",
+      "status": "delivered",
+      "completedAt": "2026-07-04T14:00:00"
+    },
+    {
+      "id": "ord-47",
+      "sourceId": "loc-36",
+      "destinationId": "loc-26",
+      "product": "diesel",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-99",
+      "status": "failed",
+      "failureReason": "Incorrect delivery address"
+    },
+    {
+      "id": "ord-48",
+      "sourceId": "loc-27",
+      "destinationId": "loc-2",
+      "product": "petrol",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "drv-63",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-49",
+      "sourceId": "loc-55",
+      "destinationId": "loc-60",
+      "product": "premium",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-07",
+      "assignedDriverId": "drv-47",
+      "status": "delivered",
+      "completedAt": "2026-07-07T14:00:00"
+    },
+    {
+      "id": "ord-50",
+      "sourceId": "loc-26",
+      "destinationId": "loc-2",
+      "product": "premium",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-31",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-51",
+      "sourceId": "loc-30",
+      "destinationId": "loc-1",
+      "product": "diesel",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-35",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-52",
+      "sourceId": "loc-7",
+      "destinationId": "loc-5",
+      "product": "petrol",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-53",
+      "sourceId": "loc-71",
+      "destinationId": "loc-56",
+      "product": "premium",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-39",
+      "status": "delivered",
+      "completedAt": "2026-07-05T14:00:00"
+    },
+    {
+      "id": "ord-54",
+      "sourceId": "loc-48",
+      "destinationId": "loc-65",
+      "product": "petrol",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-89",
+      "status": "delivered",
+      "completedAt": "2026-07-05T14:00:00"
+    },
+    {
+      "id": "ord-55",
+      "sourceId": "loc-68",
+      "destinationId": "loc-54",
+      "product": "premium",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-06",
+      "assignedDriverId": "drv-86",
+      "status": "delivered",
+      "completedAt": "2026-07-06T14:00:00"
+    },
+    {
+      "id": "ord-56",
+      "sourceId": "loc-47",
+      "destinationId": "loc-16",
+      "product": "diesel",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-57",
+      "sourceId": "loc-73",
+      "destinationId": "loc-18",
+      "product": "premium",
+      "quantity": 7500,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-58",
+      "sourceId": "loc-33",
+      "destinationId": "hub-2",
+      "product": "premium",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-59",
+      "sourceId": "loc-51",
+      "destinationId": "loc-5",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": "drv-87",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-60",
+      "sourceId": "loc-11",
+      "destinationId": "hub-2",
+      "product": "premium",
+      "quantity": 7500,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": "drv-64",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-61",
+      "sourceId": "loc-16",
+      "destinationId": "loc-9",
+      "product": "premium",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "drv-40",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-62",
+      "sourceId": "loc-31",
+      "destinationId": "loc-3",
+      "product": "premium",
+      "quantity": 6000,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-15",
+      "status": "delivered",
+      "completedAt": "2026-07-08T14:00:00"
+    },
+    {
+      "id": "ord-63",
+      "sourceId": "loc-1",
+      "destinationId": "loc-17",
+      "product": "diesel",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-45",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-64",
+      "sourceId": "loc-9",
+      "destinationId": "hub-4",
+      "product": "premium",
+      "quantity": 6000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": "drv-48",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-65",
+      "sourceId": "loc-30",
+      "destinationId": "loc-48",
+      "product": "petrol",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": "drv-59",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-66",
+      "sourceId": "loc-72",
+      "destinationId": "loc-65",
+      "product": "petrol",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-06",
+      "assignedDriverId": "drv-13",
+      "status": "delivered",
+      "completedAt": "2026-07-06T14:00:00"
+    },
+    {
+      "id": "ord-67",
+      "sourceId": "loc-60",
+      "destinationId": "hub-4",
+      "product": "petrol",
+      "quantity": 7500,
+      "deliveryDate": "2026-07-13",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-68",
+      "sourceId": "loc-74",
+      "destinationId": "loc-46",
+      "product": "petrol",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-79",
+      "status": "failed",
+      "failureReason": "Incorrect delivery address"
+    },
+    {
+      "id": "ord-69",
+      "sourceId": "loc-49",
+      "destinationId": "loc-8",
+      "product": "petrol",
+      "quantity": 8000,
+      "deliveryDate": "2026-07-04",
+      "assignedDriverId": "drv-96",
+      "status": "delivered",
+      "completedAt": "2026-07-04T14:00:00"
+    },
+    {
+      "id": "ord-70",
+      "sourceId": "loc-32",
+      "destinationId": "loc-47",
+      "product": "premium",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-13",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-71",
+      "sourceId": "loc-3",
+      "destinationId": "loc-12",
+      "product": "premium",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-68",
+      "status": "failed",
+      "failureReason": "Incorrect delivery address"
+    },
+    {
+      "id": "ord-72",
+      "sourceId": "loc-21",
+      "destinationId": "loc-26",
+      "product": "petrol",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-11",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-73",
+      "sourceId": "loc-15",
+      "destinationId": "loc-33",
+      "product": "premium",
+      "quantity": 1000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-74",
+      "sourceId": "loc-26",
+      "destinationId": "loc-55",
+      "product": "petrol",
+      "quantity": 8000,
+      "deliveryDate": "2026-07-04",
+      "assignedDriverId": "drv-96",
+      "status": "delivered",
+      "completedAt": "2026-07-04T14:00:00"
+    },
+    {
+      "id": "ord-75",
+      "sourceId": "loc-27",
+      "destinationId": "loc-68",
+      "product": "diesel",
+      "quantity": 6000,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-21",
+      "status": "delivered",
+      "completedAt": "2026-07-08T14:00:00"
+    },
+    {
+      "id": "ord-76",
+      "sourceId": "loc-9",
+      "destinationId": "loc-45",
+      "product": "diesel",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-24",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-77",
+      "sourceId": "loc-27",
+      "destinationId": "loc-63",
+      "product": "premium",
+      "quantity": 2500,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-43",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-78",
+      "sourceId": "loc-64",
+      "destinationId": "hub-7",
+      "product": "premium",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "drv-74",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-79",
+      "sourceId": "loc-38",
+      "destinationId": "loc-22",
+      "product": "petrol",
+      "quantity": 3500,
+      "deliveryDate": "2026-07-14",
+      "assignedDriverId": "drv-21",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-80",
+      "sourceId": "loc-55",
+      "destinationId": "loc-14",
+      "product": "petrol",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-04",
+      "assignedDriverId": "drv-73",
+      "status": "failed",
+      "failureReason": "Incorrect delivery address"
+    },
+    {
+      "id": "ord-81",
+      "sourceId": "loc-15",
+      "destinationId": "loc-75",
+      "product": "diesel",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-07",
+      "assignedDriverId": "drv-43",
+      "status": "delivered",
+      "completedAt": "2026-07-07T14:00:00"
+    },
+    {
+      "id": "ord-82",
+      "sourceId": "loc-38",
+      "destinationId": "loc-66",
+      "product": "premium",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-15",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-83",
+      "sourceId": "loc-51",
+      "destinationId": "loc-72",
+      "product": "premium",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-03",
+      "assignedDriverId": "drv-17",
+      "status": "delivered",
+      "completedAt": "2026-07-03T14:00:00"
+    },
+    {
+      "id": "ord-84",
+      "sourceId": "loc-20",
+      "destinationId": "loc-55",
+      "product": "diesel",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-7",
+      "status": "failed",
+      "failureReason": "Vehicle breakdown en route"
+    },
+    {
+      "id": "ord-85",
+      "sourceId": "loc-18",
+      "destinationId": "loc-19",
+      "product": "premium",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "drv-77",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-86",
+      "sourceId": "loc-28",
+      "destinationId": "loc-20",
+      "product": "diesel",
+      "quantity": 2000,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "drv-44",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-87",
+      "sourceId": "loc-26",
+      "destinationId": "loc-61",
+      "product": "premium",
+      "quantity": 7500,
+      "deliveryDate": "2026-07-05",
+      "assignedDriverId": "drv-59",
+      "status": "delivered",
+      "completedAt": "2026-07-05T14:00:00"
+    },
+    {
+      "id": "ord-88",
+      "sourceId": "loc-32",
+      "destinationId": "loc-2",
+      "product": "petrol",
+      "quantity": 1000,
+      "deliveryDate": "2026-07-07",
+      "assignedDriverId": "drv-74",
+      "status": "delivered",
+      "completedAt": "2026-07-07T14:00:00"
+    },
+    {
+      "id": "ord-89",
+      "sourceId": "loc-46",
+      "destinationId": "hub-4",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": "drv-90",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-90",
+      "sourceId": "loc-18",
+      "destinationId": "loc-43",
+      "product": "diesel",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-89",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-91",
+      "sourceId": "loc-4",
+      "destinationId": "hub-6",
+      "product": "diesel",
+      "quantity": 1000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-89",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-92",
+      "sourceId": "loc-9",
+      "destinationId": "loc-20",
+      "product": "petrol",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-16",
+      "assignedDriverId": "drv-3",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-93",
+      "sourceId": "loc-4",
+      "destinationId": "loc-29",
+      "product": "premium",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-14",
+      "assignedDriverId": "drv-76",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-94",
+      "sourceId": "loc-53",
+      "destinationId": "loc-18",
+      "product": "petrol",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": "drv-68",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-95",
+      "sourceId": "loc-42",
+      "destinationId": "loc-40",
+      "product": "petrol",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-96",
+      "sourceId": "loc-43",
+      "destinationId": "loc-35",
+      "product": "premium",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-91",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-97",
+      "sourceId": "loc-74",
+      "destinationId": "loc-38",
+      "product": "premium",
+      "quantity": 1500,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-98",
+      "sourceId": "loc-1",
+      "destinationId": "loc-57",
+      "product": "diesel",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-11",
+      "assignedDriverId": "drv-70",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-99",
+      "sourceId": "loc-40",
+      "destinationId": "hub-4",
+      "product": "premium",
+      "quantity": 7000,
+      "deliveryDate": "2026-07-11",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-100",
+      "sourceId": "loc-58",
+      "destinationId": "loc-51",
+      "product": "diesel",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-06",
+      "assignedDriverId": "drv-57",
+      "status": "delivered",
+      "completedAt": "2026-07-06T14:00:00"
+    },
+    {
+      "id": "ord-101",
+      "sourceId": "loc-41",
+      "destinationId": "loc-35",
+      "product": "premium",
+      "quantity": 3000,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-102",
+      "sourceId": "loc-10",
+      "destinationId": "loc-52",
+      "product": "petrol",
+      "quantity": 4500,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-32",
+      "status": "failed",
+      "failureReason": "Incorrect delivery address"
+    },
+    {
+      "id": "ord-103",
+      "sourceId": "loc-6",
+      "destinationId": "loc-72",
+      "product": "diesel",
+      "quantity": 7500,
+      "deliveryDate": "2026-07-12",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-104",
+      "sourceId": "loc-8",
+      "destinationId": "loc-4",
+      "product": "premium",
+      "quantity": 6500,
+      "deliveryDate": "2026-07-10",
+      "assignedDriverId": "drv-54",
+      "status": "assigned"
+    },
+    {
+      "id": "ord-105",
+      "sourceId": "loc-57",
+      "destinationId": "loc-43",
+      "product": "premium",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-15",
+      "assignedDriverId": null,
+      "status": "pending"
+    },
+    {
+      "id": "ord-106",
+      "sourceId": "loc-74",
+      "destinationId": "loc-69",
+      "product": "petrol",
+      "quantity": 3500,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-32",
+      "status": "failed",
+      "failureReason": "Vehicle breakdown en route"
+    },
+    {
+      "id": "ord-107",
+      "sourceId": "loc-20",
+      "destinationId": "loc-4",
+      "product": "diesel",
+      "quantity": 1000,
+      "deliveryDate": "2026-07-08",
+      "assignedDriverId": "drv-63",
+      "status": "delivered",
+      "completedAt": "2026-07-08T14:00:00"
+    },
+    {
+      "id": "ord-108",
+      "sourceId": "loc-19",
+      "destinationId": "loc-51",
+      "product": "premium",
+      "quantity": 4000,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-84",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    },
+    {
+      "id": "ord-109",
+      "sourceId": "loc-64",
+      "destinationId": "loc-8",
+      "product": "diesel",
+      "quantity": 5000,
+      "deliveryDate": "2026-07-06",
+      "assignedDriverId": "drv-62",
+      "status": "failed",
+      "failureReason": "Access blocked on arrival"
+    },
+    {
+      "id": "ord-110",
+      "sourceId": "loc-69",
+      "destinationId": "loc-65",
+      "product": "diesel",
+      "quantity": 5500,
+      "deliveryDate": "2026-07-09",
+      "assignedDriverId": "drv-25",
+      "status": "delivered",
+      "completedAt": "2026-07-09T14:00:00"
+    }
+  ],
+  "allocations": [
+    {
+      "id": "alloc-1",
+      "vehicleId": "vehicle-2",
+      "driverId": "driver-1",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-2",
+      "vehicleId": "vehicle-1",
+      "driverId": "driver-2",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-3",
+      "vehicleId": "vehicle-5",
+      "driverId": "driver-4",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-4",
+      "vehicleId": "vehicle-6",
+      "driverId": "driver-5",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-5",
+      "vehicleId": "vehicle-4",
+      "driverId": "driver-6",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-6",
+      "vehicleId": "vehicle-3",
+      "driverId": "driver-3",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-7",
+      "vehicleId": "vehicle-2",
+      "driverId": "driver-1",
+      "date": "2026-07-09"
+    },
+    {
+      "id": "alloc-8",
+      "vehicleId": "vehicle-8",
+      "driverId": "driver-7",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b1",
+      "vehicleId": "veh-99",
+      "driverId": "drv-95",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b2",
+      "vehicleId": "veh-29",
+      "driverId": "drv-76",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b3",
+      "vehicleId": "veh-49",
+      "driverId": "drv-32",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b4",
+      "vehicleId": "veh-35",
+      "driverId": "drv-12",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b5",
+      "vehicleId": "veh-6",
+      "driverId": "drv-89",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b6",
+      "vehicleId": "veh-64",
+      "driverId": "drv-97",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b7",
+      "vehicleId": "veh-19",
+      "driverId": "drv-15",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b8",
+      "vehicleId": "veh-75",
+      "driverId": "drv-16",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b9",
+      "vehicleId": "veh-87",
+      "driverId": "drv-10",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b10",
+      "vehicleId": "veh-37",
+      "driverId": "drv-36",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b11",
+      "vehicleId": "veh-96",
+      "driverId": "drv-37",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b12",
+      "vehicleId": "veh-62",
+      "driverId": "drv-18",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b13",
+      "vehicleId": "veh-26",
+      "driverId": "drv-3",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b14",
+      "vehicleId": "veh-9",
+      "driverId": "drv-86",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "alloc-b15",
+      "vehicleId": "veh-3",
+      "driverId": "drv-20",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b16",
+      "vehicleId": "veh-28",
+      "driverId": "drv-37",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b17",
+      "vehicleId": "veh-16",
+      "driverId": "drv-31",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b18",
+      "vehicleId": "veh-92",
+      "driverId": "drv-41",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b19",
+      "vehicleId": "veh-72",
+      "driverId": "drv-77",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b20",
+      "vehicleId": "veh-43",
+      "driverId": "drv-97",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b21",
+      "vehicleId": "veh-70",
+      "driverId": "drv-76",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b22",
+      "vehicleId": "veh-40",
+      "driverId": "drv-21",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b23",
+      "vehicleId": "veh-36",
+      "driverId": "drv-75",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b24",
+      "vehicleId": "veh-92",
+      "driverId": "drv-40",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b25",
+      "vehicleId": "veh-53",
+      "driverId": "drv-94",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b26",
+      "vehicleId": "veh-1",
+      "driverId": "drv-22",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b27",
+      "vehicleId": "veh-88",
+      "driverId": "drv-97",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b28",
+      "vehicleId": "veh-18",
+      "driverId": "drv-31",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b29",
+      "vehicleId": "veh-23",
+      "driverId": "drv-2",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b30",
+      "vehicleId": "veh-70",
+      "driverId": "drv-24",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b31",
+      "vehicleId": "veh-62",
+      "driverId": "drv-37",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b32",
+      "vehicleId": "veh-86",
+      "driverId": "drv-18",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "alloc-b33",
+      "vehicleId": "veh-96",
+      "driverId": "drv-4",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b34",
+      "vehicleId": "veh-42",
+      "driverId": "drv-20",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b35",
+      "vehicleId": "veh-71",
+      "driverId": "drv-58",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b36",
+      "vehicleId": "veh-43",
+      "driverId": "drv-71",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "alloc-b37",
+      "vehicleId": "veh-88",
+      "driverId": "drv-28",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b38",
+      "vehicleId": "veh-94",
+      "driverId": "drv-69",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "alloc-b39",
+      "vehicleId": "veh-79",
+      "driverId": "drv-67",
+      "date": "2026-07-10"
+    },
+    {
+      "id": "alloc-b40",
+      "vehicleId": "veh-53",
+      "driverId": "drv-31",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b41",
+      "vehicleId": "veh-96",
+      "driverId": "drv-94",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b42",
+      "vehicleId": "veh-69",
+      "driverId": "drv-55",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b43",
+      "vehicleId": "veh-40",
+      "driverId": "drv-72",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b44",
+      "vehicleId": "veh-16",
+      "driverId": "drv-45",
+      "date": "2026-07-11"
+    },
+    {
+      "id": "alloc-b45",
+      "vehicleId": "veh-75",
+      "driverId": "drv-23",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "alloc-b46",
+      "vehicleId": "veh-96",
+      "driverId": "drv-83",
+      "date": "2026-07-14"
+    },
+    {
+      "id": "alloc-b47",
+      "vehicleId": "veh-55",
+      "driverId": "drv-35",
+      "date": "2026-07-15"
+    },
+    {
+      "id": "alloc-b48",
+      "vehicleId": "veh-39",
+      "driverId": "drv-6",
+      "date": "2026-07-13"
+    },
+    {
+      "id": "alloc-b49",
+      "vehicleId": "veh-89",
+      "driverId": "drv-20",
+      "date": "2026-07-12"
+    },
+    {
+      "id": "alloc-b50",
+      "vehicleId": "veh-36",
+      "driverId": "drv-59",
+      "date": "2026-07-15"
+    }
+  ],
+  "shifts": [
+    {
+      "id": "shift-past-1",
+      "driverId": "driver-1",
+      "vehicleId": "vehicle-2",
+      "date": "2026-07-09",
+      "status": "ended",
+      "startedAt": "2026-07-09T08:00:00",
+      "endedAt": "2026-07-09T16:30:00",
+      "orderIds": [
+        "order-12"
+      ]
+    },
+    {
+      "id": "shift-past-2",
+      "driverId": "driver-1",
+      "vehicleId": "vehicle-2",
+      "date": "2026-07-08",
+      "status": "ended",
+      "startedAt": "2026-07-08T08:10:00",
+      "endedAt": "2026-07-08T14:00:00",
+      "orderIds": [
+        "order-14"
+      ]
+    },
+    {
+      "id": "shift-active-1",
+      "driverId": "driver-7",
+      "vehicleId": "vehicle-8",
+      "date": "2026-07-10",
+      "status": "active",
+      "startedAt": "2026-07-10T08:30:00",
+      "endedAt": null,
+      "orderIds": [
+        "order-19"
+      ]
+    }
+  ],
+  "vehiclePositions": [
+    {
+      "id": "pos-1",
+      "vehicleId": "vehicle-2",
+      "driverId": "driver-1",
+      "lat": 40.7128,
+      "lng": -74.006,
+      "updatedAt": "2026-07-10T08:00:00",
+      "status": "idle"
+    },
+    {
+      "id": "pos-2",
+      "vehicleId": "vehicle-1",
+      "driverId": "driver-2",
+      "lat": 40.6413,
+      "lng": -73.7781,
+      "updatedAt": "2026-07-10T08:00:00",
+      "status": "idle"
+    },
+    {
+      "id": "pos-3",
+      "vehicleId": "vehicle-5",
+      "driverId": "driver-4",
+      "lat": 40.6413,
+      "lng": -73.7781,
+      "updatedAt": "2026-07-10T08:00:00",
+      "status": "idle"
+    },
+    {
+      "id": "pos-4",
+      "vehicleId": "vehicle-6",
+      "driverId": "driver-5",
+      "lat": 40.59,
+      "lng": -73.94,
+      "updatedAt": "2026-07-10T08:00:00",
+      "status": "idle"
+    },
+    {
+      "id": "pos-5",
+      "vehicleId": "vehicle-4",
+      "driverId": "driver-6",
+      "lat": 40.7128,
+      "lng": -74.006,
+      "updatedAt": "2026-07-10T08:00:00",
+      "status": "idle"
+    },
+    {
+      "id": "pos-6",
+      "vehicleId": "vehicle-8",
+      "driverId": "driver-7",
+      "lat": 40.65882,
+      "lng": -73.89777,
+      "trail": [
+        {
+          "lat": 40.7128,
+          "lng": -74.006
+        },
+        {
+          "lat": 40.70406,
+          "lng": -73.9931
+        },
+        {
+          "lat": 40.69589,
+          "lng": -73.98001
+        },
+        {
+          "lat": 40.68828,
+          "lng": -73.96675
+        },
+        {
+          "lat": 40.68125,
+          "lng": -73.95332
+        },
+        {
+          "lat": 40.67479,
+          "lng": -73.9397
+        },
+        {
+          "lat": 40.6689,
+          "lng": -73.9259
+        },
+        {
+          "lat": 40.66357,
+          "lng": -73.91192
+        }
+      ],
+      "updatedAt": "2026-07-10T09:05:00",
+      "status": "in_transit"
+    }
+  ]
+}

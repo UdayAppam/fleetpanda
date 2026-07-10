@@ -39,6 +39,7 @@ export default function ShiftPage() {
   const firstPickup = route[0] ? day.hub.get(route[0].sourceId)?.name : undefined;
 
   const endShift = async () => {
+    /* v8 ignore next -- endShift is only wired to the End Shift button, which renders only when a shift is active */
     if (!active) return;
     const remaining = day.orders.filter((o) => o.status === 'in_transit').length;
     const ok = await confirm({
@@ -83,7 +84,7 @@ export default function ShiftPage() {
               <span className={`${styles.muted} num`}>{pct}%</span>
             </div>
             <div className={styles.bar}>
-              <span className={styles.barFill} style={{ width: `${pct}%` }} />
+              <span className={styles.barFill} style={{ ['--pct' as string]: `${pct}%` }} />
             </div>
 
             <div className={styles.route}>

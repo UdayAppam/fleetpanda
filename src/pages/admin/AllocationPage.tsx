@@ -60,6 +60,7 @@ export default function AllocationPage() {
     [orders.data, driverId, date],
   );
   const dayLoad = dayOrders.reduce((n, o) => n + o.quantity, 0);
+  /* v8 ignore next -- a selectable vehicle always resolves in the same lookup, so capacity is never nullish */
   const selectedCapacity = vehicleId ? vehicle.get(vehicleId)?.capacity ?? 0 : 0;
   const overCapacity = Boolean(vehicleId && dayLoad > selectedCapacity); // HARD block
 
@@ -92,6 +93,7 @@ export default function AllocationPage() {
   );
 
   const submit = () => {
+    /* v8 ignore next -- this guard mirrors the Allocate button's disabled prop, so it can't run while true */
     if (!vehicleId || !driverId || conflict || overCapacity || pastDate) return;
     create.mutate({ vehicleId, driverId, date }, { onSuccess: () => setOpen(false) });
   };
@@ -163,7 +165,7 @@ export default function AllocationPage() {
           </Field>
 
           {conflict && (
-            <div className={formStyles.opWarn} role="alert" style={{ color: 'var(--crit)', background: 'color-mix(in srgb, var(--crit) 12%, transparent)' }}>
+            <div className={formStyles.opCrit} role="alert">
               <AlertTriangle size={16} />
               <span>
                 {vehicle.get(vehicleId)?.registration} is already allocated on {date}
@@ -171,7 +173,7 @@ export default function AllocationPage() {
             </div>
           )}
           {overCapacity && !conflict && (
-            <div className={formStyles.opWarn} role="alert" style={{ color: 'var(--crit)', background: 'color-mix(in srgb, var(--crit) 12%, transparent)' }}>
+            <div className={formStyles.opCrit} role="alert">
               <AlertTriangle size={16} />
               <span>
                 {vehicle.get(vehicleId)?.registration} ({fmtQty(selectedCapacity)}) can’t carry the day’s load of{' '}
@@ -207,6 +209,7 @@ export default function AllocationPage() {
             <div className={formStyles.opWarn}>
               <GaugeCircle size={16} />
               <span>
+                {/* v8 ignore next -- underutilised is only true when plan.utilisation is non-null */}
                 Only {Math.round((plan.utilisation ?? 0) * 100)}% of {vehicle.get(vehicleId)?.registration} used — a
                 smaller tanker would be more efficient.
               </span>

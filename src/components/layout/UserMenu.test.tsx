@@ -39,4 +39,14 @@ describe('UserMenu', () => {
     await userEvent.click(screen.getByRole('button', { name: /log out/i }));
     expect(store.getState().auth.user).toBeNull();
   });
+
+  it('closes the dropdown when the scrim behind it is clicked', async () => {
+    renderWithProviders(<UserMenu name="Dana" role="admin" />);
+    await userEvent.click(screen.getByText('Dana'));
+    const logout = screen.getByRole('button', { name: /log out/i });
+    // The scrim is the sibling rendered just before the menu container.
+    const scrim = logout.parentElement!.previousElementSibling as HTMLElement;
+    await userEvent.click(scrim);
+    expect(screen.queryByRole('button', { name: /log out/i })).not.toBeInTheDocument();
+  });
 });

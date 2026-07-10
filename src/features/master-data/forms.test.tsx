@@ -12,6 +12,26 @@ vi.mock('react-leaflet', () => ({
   useMapEvents: () => null,
 }));
 
+// Stub the picker with buttons that drive HubForm's onChange/onAddress callbacks directly.
+vi.mock('./LocationPicker', () => ({
+  LocationPicker: ({
+    onChange,
+    onAddress,
+  }: {
+    onChange: (lat: number, lng: number) => void;
+    onAddress?: (address: string) => void;
+  }) => (
+    <div>
+      <button type="button" onClick={() => onChange(12.34, 56.78)}>
+        pick-coords
+      </button>
+      <button type="button" onClick={() => onAddress?.('123 Mock St')}>
+        pick-address
+      </button>
+    </div>
+  ),
+}));
+
 import { ProductForm, DriverForm, VehicleForm, HubForm } from './forms';
 import { renderWithProviders } from '@/test/renderWithProviders';
 import { resetDb } from '@/test/mswServer';
@@ -73,5 +93,24 @@ describe('HubForm', () => {
     renderWithProviders(<HubForm onSubmit={() => {}} />);
     await userEvent.click(screen.getByRole('button', { name: /save/i }));
     expect(await screen.findByText(/name is required/i)).toBeInTheDocument();
+  });
+
+  it('writes picker coordinates + address into the form and submits them', async () => {
+    const onSubmit = vi.fn();
+    renderWithProviders(<HubForm onSubmit={onSubmit} />);
+    await screen.findByLabelText(/Diesel/);
+    await userEvent.type(screen.getByLabelText('Name'), 'Depot X');
+    await userEvent.click(screen.getByRole('button', { name: /pick-coords/ }));
+    await userEvent.click(screen.getByRole('button', { name: /pick-address/ }));
+    expect(screen.getByLabelText(/Latitude/)).toHaveValue(12.34);
+    expect(screen.getByLabelText(/Longitude/)).toHaveValue(56.78);
+    expect(screen.getByLabelText('Address')).toHaveValue('123 Mock St');
+    await userEvent.click(screen.getByRole('button', { name: /save/i }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalled());
+    expect(onSubmit.mock.calls[0][0]).toMatchObject({
+      name: 'Depot X',
+      address: '123 Mock St',
+      coordinates: { lat: 12.34, lng: 56.78 },
+    });
   });
 });

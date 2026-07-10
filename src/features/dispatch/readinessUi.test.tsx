@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { readinessGroup, ReadinessPill, ctaFor } from './readinessUi';
-import type { Readiness } from '@/services/rules';
+import type { Readiness, ReadinessAction } from '@/services/rules';
 import type { Order } from '@/types';
 
 const order: Order = {
@@ -73,5 +73,9 @@ describe('ctaFor', () => {
   it('links review_stock and monitor to their views', () => {
     expect(ctaFor(order, 'review_stock')).toEqual({ label: 'Review stock', to: '/admin/inventory' });
     expect(ctaFor(order, 'monitor')).toEqual({ label: 'View on map', to: '/admin/map' });
+  });
+
+  it('returns null for an unrecognised action', () => {
+    expect(ctaFor(order, 'unknown_action' as ReadinessAction)).toBeNull();
   });
 });

@@ -69,6 +69,13 @@ describe('sequenceOrders', () => {
     const orders = [mkOrder('a', 'hub-1', 'hub-4', 1), mkOrder('b', 'hub-1', 'hub-close', 1)];
     expect(sequenceOrders(orders, coordOf).map((o) => o.id).sort()).toEqual(['a', 'b']);
   });
+  it('returns an empty array for no orders', () => {
+    expect(sequenceOrders([], coordOf)).toEqual([]);
+  });
+  it('tolerates unknown destination coordinates (no start position)', () => {
+    const orders = [mkOrder('a', 'unknown', 'unknown', 1), mkOrder('b', 'unknown', 'unknown', 1)];
+    expect(sequenceOrders(orders, coordOf).map((o) => o.id).sort()).toEqual(['a', 'b']);
+  });
 });
 
 describe('orderJourney / legKm without coordinates', () => {

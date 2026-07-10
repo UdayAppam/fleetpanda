@@ -60,6 +60,22 @@ describe('useDriverDay', () => {
     expect(result.current.readiness.ready).toBe(false);
   });
 
+  it('falls back to the raw hub id when the source hub is unknown', async () => {
+    const db = getDb();
+    db.hubs = [
+      { id: 'hub-3', name: 'Northgate', locationType: 'hub', address: 'y', coordinates: { lat: 40.7, lng: -73.9 }, inventory: { diesel: 9800 } },
+    ];
+    db.allocations = [{ id: 'a1', vehicleId: 'vehicle-1', driverId: 'driver-1', date: iso }];
+    // Source hub 'ghost-hub' isn't in the lookup, so the name resolver returns the id.
+    db.orders = [
+      { id: 'o1', sourceId: 'ghost-hub', destinationId: 'hub-3', product: 'diesel', quantity: 5000, deliveryDate: iso, assignedDriverId: 'driver-1', status: 'assigned' },
+    ];
+    const { result } = renderHookWithProviders(() => useDriverDay(), { store: driverStore() });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.readiness.ready).toBe(false);
+    expect(result.current.readiness.reason).toContain('ghost-hub');
+  });
+
   it('has no allocation/orders for an unauthenticated (no driverId) user', async () => {
     seedToday();
     const { result } = renderHookWithProviders(() => useDriverDay());

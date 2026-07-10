@@ -50,6 +50,12 @@ h4 {
 .num {
   font-variant-numeric: tabular-nums;
 }
+.capitalize {
+  text-transform: capitalize;
+}
+.muted {
+  color: var(--text-muted);
+}
 
 a {
   color: var(--brand);

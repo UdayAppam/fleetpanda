@@ -125,7 +125,7 @@ export default function DriverMapPage() {
             </div>
             <div className={styles.navMeta}>
               <span>
-                <PackageOpen size={14} /> {fmtQty(inTransit.quantity)} <span style={{ textTransform: 'capitalize' }}>{inTransit.product}</span>
+                <PackageOpen size={14} /> {fmtQty(inTransit.quantity)} <span className="capitalize">{inTransit.product}</span>
               </span>
               {remainKm != null && (
                 <span>

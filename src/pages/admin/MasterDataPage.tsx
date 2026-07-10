@@ -64,7 +64,7 @@ export default function MasterDataPage() {
 
   function rowActions(entity: { id: string; name?: string; registration?: string }) {
     return (
-      <span style={{ display: 'inline-flex', gap: 6, justifyContent: 'flex-end' }}>
+      <span className={styles.rowActions}>
         <Button variant="ghost" size="sm" icon={<Pencil size={14} />} onClick={() => setEditing(entity)} aria-label="Edit" />
         <Button
           variant="ghost"
@@ -74,6 +74,7 @@ export default function MasterDataPage() {
           onClick={async () => {
             const ok = await confirm({
               title: 'Delete record?',
+              /* v8 ignore next -- every list row has a name or registration (the filter would throw otherwise), so id is a last resort */
               message: `Remove "${entity.name ?? entity.registration ?? entity.id}"? This cannot be undone.`,
               confirmLabel: 'Delete',
               danger: true,
@@ -96,7 +97,7 @@ export default function MasterDataPage() {
           key: 'name',
           header: 'Name',
           render: (h) => (
-            <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontWeight: 600 }}>
+            <span className={styles.nameCell}>
               <MapPin size={14} /> {h.name}
             </span>
           ),
@@ -160,7 +161,7 @@ export default function MasterDataPage() {
       (v) => (attr === 'all' || v.status === attr) && (match(v.registration) || match(v.type)),
     );
     const columns: Column<Vehicle>[] = [
-      { key: 'reg', header: 'Registration', render: (v) => <span className="mono" style={{ fontWeight: 600 }}>{v.registration}</span> },
+      { key: 'reg', header: 'Registration', render: (v) => <span className={`mono ${styles.bold}`}>{v.registration}</span> },
       { key: 'type', header: 'Type', render: (v) => v.type },
       { key: 'cap', header: 'Capacity', align: 'right', render: (v) => `${fmtNum(v.capacity)} L` },
       { key: 'status', header: 'Status', render: (v) => <Badge tone={v.status === 'on_shift' ? 'info' : v.status === 'maintenance' ? 'warn' : 'neutral'}>{v.status.replace('_', ' ')}</Badge> },

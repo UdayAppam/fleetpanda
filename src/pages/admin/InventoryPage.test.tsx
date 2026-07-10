@@ -35,9 +35,31 @@ describe('InventoryPage', () => {
     expect(screen.getByText('Northgate')).toBeInTheDocument();
   });
 
-  it('renders an error state when the hubs request fails', async () => {
+  it('renders an error state when the hubs request fails and retries', async () => {
     server.use(http.get(`${API_URL}/hubs`, () => HttpResponse.json({ error: 'boom' }, { status: 500 })));
     renderWithProviders(<InventoryPage />);
     expect(await screen.findByRole('alert')).toHaveTextContent(/boom|failed/i);
+    await userEvent.click(screen.getByRole('button', { name: /Retry/i }));
+  });
+
+  it('treats a product with no hub inventory as critical (missing-key fallback)', async () => {
+    // Petrol is not present in any hub's inventory → `h.inventory[key] ?? 0` fallbacks fire.
+    getDb().products.push({ id: 'prod-petrol', key: 'petrol', name: 'Petrol Gold', unit: 'L', lowStockThreshold: 1000, tankCapacity: 5000 });
+    renderWithProviders(<InventoryPage />);
+    await screen.findByText('Downtown');
+    // alertCount reduce counts the missing petrol on both hubs
+    expect(screen.getByText(/below minimum/i)).toBeInTheDocument();
+
+    // level filter runs the `some` predicate with the missing-key fallback
+    await userEvent.click(screen.getByRole('tab', { name: /Critical/ }));
+    expect(screen.getByText('Downtown')).toBeInTheDocument();
+    expect(screen.getByText('Northgate')).toBeInTheDocument();
+  });
+
+  it('renders when the hubs payload is null', async () => {
+    server.use(http.get(`${API_URL}/hubs`, () => HttpResponse.json(null)));
+    renderWithProviders(<InventoryPage />);
+    expect(await screen.findByRole('heading', { name: 'Inventory' })).toBeInTheDocument();
+    expect(screen.queryByText(/below minimum/i)).not.toBeInTheDocument();
   });
 });

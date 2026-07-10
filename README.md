@@ -130,10 +130,13 @@ The API is mocked with **MSW** in tests. Critical flows covered:
 | `dev` | Vite dev server |
 | `mock` | json-server via `server.js` |
 | `dev:all` | both, concurrently |
+| `dev:mock` | serverless mode — app + **in-browser** MSW API (no json-server) |
 | `seed` | regenerate `db.json` |
+| `seed:snapshot` | regenerate the frozen browser seed (`src/mocks/db.seed.json`) |
 | `test` / `test:coverage` | run tests / with coverage |
 | `lint` / `typecheck` | ESLint / `tsc --noEmit` |
 | `build` / `preview` | production build / preview it |
+| `build:mock` | production build with the in-browser mock API (what Netlify ships) |
 
 ---
 
@@ -174,11 +177,30 @@ Full component responsibilities: [`docs/COMPONENTS.md`](docs/COMPONENTS.md).
 
 ## Deployment
 
-Static hosts (Vercel/Netlify) **cannot run json-server**; the mock API needs a Node host
-(e.g. Render), whose free tier has an **ephemeral filesystem** (`db.json` resets on
-sleep/redeploy) and requires **CORS** for the SPA origin. Because of this the **recorded
-demo video is the primary deliverable**, with a deployed link as a bonus; **local run is the
-most reliable path**. Set `VITE_API_URL` to point the SPA at the API origin.
+### Serverless demo (Netlify, no backend) — default
+
+The deployed build runs its **own API inside the browser** via **MSW (Mock Service Worker)**,
+so it hosts on any static host with **no server, no database, no cold starts**. The same
+handler code that backs the tests (`src/mocks/handlers.ts`) is served by a Service Worker
+(`src/mocks/browser.ts`), seeded from a frozen snapshot (`src/mocks/db.seed.json`) and
+persisted per-browser to `localStorage`. This is enabled by `VITE_MOCK=true` (wired in
+`netlify.toml`), which also pins `VITE_DEMO_DATE=2026-07-10` so the demo's "today" always
+matches the seed. See **ADR-28**.
+
+```bash
+npm run dev:mock       # run locally in serverless mode (no json-server needed)
+npm run build:mock     # produce the static bundle Netlify ships
+```
+
+Netlify picks up `netlify.toml` automatically (build `npm run build`, publish `dist`, SPA
+redirect). Data is per-visitor (each browser gets its own copy) — ideal for a shareable demo.
+
+### Full-stack option (real shared backend)
+
+To run against the actual json-server writer instead, host `server.js` on a Node host
+(e.g. Render — note its free tier has an **ephemeral filesystem**, so `db.json` resets on
+sleep) and set `VITE_API_URL` to that origin (leave `VITE_MOCK` unset). CORS is already
+enabled by json-server's defaults.
 
 ---
 

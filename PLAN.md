@@ -1,7 +1,7 @@
 # FleetPanda — Fleet Tracking Platform
 ## Architecture & Implementation Plan
 
-> **Status:** Implemented — **rev 23, large validated seed (100+ records) + use-case validation** (see §11)
+> **Status:** Implemented — **rev 24, code-quality pass: no inline styles, composable primitives** (see §11)
 > **Author:** Frontend Architect
 > **Stack:** React + Redux Toolkit + Context API + TanStack Query + json-server
 > **Date:** 2026-07-09
@@ -618,6 +618,31 @@ shift lifecycle, auth guard), not a blanket 70% across every file.
 ---
 
 ## 11. Revision Log
+
+**Rev 25 — serverless deploy: in-browser mock API (MSW):**
+- The app now ships a **serverless build** that runs its API **inside the browser** via a
+  **Service Worker** (MSW), so it hosts on Netlify with **no backend, no DB, no cold start**
+  (fixes the earlier localhost/MIME deploy problems — ADR-14/-28).
+- The transactional rules were extracted into a **shared handler factory** (`src/mocks/handlers.ts`)
+  reused by **both** the test server (`msw/node`) and the browser worker (`src/mocks/browser.ts`),
+  seeded from a frozen snapshot (`src/mocks/db.seed.json`) and persisted per-browser to
+  `localStorage`. `VITE_MOCK=true` (wired in `netlify.toml`) enables it and pins
+  `VITE_DEMO_DATE=2026-07-10` to the seed. New scripts: `dev:mock`, `build:mock`, `seed:snapshot`.
+- The shared handlers now faithfully mirror `server.js` (past-date allocation guard; driver/vehicle
+  status flips on shift start/end; timestamp shift ids) — **3 tests realigned** to the real
+  behaviour they'd been shimming. **376 tests pass** (2 pre-existing WIP tests unrelated to this
+  change remain red — OrderForm past-date text + HubForm picker button). ADR-28 records the rationale.
+
+**Rev 24 — code-quality: remove inline styles + composable primitives:**
+- **All presentational inline `style={{}}` removed** (~28 across 13 files) → CSS Modules or global
+  utilities (`.capitalize`, `.muted` alongside the existing `.mono`/`.num`). The only remaining
+  `style` bindings are **CSS custom properties for genuinely data-driven geometry** (fuel-gauge
+  fill/tick, shift progress width) — the correct pattern; the rules live in CSS.
+- **Component architecture:** `Field`'s `Input`/`Select` now **merge `className`** (composable —
+  callers extend without losing base styles); `Table` uses **`data-align` + a `--col-w` var**
+  instead of inline alignment/width; added `ErrorBoundary`/`ConfirmContext`/`OrdersPage` CSS
+  modules; added `.opCrit` variant so warning banners don't override via inline colours.
+- Styling standard documented (`docs/DECISIONS.md` ADR-12). No visual change; **326 tests pass**.
 
 **Rev 23 — large validated dataset + use-case validation:**
 - `seed.js` now appends a **deterministic bulk dataset** to the curated demo core: **82 locations,

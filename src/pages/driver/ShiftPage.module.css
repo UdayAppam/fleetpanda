@@ -66,6 +66,7 @@
 .barFill {
   display: block;
   height: 100%;
+  width: var(--pct, 0%);
   background: var(--ok);
   border-radius: var(--r-full);
   transition: width 0.4s ease;

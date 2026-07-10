@@ -83,7 +83,7 @@ export default function DashboardPage() {
                         </div>
                         <div className={styles.actionDetail}>
                           {hub.get(order.sourceId)?.name} → {hub.get(order.destinationId)?.name} ·{' '}
-                          <span style={{ textTransform: 'capitalize' }}>{order.product}</span> {fmtQty(order.quantity)}
+                          <span className="capitalize">{order.product}</span> {fmtQty(order.quantity)}
                           {readiness.detail && <> · {readiness.detail}</>}
                         </div>
                       </div>
@@ -122,8 +122,8 @@ export default function DashboardPage() {
                   <li key={i} className={styles.stockRow}>
                     <Boxes size={15} className={styles.actionIcon} data-level={s.level} />
                     <span className={styles.stockHub}>{s.hub}</span>
-                    <span style={{ textTransform: 'capitalize', color: 'var(--text-muted)' }}>{s.product}</span>
-                    <span className="num" data-level={s.level} style={{ marginLeft: 'auto', color: s.level === 'crit' ? 'var(--crit)' : 'var(--warn)' }}>
+                    <span className="capitalize muted">{s.product}</span>
+                    <span className={`num ${styles.stockQty}`} data-level={s.level}>
                       {fmtQty(s.qty)}
                     </span>
                   </li>
@@ -158,7 +158,8 @@ export default function DashboardPage() {
                     <div className={styles.actionDetail}>
                       {a.kind === 'overbooked'
                         ? `${a.plan.legs.length} deliveries ≈ ${fmtDuration(a.plan.totalMinutes)} — over the 8h shift by ${fmtDuration(a.plan.overMinutes)}. Split the run or add a driver.`
-                        : `Only ${Math.round((a.plan.utilisation ?? 0) * 100)}% of ${a.vehicleReg} used (${fmtQty(a.plan.load)}). Consider a smaller tanker.`}
+                        : /* v8 ignore next -- the 'underutilised' kind is only pushed when plan.utilisation is non-null */
+                          `Only ${Math.round((a.plan.utilisation ?? 0) * 100)}% of ${a.vehicleReg} used (${fmtQty(a.plan.load)}). Consider a smaller tanker.`}
                     </div>
                   </div>
                   <Button

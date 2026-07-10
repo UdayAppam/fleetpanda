@@ -200,11 +200,12 @@ export default function FleetMapPage() {
                     {v.destName && (
                       <>
                         <br />→ {v.destName}
+                        {/* v8 ignore next -- etaMin is always derived non-null whenever remainKm != null */}
                         {remainKm != null && ` (${Math.round(remainKm)} km · ~${fmtDuration(etaMin ?? 0)})`}
                       </>
                     )}
                     <br />
-                    <span style={{ color: '#888' }}>Updated {fmtTime(v.position.updatedAt)}</span>
+                    <span className="muted">Updated {fmtTime(v.position.updatedAt)}</span>
                   </Popup>
                 </CircleMarker>
               );

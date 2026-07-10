@@ -17,6 +17,7 @@ import { useReadinessResolver } from '@/features/dispatch/useDispatchReadiness';
 import { useConfirm } from '@/contexts/ConfirmContext';
 import type { Order, OrderStatus } from '@/types';
 import { fmtDate, fmtQty } from '@/utils/format';
+import styles from './OrdersPage.module.css';
 
 // Orders are only editable/removable before dispatch (source stock hasn't moved yet).
 const EDITABLE: OrderStatus[] = ['pending', 'assigned'];
@@ -89,13 +90,13 @@ export default function OrdersPage() {
       key: 'route',
       header: 'Route',
       render: (o) => (
-        <span style={{ fontSize: 'var(--fs-sm)' }}>
-          {hub.get(o.sourceId)?.name ?? '—'} <span style={{ color: 'var(--text-muted)' }}>→</span>{' '}
+        <span className={styles.route}>
+          {hub.get(o.sourceId)?.name ?? '—'} <span className="muted">→</span>{' '}
           <strong>{hub.get(o.destinationId)?.name ?? '—'}</strong>
         </span>
       ),
     },
-    { key: 'product', header: 'Product', render: (o) => <span style={{ textTransform: 'capitalize' }}>{o.product}</span> },
+    { key: 'product', header: 'Product', render: (o) => <span className="capitalize">{o.product}</span> },
     { key: 'qty', header: 'Qty', align: 'right', render: (o) => <span className="num">{fmtQty(o.quantity)}</span> },
     { key: 'date', header: 'Delivery', render: (o) => fmtDate(o.deliveryDate) },
     { key: 'status', header: 'Status', render: (o) => <StatusBadge status={o.status} /> },
@@ -113,7 +114,7 @@ export default function OrdersPage() {
             value={o.assignedDriverId ?? ''}
             onChange={(e) => e.target.value && assign.mutate({ id: o.id, driverId: e.target.value })}
             aria-label={`Assign driver to ${o.id}`}
-            style={{ minWidth: 130 }}
+            className={styles.driverSelect}
           >
             <option value="">Unassigned</option>
             {drivers.map((d) => (
@@ -133,7 +134,7 @@ export default function OrdersPage() {
       align: 'right',
       render: (o) =>
         EDITABLE.includes(o.status) ? (
-          <span style={{ display: 'inline-flex', gap: 6, justifyContent: 'flex-end' }}>
+          <span className={styles.rowActions}>
             <Button variant="ghost" size="sm" icon={<Pencil size={14} />} aria-label={`Edit ${o.id}`} onClick={() => setEditing(o)} />
             <Button
               variant="ghost"
@@ -171,26 +172,10 @@ export default function OrdersPage() {
         value={filter}
         onChange={changeFilter}
       />
-      <div style={{ height: 'var(--sp-4)' }} />
+      <div className={styles.spacer} />
       <Toolbar search={search} onSearch={setSearch} placeholder="Search orders…">
         {readinessFilter && readinessFilter !== 'done' && (
-          <button
-            onClick={clearReadiness}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              border: '1px solid var(--brand)',
-              background: 'color-mix(in srgb, var(--brand) 14%, transparent)',
-              color: 'var(--brand)',
-              borderRadius: 'var(--r-full)',
-              padding: '5px 12px',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-display)',
-              fontWeight: 600,
-              fontSize: 'var(--fs-sm)',
-            }}
-          >
+          <button className={styles.readinessChip} onClick={clearReadiness}>
             {READINESS_GROUP_LABEL[readinessFilter]}
             {dateFilter ? ` · ${fmtDate(dateFilter)}` : ''} <X size={13} />
           </button>

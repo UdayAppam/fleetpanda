@@ -110,6 +110,24 @@
   color: var(--warn);
   background: color-mix(in srgb, var(--warn) 12%, transparent);
 }
+.opCrit {
+  color: var(--crit);
+  background: color-mix(in srgb, var(--crit) 12%, transparent);
+}
+.opCrit,
+.opWarn,
+.opOk {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  padding: var(--sp-3);
+  border-radius: var(--r-sm);
+}
+.opCrit svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
 .opOk {
   color: var(--ok);
   background: color-mix(in srgb, var(--ok) 12%, transparent);
