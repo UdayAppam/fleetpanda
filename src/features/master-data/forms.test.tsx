@@ -100,11 +100,11 @@ describe('HubForm', () => {
     renderWithProviders(<HubForm onSubmit={onSubmit} />);
     await screen.findByLabelText(/Diesel/);
     await userEvent.type(screen.getByLabelText('Name'), 'Depot X');
-    await userEvent.click(screen.getByRole('button', { name: /pick-coords/ }));
-    await userEvent.click(screen.getByRole('button', { name: /pick-address/ }));
+    await userEvent.click(screen.getByText('pick-coords'));
+    await userEvent.click(screen.getByText('pick-address'));
     expect(screen.getByLabelText(/Latitude/)).toHaveValue(12.34);
     expect(screen.getByLabelText(/Longitude/)).toHaveValue(56.78);
-    expect(screen.getByLabelText('Address')).toHaveValue('123 Mock St');
+    expect(screen.getByLabelText(/Address/)).toHaveValue('123 Mock St');
     await userEvent.click(screen.getByRole('button', { name: /save/i }));
     await waitFor(() => expect(onSubmit).toHaveBeenCalled());
     expect(onSubmit.mock.calls[0][0]).toMatchObject({
