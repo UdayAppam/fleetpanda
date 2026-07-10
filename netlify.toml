@@ -1,0 +1,14 @@
+# Netlify deploy config for the FleetPanda Vite SPA.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA fallback: serve index.html for client-side routes (existing files like /assets/* are
+# served first, so this does NOT affect JS/CSS asset MIME types).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
