@@ -13,6 +13,8 @@ import styles from './LoginForm.module.css';
 const QUICK = [
   { label: 'Admin', email: 'admin@fleetpanda.com', password: 'admin123' },
   { label: 'Driver', email: 'driver@fleetpanda.com', password: 'driver123' },
+  { label: 'Amina', email: 'amina@fleetpanda.com', password: 'driver123' }, // 4-drop milk-run today
+  { label: 'Sam', email: 'sam@fleetpanda.com', password: 'driver123' }, // live in-transit run
 ];
 
 export function LoginForm() {

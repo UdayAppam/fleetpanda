@@ -1,4 +1,4 @@
-import { Play, Square, Truck, Info, Clock, Route, MapPin, Package, CheckCircle2 } from 'lucide-react';
+import { Play, Square, Truck, Info, Clock, Route, MapPin, Package, CheckCircle2, Fuel } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, Spinner, ErrorState } from '@/components/ui/misc';
 import { Button } from '@/components/ui/Button';
@@ -8,7 +8,7 @@ import { usePositions } from '@/hooks/queries';
 import { useDriverDay } from '@/features/driver-shift/useDriverDay';
 import { useShiftMutations } from '@/features/driver-shift/mutations';
 import { useConfirm } from '@/contexts/ConfirmContext';
-import { driverDayPlan, sequenceOrders, fmtDuration, etaEnd } from '@/services/logistics';
+import { driverDayPlan, fmtDuration, etaEnd } from '@/services/logistics';
 import { fmtDate, fmtQty, fmtTime } from '@/utils/format';
 import { today } from '@/utils/clock';
 import styles from './ShiftPage.module.css';
@@ -33,10 +33,11 @@ export default function ShiftPage() {
   const coordOf = (id: string) => day.hub.get(id)?.coordinates;
   const myPos = (positions.data ?? []).find((p) => p.driverId === day.driverId);
   const startFrom = myPos ? { lat: myPos.lat, lng: myPos.lng } : undefined;
-  const route = sequenceOrders(day.orders, coordOf, startFrom);
-  const plan = driverDayPlan(route, coordOf, day.allocatedVehicle?.capacity ?? null, startFrom);
+  const capacity = day.allocatedVehicle?.capacity ?? null;
+  const plan = driverDayPlan(day.orders, coordOf, capacity, startFrom);
   const eta = active?.startedAt ? fmtTime(etaEnd(active.startedAt, plan.totalMinutes)) : null;
-  const firstPickup = route[0] ? day.hub.get(route[0].sourceId)?.name : undefined;
+  const firstPickup = plan.trips[0] ? day.hub.get(plan.trips[0].sourceId)?.name : undefined;
+  const tankPct = capacity ? Math.round(Math.min(1, totalQty / capacity) * 100) : null;
 
   const endShift = async () => {
     /* v8 ignore next -- endShift is only wired to the End Shift button, which renders only when a shift is active */
@@ -99,6 +100,18 @@ export default function ShiftPage() {
               </span>
               {eta && <span className={styles.eta}>ETA ~{eta}</span>}
             </div>
+
+            {tankPct != null && day.allocatedVehicle && (
+              <div className={styles.tank}>
+                <span className={styles.tankBar}>
+                  <span className={styles.tankFill} style={{ ['--fill' as string]: `${tankPct}%` }} />
+                </span>
+                <span className={styles.tankText}>
+                  <Fuel size={13} /> {fmtQty(totalQty)} loaded · <strong className="num">{tankPct}%</strong> of{' '}
+                  {day.allocatedVehicle.registration} ({fmtQty(capacity!)})
+                </span>
+              </div>
+            )}
             {!active && firstPickup && (
               <div className={styles.startAt}>
                 <MapPin size={14} /> Starts at <strong>{firstPickup}</strong>
@@ -142,7 +155,7 @@ export default function ShiftPage() {
         <h3 className={styles.sectionTitle}>Delivery Management</h3>
         {total > 0 && <span className={styles.muted}>{done}/{total} complete</span>}
       </div>
-      <DeliveryManager orders={route} hub={day.hub} active={Boolean(active)} />
+      <DeliveryManager trips={plan.trips} hub={day.hub} active={Boolean(active)} capacity={capacity} />
     </div>
   );
 }

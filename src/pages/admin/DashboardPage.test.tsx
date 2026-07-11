@@ -118,8 +118,9 @@ describe('DashboardPage', () => {
       { id: 'al-b', vehicleId: 'vehicle-big', driverId: 'driver-2', date: d() },
     ];
     db.orders = [
-      mkOrder({ id: 'ob1', assignedDriverId: 'driver-1', quantity: 3000 }),
-      mkOrder({ id: 'ob2', assignedDriverId: 'driver-1', quantity: 3000 }),
+      // driver-1: many drops (16 × ~30 min unload) overrun the 8h shift → overbooked
+      ...Array.from({ length: 16 }, (_, i) => mkOrder({ id: `ob${i}`, assignedDriverId: 'driver-1', quantity: 500 })),
+      // driver-2: one tiny load in the 100,000 L tanker → under-utilised
       mkOrder({ id: 'uu1', assignedDriverId: 'driver-2', quantity: 1000 }),
     ];
 

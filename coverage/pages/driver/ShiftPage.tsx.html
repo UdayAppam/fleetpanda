@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>111/111</span>
+                <span class='fraction'>122/122</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>47/47</span>
+                <span class='fraction'>49/49</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>111/111</span>
+                <span class='fraction'>122/122</span>
             </div>
         
             
@@ -211,7 +211,20 @@
 <a name='L146'></a><a href='#L146'>146</a>
 <a name='L147'></a><a href='#L147'>147</a>
 <a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -243,6 +256,7 @@
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
@@ -312,6 +326,18 @@
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -359,7 +385,7 @@
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Play, Square, Truck, Info, Clock, Route, MapPin, Package, CheckCircle2 } from 'lucide-react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Play, Square, Truck, Info, Clock, Route, MapPin, Package, CheckCircle2, Fuel } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, Spinner, ErrorState } from '@/components/ui/misc';
 import { Button } from '@/components/ui/Button';
@@ -369,7 +395,7 @@ import { usePositions } from '@/hooks/queries';
 import { useDriverDay } from '@/features/driver-shift/useDriverDay';
 import { useShiftMutations } from '@/features/driver-shift/mutations';
 import { useConfirm } from '@/contexts/ConfirmContext';
-import { driverDayPlan, sequenceOrders, fmtDuration, etaEnd } from '@/services/logistics';
+import { driverDayPlan, fmtDuration, etaEnd } from '@/services/logistics';
 import { fmtDate, fmtQty, fmtTime } from '@/utils/format';
 import { today } from '@/utils/clock';
 import styles from './ShiftPage.module.css';
@@ -394,10 +420,11 @@ export default function ShiftPage() {
   const coordOf = (id: string) =&gt; day.hub.get(id)?.coordinates;
   const myPos = (positions.data ?? []).find((p) =&gt; p.driverId === day.driverId);
   const startFrom = myPos ? { lat: myPos.lat, lng: myPos.lng } : undefined;
-  const route = sequenceOrders(day.orders, coordOf, startFrom);
-  const plan = driverDayPlan(route, coordOf, day.allocatedVehicle?.capacity ?? null, startFrom);
+  const capacity = day.allocatedVehicle?.capacity ?? null;
+  const plan = driverDayPlan(day.orders, coordOf, capacity, startFrom);
   const eta = active?.startedAt ? fmtTime(etaEnd(active.startedAt, plan.totalMinutes)) : null;
-  const firstPickup = route[0] ? day.hub.get(route[0].sourceId)?.name : undefined;
+  const firstPickup = plan.trips[0] ? day.hub.get(plan.trips[0].sourceId)?.name : undefined;
+  const tankPct = capacity ? Math.round(Math.min(1, totalQty / capacity) * 100) : null;
 &nbsp;
   const endShift = async () =&gt; {
     /* v8 ignore next -- endShift is only wired to the End Shift button, which renders only when a shift is active */
@@ -460,6 +487,18 @@ export default function ShiftPage() {
               &lt;/span&gt;
               {eta &amp;&amp; &lt;span className={styles.eta}&gt;ETA ~{eta}&lt;/span&gt;}
             &lt;/div&gt;
+&nbsp;
+            {tankPct != null &amp;&amp; day.allocatedVehicle &amp;&amp; (
+              &lt;div className={styles.tank}&gt;
+                &lt;span className={styles.tankBar}&gt;
+                  &lt;span className={styles.tankFill} style={{ ['--fill' as string]: `${tankPct}%` }} /&gt;
+                &lt;/span&gt;
+                &lt;span className={styles.tankText}&gt;
+                  &lt;Fuel size={13} /&gt; {fmtQty(totalQty)} loaded · &lt;strong className="num"&gt;{tankPct}%&lt;/strong&gt; of{' '}
+                  {day.allocatedVehicle.registration} ({fmtQty(capacity!)})
+                &lt;/span&gt;
+              &lt;/div&gt;
+            )}
             {!active &amp;&amp; firstPickup &amp;&amp; (
               &lt;div className={styles.startAt}&gt;
                 &lt;MapPin size={14} /&gt; Starts at &lt;strong&gt;{firstPickup}&lt;/strong&gt;
@@ -503,7 +542,7 @@ export default function ShiftPage() {
         &lt;h3 className={styles.sectionTitle}&gt;Delivery Management&lt;/h3&gt;
         {total &gt; 0 &amp;&amp; &lt;span className={styles.muted}&gt;{done}/{total} complete&lt;/span&gt;}
       &lt;/div&gt;
-      &lt;DeliveryManager orders={route} hub={day.hub} active={Boolean(active)} /&gt;
+      &lt;DeliveryManager trips={plan.trips} hub={day.hub} active={Boolean(active)} capacity={capacity} /&gt;
     &lt;/div&gt;
   );
 }
@@ -514,7 +553,7 @@ export default function ShiftPage() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-11T05:53:43.351Z
+                at 2026-07-11T06:37:08.663Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

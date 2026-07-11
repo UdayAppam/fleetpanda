@@ -156,9 +156,9 @@ describe('AllocationPage', () => {
 
   it('folds a reposition deadhead into the shift and flags an overbooked run', async () => {
     // Orders start at hub-3 while the vehicle sits at hub-1 → a real reposition leg.
+    // Many drops (16 × ~30 min unload) overrun the 8h shift; load (8,000) stays within capacity.
     getDb().orders.push(
-      mkOrder({ id: 'o-far-1', quantity: 3000, sourceId: 'hub-3', destinationId: 'hub-1' }),
-      mkOrder({ id: 'o-far-2', quantity: 3000, sourceId: 'hub-3', destinationId: 'hub-1' }),
+      ...Array.from({ length: 16 }, (_, i) => mkOrder({ id: `o-far-${i}`, quantity: 500, sourceId: 'hub-3', destinationId: 'hub-1' })),
     );
     renderWithProviders(<AllocationPage />);
     const user = await openModal();

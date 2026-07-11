@@ -241,9 +241,26 @@ for (let i = 0; i < 120 && allocN < 50; i++) {
   allocations.push({ id: `alloc-b${++allocN}`, vehicleId: v.id, driverId: pick(bulkDrivers).id, date });
 }
 
+// Every driver gets a login (demo): the curated drivers keep their friendly emails above;
+// all others get firstname.lastname@fleetpanda.com (deduped). Password is 'driver123' for all.
+const driversWithUser = new Set(users.filter((u) => u.driverId).map((u) => u.driverId));
+const emailUsed = new Set(users.map((u) => u.email));
+const emailFor = (name) => {
+  const base = name.toLowerCase().replace(/[^a-z ]/g, '').split(/\s+/).filter(Boolean).join('.') || 'driver';
+  let email = `${base}@fleetpanda.com`;
+  let n = 1;
+  while (emailUsed.has(email)) email = `${base}${++n}@fleetpanda.com`;
+  emailUsed.add(email);
+  return email;
+};
+for (const d of drivers) {
+  if (driversWithUser.has(d.id)) continue;
+  users.push({ id: `user-${d.id}`, email: emailFor(d.name), password: 'driver123', name: d.name, role: 'driver', driverId: d.id });
+}
+
 const db = { users, products, hubs, drivers, vehicles, orders, allocations, shifts, vehiclePositions };
 writeFileSync('db.json', JSON.stringify(db, null, 2));
 const invCells = hubs.length * products.length;
 console.log(
-  `Seeded db.json (today=${TODAY}): ${hubs.length} locations, ${products.length} products, ${drivers.length} drivers, ${vehicles.length} vehicles, ${orders.length} orders, ${allocations.length} allocations, ${invCells} inventory cells.`,
+  `Seeded db.json (today=${TODAY}): ${users.length} users, ${hubs.length} locations, ${products.length} products, ${drivers.length} drivers, ${vehicles.length} vehicles, ${orders.length} orders, ${allocations.length} allocations, ${invCells} inventory cells.`,
 );

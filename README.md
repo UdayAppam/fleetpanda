@@ -82,9 +82,13 @@ The login screen shows demo credentials and one-click **quick-login** chips:
 | Role | Email | Lands on |
 |---|---|---|
 | Admin | `admin@fleetpanda.com` | `/admin` |
-| Driver | `driver@fleetpanda.com` | `/driver` |
+| Driver (John) | `driver@fleetpanda.com` | `/driver` |
+| Amina — 4-drop milk-run today | `amina@fleetpanda.com` | `/driver` |
+| Sam — live in-transit run | `sam@fleetpanda.com` | `/driver` |
 
-(Auth is a client-side mock — see `docs/DECISIONS.md` ADR-06/07.)
+**Every driver** has a login: `firstname.lastname@fleetpanda.com` — password `driver123` for all
+drivers (`admin123` for admin). Curated drivers keep the friendly emails above. (Auth is a
+client-side mock — see `docs/DECISIONS.md` ADR-06/07; the driver "trips" view is ADR-29.)
 
 ---
 

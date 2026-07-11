@@ -9,7 +9,7 @@ import { createHandlers, type MockDb, type MockStore } from './handlers';
 import seedData from './db.seed.json';
 
 // Bump when db.seed.json's shape changes so returning visitors drop stale localStorage.
-const SEED_VERSION = '2026-07-10';
+const SEED_VERSION = '2026-07-11-all-drivers';
 const STORAGE_KEY = 'fleetpanda:mockdb';
 
 function freshSeed(): MockDb {

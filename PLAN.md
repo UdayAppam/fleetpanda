@@ -619,6 +619,17 @@ shift lifecycle, auth guard), not a blanket 70% across every file.
 
 ## 11. Revision Log
 
+**Rev 27 — driver view as trips (milk-run) + all-driver logins:**
+- **P2:** new `buildTrips()` groups a day's orders by pickup source; `driverDayPlan` now models a
+  **load-once + chained-drops** run (plus inter-trip deadheads) instead of a round-trip per order —
+  ETA/km are no longer overestimated and match the single-tank allocation guard.
+- **P1:** `DeliveryManager` renders a **Load header per trip** (source · litres · drops · tank-fill)
+  then the drop cards, so the pickup shows once, not on every card.
+- **P3:** the Shift hero shows a **tank-fill** line (`<load> loaded · <n>% of <reg>`).
+- **Logins:** every driver now has an account (`seed.js`); `SEED_VERSION` bumped so stale demo
+  caches reset (fixes "can't log in as amina"). Login page adds Amina + Sam quick chips. ADR-29.
+- **420 tests pass, 100% coverage** (overbooked fixtures updated to ≥16 drops for the new math).
+
 **Rev 26 — serverless self-heal: recover from idle Service-Worker eviction:**
 - Fixed the deployed-demo error `Unexpected token '<', "<!doctype "... is not valid JSON` seen
   **after the tab sat idle**: browsers stop idle Service Workers, so a request (e.g. the 30 s Fleet

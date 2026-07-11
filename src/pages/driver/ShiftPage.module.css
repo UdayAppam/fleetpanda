@@ -88,6 +88,35 @@
   color: var(--ok);
   font-weight: 600;
 }
+.tank {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+.tankBar {
+  width: 120px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.tankFill {
+  display: block;
+  height: 100%;
+  width: var(--fill, 0%);
+  background: var(--brand);
+  border-radius: var(--r-full);
+  transition: width 0.4s ease;
+}
+.tankText {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
 .startAt {
   display: flex;
   align-items: center;

@@ -471,7 +471,29 @@ These aren't library choices but they materially shape the app; recorded for tra
 - **Trade-off:** The curve is decorative, not road-accurate. If real turn-by-turn geometry is
   needed, `routePath()` is the single seam to swap for a routing-API call.
 
-## ADR-28 — Serverless deploy: run the mock API in the browser (MSW), not a Node host
+## ADR-29 — Driver view as "trips" (load once, chained drops) + all-driver logins
+
+- **Context:** A driver's day is a **milk-run**: load once at a source, then drop at several hubs.
+  The old view showed each order as an independent `pickup → drop` card and `driverDayPlan`
+  modelled each order as a **round-trip back to the source** — so the pickup repeated on every
+  card and the ETA/km were badly overestimated (and contradicted the allocation guard, which
+  assumes the day fits one tank). Also, only 5 drivers had login accounts, so most of the 107
+  seeded drivers (incl. multi-order days) couldn't be viewed.
+- **Decision (P1/P2/P3):**
+  - **P2 — plan math:** `buildTrips()` groups a day's orders by pickup source into **trips**
+    (load once + drops sequenced nearest-first); `driverDayPlan` sums trip time/km + inter-trip
+    deadheads instead of per-order round trips. `orderJourney` is kept only for its own tests.
+  - **P1 — driver UI:** `DeliveryManager` renders a **Load header per trip** (source, litres,
+    drop count, tank-fill) then the ordered drop cards — the pickup shows **once**, not per card.
+  - **P3 — tank context:** the Shift hero shows `<load> loaded · <n>% of <reg> (<cap>)`.
+  - **Logins:** `seed.js` now issues a login for **every** driver (`firstname.lastname@fleetpanda.com`,
+    password `driver123`; curated drivers keep friendly emails). `SEED_VERSION` bumped so stale
+    localStorage resets. Login page adds Amina (4-drop milk-run) + Sam (live run) quick chips.
+- **Reasoning:** The view now matches how the operation actually runs, the numbers are honest, and
+  any driver/day (incl. the multi-order milk-runs) is reachable for review/demo.
+- **Not done (P4, deferred):** multi-**trip** reload days (day load > tank) remain blocked at
+  allocation; the trip model splits by source but not yet by capacity. `sequenceOrders` and the
+  per-source grouping are the seam if reload support is added later.
 
 - **Context:** The app's backend is `server.js` (json-server + custom single-writer routes). A
   static host (Netlify) **cannot run it**, so the first deploy served the dev `index.html` (MIME

@@ -32,8 +32,8 @@ describe('useShiftAdvisories', () => {
     const db = base();
     db.vehicles = [{ id: 'vehicle-1', registration: 'TRK-101', capacity: 40000, type: 'Tanker', status: 'available' }];
     db.allocations = [{ id: 'a1', vehicleId: 'vehicle-1', driverId: 'driver-1', date: iso }];
-    // Many long round trips overrun the 8h shift.
-    db.orders = Array.from({ length: 8 }, (_, i) => order({ id: `o${i}`, quantity: 3000 }));
+    // Many drops overrun the 8h shift (unload time alone: 16 × ~30 min > 8h).
+    db.orders = Array.from({ length: 16 }, (_, i) => order({ id: `o${i}`, quantity: 2000 }));
 
     const { result } = renderHookWithProviders(() => useShiftAdvisories(iso));
     await waitFor(() => expect(result.current.advisories.length).toBeGreaterThan(0));
@@ -70,7 +70,7 @@ describe('useShiftAdvisories', () => {
     db.drivers = []; // driver.get(...) undefined → driverName falls back to the id
     db.vehicles = []; // vehicle.get(...) undefined → capacity ?? null and reg ?? a.vehicleId
     db.allocations = [{ id: 'a1', vehicleId: 'vehicle-x', driverId: 'driver-1', date: iso }];
-    db.orders = Array.from({ length: 8 }, (_, i) => order({ id: `o${i}`, quantity: 3000 }));
+    db.orders = Array.from({ length: 16 }, (_, i) => order({ id: `o${i}`, quantity: 2000 }));
 
     const { result } = renderHookWithProviders(() => useShiftAdvisories(iso));
     // Waiting for the advisory guarantees the memo ran with the allocation loaded but the
