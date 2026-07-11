@@ -44,4 +44,12 @@ describe('config/env', () => {
     const env = await loadEnv();
     expect(env.DEMO_DATE).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
+
+  it('pins DEMO_DATE to the seed date in mock mode when unset', async () => {
+    vi.stubEnv('VITE_DEMO_DATE', undefined as unknown as string);
+    vi.stubEnv('VITE_MOCK', 'true');
+    const env = await loadEnv();
+    expect(env.DEMO_DATE).toBe(env.SEED_DEMO_DATE);
+    expect(env.DEMO_DATE).toBe('2026-07-10');
+  });
 });

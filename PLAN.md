@@ -619,6 +619,12 @@ shift lifecycle, auth guard), not a blanket 70% across every file.
 
 ## 11. Revision Log
 
+**Rev 28 — mock demo date pinned to the seed:** `npm run dev:mock` didn't pin `VITE_DEMO_DATE`, so
+local serverless treated the real calendar day as "today" while the frozen seed is dated
+2026-07-10 — so drivers (e.g. Amina) showed no shift/truck/deliveries. `env.ts` now defaults
+`DEMO_DATE` to `SEED_DEMO_DATE` (2026-07-10) whenever `USE_MOCK` is on (deployed builds already
+baked it via netlify.toml). Covered in `env.test.ts`.
+
 **Rev 27 — driver view as trips (milk-run) + all-driver logins:**
 - **P2:** new `buildTrips()` groups a day's orders by pickup source; `driverDayPlan` now models a
   **load-once + chained-drops** run (plus inter-trip deadheads) instead of a round-trip per order —
