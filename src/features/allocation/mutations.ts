@@ -21,5 +21,23 @@ export function useAllocationMutations() {
     },
   });
 
-  return { create };
+  const update = useMutation({
+    mutationFn: ({ id, input }: { id: string; input: AllocationInput }) => api.updateAllocation(id, input),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: qk.allocations });
+      toast.success('Allocation updated');
+    },
+    onError: (e: unknown) => toast.error(e instanceof ApiError ? e.message : 'Update failed'),
+  });
+
+  const remove = useMutation({
+    mutationFn: (id: string) => api.deleteAllocation(id),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: qk.allocations });
+      toast.success('Allocation removed');
+    },
+    onError: (e: unknown) => toast.error(e instanceof ApiError ? e.message : 'Remove failed'),
+  });
+
+  return { create, update, remove };
 }

@@ -471,6 +471,23 @@ These aren't library choices but they materially shape the app; recorded for tra
 - **Trade-off:** The curve is decorative, not road-accurate. If real turn-by-turn geometry is
   needed, `routePath()` is the single seam to swap for a routing-API call.
 
+## ADR-31 — Allocation calendar: show every allocation + edit/delete
+
+- **Context:** The allocation calendar capped a day at 3 chips with a `+N` overflow and showed only
+  the vehicle registration (driver hidden in a tooltip), and allocations could only be **created** —
+  no edit or delete. Dispatchers couldn't see a busy day's full roster or fix a mistake.
+- **Decision:** Each day cell now lists **all** allocations as `TRK-xxx · Driver` chips in a
+  scrollable list (no cap). The date number is the "add" affordance (keyboard-accessible button);
+  each chip is an "edit" button (past days render read-only text) — avoiding nested interactive
+  elements. Editing reuses the allocation form (change vehicle/driver/date or **Remove**, behind a
+  confirm) with the same conflict / past-date / capacity / feasibility guards, except the
+  vehicle+date **clash check ignores the row being edited** (`hasAllocationConflict(..., excludeId)`).
+  New endpoints `PATCH`/`DELETE /allocations/:id` (mock handlers + `server.js`, guards preserved).
+- **Reasoning:** Full day-wise visibility with truck **and** driver, plus safe edit/delete, matches
+  how dispatch actually works — without cramming or losing the transactional guards.
+- **Trade-off:** A very busy day scrolls within the cell rather than expanding; a dedicated day
+  drawer could come later if needed.
+
 ## ADR-30 — Rolling demo (re-anchor the seed to today) + driver month summary
 
 - **Context:** The mock pinned "today" to the seed's base date (2026-07-10), so a reviewer opening

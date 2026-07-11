@@ -33,6 +33,9 @@ export const api = {
   // transactional (server owns side-effects)
   createAllocation: (body: { vehicleId: string; driverId: string; date: string }) =>
     http.post<Allocation>('/allocations', body),
+  updateAllocation: (id: string, body: { vehicleId: string; driverId: string; date: string }) =>
+    http.patch<Allocation>(`/allocations/${id}`, body),
+  deleteAllocation: (id: string) => http.del<void>(`/allocations/${id}`),
   assignOrder: (id: string, driverId: string) =>
     http.patch<Order>(`/orders/${id}`, { assignedDriverId: driverId, status: 'assigned' }),
   startShift: (driverId: string, date: string) =>

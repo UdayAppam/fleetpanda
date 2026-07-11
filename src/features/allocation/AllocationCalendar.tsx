@@ -20,9 +20,10 @@ interface Props {
   vehicle: Map<string, Vehicle>;
   driver: Map<string, Driver>;
   onPickDay: (isoDate: string) => void;
+  onEditAllocation: (allocation: Allocation) => void;
 }
 
-export function AllocationCalendar({ allocations, vehicle, driver, onPickDay }: Props) {
+export function AllocationCalendar({ allocations, vehicle, driver, onPickDay, onEditAllocation }: Props) {
   const [cursor, setCursor] = useState(() => new Date(today() + 'T00:00:00'));
   const todayIso = today();
 
@@ -65,29 +66,49 @@ export function AllocationCalendar({ allocations, vehicle, driver, onPickDay }: 
         {days.map((day) => {
           const iso = format(day, 'yyyy-MM-dd');
           const list = byDate.get(iso) ?? [];
-          const past = iso < todayIso; // history — read-only, no new allocations
+          const past = iso < todayIso; // history — read-only, no new/edited allocations
+          const labelFor = (a: Allocation) =>
+            `${vehicle.get(a.vehicleId)?.registration ?? a.vehicleId} · ${driver.get(a.driverId)?.name ?? a.driverId}`;
           return (
-            <button
+            <div
               key={iso}
               className={styles.day}
               data-outside={!isSameMonth(day, cursor)}
               data-today={isSameDay(day, new Date(todayIso + 'T00:00:00'))}
               data-past={past}
-              disabled={past}
-              onClick={() => !past && onPickDay(iso)}
-              aria-label={past ? `${iso} (history)` : `Allocate on ${iso}`}
-              title={past ? 'Past date — history only' : undefined}
             >
-              <span className={styles.dayNum}>{format(day, 'd')}</span>
-              <span className={styles.chips}>
-                {list.slice(0, 3).map((a) => (
-                  <span key={a.id} className={styles.chip} title={`${vehicle.get(a.vehicleId)?.registration} · ${driver.get(a.driverId)?.name}`}>
-                    {vehicle.get(a.vehicleId)?.registration ?? a.vehicleId}
-                  </span>
-                ))}
-                {list.length > 3 && <span className={styles.more}>+{list.length - 3}</span>}
-              </span>
-            </button>
+              <button
+                type="button"
+                className={styles.dayNum}
+                disabled={past}
+                onClick={() => !past && onPickDay(iso)}
+                aria-label={past ? `${iso} (history)` : `Allocate on ${iso}`}
+                title={past ? 'Past date — history only' : 'Allocate a vehicle'}
+              >
+                {format(day, 'd')}
+              </button>
+              {list.length > 0 && (
+                <div className={styles.chips}>
+                  {list.map((a) =>
+                    past ? (
+                      <span key={a.id} className={styles.chip} title={labelFor(a)}>
+                        {labelFor(a)}
+                      </span>
+                    ) : (
+                      <button
+                        key={a.id}
+                        type="button"
+                        className={styles.chip}
+                        title={`Edit ${labelFor(a)}`}
+                        onClick={() => onEditAllocation(a)}
+                      >
+                        {labelFor(a)}
+                      </button>
+                    ),
+                  )}
+                </div>
+              )}
+            </div>
           );
         })}
       </div>

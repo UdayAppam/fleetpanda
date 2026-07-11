@@ -619,6 +619,13 @@ shift lifecycle, auth guard), not a blanket 70% across every file.
 
 ## 11. Revision Log
 
+**Rev 31 — allocation calendar: show all + edit/delete:** the day cell now lists **every**
+allocation as a `TRK · Driver` chip (scrollable; the old 3-chip `+N` cap is gone), and clicking a
+chip **edits** that allocation (change vehicle/driver/date, or **Remove**) with the same
+conflict/past-date/capacity guards — the clash check ignores the row being edited. New
+`PATCH`/`DELETE /allocations/:id` (mock handlers + `server.js` parity), `updateAllocation`/
+`deleteAllocation` endpoints, and `update`/`remove` mutations. ADR-31; 100% coverage.
+
 **Rev 30 — driver Schedule page (day-wise month view):** new `/driver/schedule` (nav item +
 `SchedulePage` + `useDriverSchedule`) shows the driver's month **day by day** — each day's assigned
 orders (route · product · qty · status) plus the **truck allocated that day**, with a month

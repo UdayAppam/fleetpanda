@@ -57,6 +57,29 @@ server.post('/allocations', (req, res) => {
   return res.status(201).json(alloc);
 });
 
+// --- allocation edit/delete (same guards; clash check ignores the row itself) ---
+server.patch('/allocations/:id', (req, res) => {
+  const alloc = db.get('allocations').find({ id: req.params.id }).value();
+  if (!alloc) return bad(res, 404, 'Allocation not found');
+  const vehicleId = req.body?.vehicleId ?? alloc.vehicleId;
+  const driverId = req.body?.driverId ?? alloc.driverId;
+  const date = req.body?.date ?? alloc.date;
+  if (date < localToday()) return bad(res, 422, 'Cannot allocate for a past date');
+  const clash = db.get('allocations').value().find((a) => a.id !== alloc.id && a.vehicleId === vehicleId && a.date === date);
+  if (clash) {
+    const vehicle = db.get('vehicles').find({ id: vehicleId }).value();
+    return bad(res, 409, `${vehicle?.registration ?? vehicleId} is already allocated on ${date}`, { conflict: clash });
+  }
+  const updated = db.get('allocations').find({ id: alloc.id }).assign({ vehicleId, driverId, date }).write();
+  return res.json(updated);
+});
+server.delete('/allocations/:id', (req, res) => {
+  const alloc = db.get('allocations').find({ id: req.params.id }).value();
+  if (!alloc) return bad(res, 404, 'Allocation not found');
+  db.get('allocations').remove({ id: req.params.id }).write();
+  return res.json({});
+});
+
 // --- shift start: activate, dispatch orders (source -inventory), with guards ----
 server.post('/shifts/start', (req, res) => {
   const { driverId, date } = req.body ?? {};

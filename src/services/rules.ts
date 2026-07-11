@@ -17,8 +17,9 @@ export function hasAllocationConflict(
   allocations: Allocation[],
   vehicleId: string,
   date: string,
+  excludeId?: string, // ignore this allocation (when editing it)
 ): boolean {
-  return allocations.some((a) => a.vehicleId === vehicleId && a.date === date);
+  return allocations.some((a) => a.id !== excludeId && a.vehicleId === vehicleId && a.date === date);
 }
 
 // Derive a vehicle's map status from its driver's orders (tooltip + filter agree).

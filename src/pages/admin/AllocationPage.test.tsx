@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useNavigate } from 'react-router-dom';
 import { http, HttpResponse } from 'msw';
@@ -66,6 +66,67 @@ describe('AllocationPage', () => {
     expect(screen.getByText('Loading allocations…')).toBeInTheDocument();
     expect(await screen.findByRole('button', { name: /Allocate Vehicle/ })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Vehicle Allocation' })).toBeInTheDocument();
+  });
+
+  function seedEditable() {
+    const db = getDb();
+    db.vehicles = [
+      { id: 'vehicle-1', registration: 'TRK-101', capacity: 8000, type: 'Tanker', status: 'available' },
+      { id: 'vehicle-2', registration: 'TRK-202', capacity: 12000, type: 'Tanker', status: 'available' },
+    ];
+    db.drivers = [
+      { id: 'driver-1', name: 'John', license: 'DL-1', phone: '+1', status: 'available' },
+      { id: 'driver-2', name: 'Mary', license: 'DL-2', phone: '+2', status: 'available' },
+    ];
+    db.allocations = [{ id: 'a1', vehicleId: 'vehicle-1', driverId: 'driver-1', date: d() }];
+    db.orders = [];
+  }
+
+  it('edits an existing allocation from its calendar chip', async () => {
+    seedEditable();
+    const user = userEvent.setup();
+    renderWithProviders(<AllocationPage />);
+    await screen.findByRole('button', { name: /Allocate Vehicle/ });
+
+    await user.click(screen.getByRole('button', { name: 'TRK-101 · John' }));
+    await screen.findByRole('dialog', { name: 'Edit Allocation' });
+
+    await user.selectOptions(vehicleSelect(), 'vehicle-2');
+    await user.click(screen.getByRole('button', { name: /^Save$/ }));
+
+    await waitFor(() => expect(getDb().allocations.find((a) => a.id === 'a1')?.vehicleId).toBe('vehicle-2'));
+  });
+
+  it('removes an allocation via the edit modal after confirming', async () => {
+    seedEditable();
+    const user = userEvent.setup();
+    renderWithProviders(<AllocationPage />);
+    await screen.findByRole('button', { name: /Allocate Vehicle/ });
+
+    await user.click(screen.getByRole('button', { name: 'TRK-101 · John' }));
+    await screen.findByRole('dialog', { name: 'Edit Allocation' });
+    await user.click(screen.getByRole('button', { name: /Remove/ }));
+
+    const confirmDialog = await screen.findByRole('dialog', { name: /Remove allocation/i });
+    await user.click(within(confirmDialog).getByRole('button', { name: /^Remove$/ }));
+
+    await waitFor(() => expect(getDb().allocations.some((a) => a.id === 'a1')).toBe(false));
+  });
+
+  it('uses generic names in the remove confirmation when vehicle/driver are unknown', async () => {
+    const db = getDb();
+    db.allocations = [{ id: 'a1', vehicleId: 'veh-x', driverId: 'drv-x', date: d() }]; // not in lookups
+    db.orders = [];
+    const user = userEvent.setup();
+    renderWithProviders(<AllocationPage />);
+    await screen.findByRole('button', { name: /Allocate Vehicle/ });
+
+    await user.click(screen.getByRole('button', { name: 'veh-x · drv-x' }));
+    await screen.findByRole('dialog', { name: 'Edit Allocation' });
+    await user.click(screen.getByRole('button', { name: /Remove/ }));
+
+    const confirmDialog = await screen.findByRole('dialog', { name: /Remove allocation/i });
+    expect(within(confirmDialog).getByText(/Unassign this vehicle from the driver/i)).toBeInTheDocument();
   });
 
   it('prefills the modal from deep-link location.state', async () => {

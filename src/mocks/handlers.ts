@@ -92,6 +92,32 @@ export function createHandlers(store: MockStore) {
       return HttpResponse.json(alloc, { status: 201 });
     }),
 
+    // --- allocation edit: same guards, but the vehicle+date clash ignores this row ---------
+    http.patch(u('/allocations/:id'), async ({ params, request }) => {
+      const alloc = find(db().allocations, params.id as string);
+      if (!alloc) return err(404, 'Allocation not found');
+      const b = (await request.json()) as { vehicleId?: string; driverId?: string; date?: string };
+      const vehicleId = b.vehicleId ?? alloc.vehicleId;
+      const driverId = b.driverId ?? alloc.driverId;
+      const date = b.date ?? alloc.date;
+      if (date < localToday()) return err(422, 'Cannot allocate for a past date');
+      const clash = db().allocations.find((a) => a.id !== alloc.id && a.vehicleId === vehicleId && a.date === date);
+      if (clash) {
+        const veh = find(db().vehicles, vehicleId);
+        return err(409, `${veh?.registration ?? vehicleId} is already allocated on ${date}`, { conflict: clash });
+      }
+      Object.assign(alloc, { vehicleId, driverId, date });
+      wrote();
+      return HttpResponse.json(alloc);
+    }),
+    http.delete(u('/allocations/:id'), ({ params }) => {
+      const id = params.id as string;
+      if (!find(db().allocations, id)) return err(404, 'Allocation not found');
+      db().allocations = db().allocations.filter((a) => a.id !== id);
+      wrote();
+      return HttpResponse.json({});
+    }),
+
     // --- shift start: dispatch orders, decrement source inventory, flip statuses ---
     http.post(u('/shifts/start'), async ({ request }) => {
       const { driverId, date } = (await request.json()) as { driverId?: string; date?: string };

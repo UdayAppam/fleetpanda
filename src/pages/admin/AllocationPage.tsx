@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CalendarPlus, AlertTriangle, PackageCheck } from 'lucide-react';
+import { CalendarPlus, AlertTriangle, PackageCheck, Trash2 } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
@@ -8,6 +8,7 @@ import { Field, Select, Input } from '@/components/ui/Field';
 import { Spinner } from '@/components/ui/misc';
 import { AllocationCalendar } from '@/features/allocation/AllocationCalendar';
 import { useAllocationMutations } from '@/features/allocation/mutations';
+import { useConfirm } from '@/contexts/ConfirmContext';
 import { useAllocations, useOrders, usePositions } from '@/hooks/queries';
 import { useLookups } from '@/hooks/useLookups';
 import { hasAllocationConflict } from '@/services/rules';
@@ -25,22 +26,33 @@ export default function AllocationPage() {
   const orders = useOrders();
   const positions = usePositions();
   const { vehicle, driver, hub, vehicles, drivers, loading } = useLookups();
-  const { create } = useAllocationMutations();
+  const { create, update, remove } = useAllocationMutations();
+  const confirm = useConfirm();
   const location = useLocation();
 
   const [open, setOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [date, setDate] = useState(today());
   const [vehicleId, setVehicleId] = useState('');
   const [driverId, setDriverId] = useState('');
 
   const list = allocations.data ?? [];
-  const conflict = vehicleId ? hasAllocationConflict(list, vehicleId, date) : false;
+  const conflict = vehicleId ? hasAllocationConflict(list, vehicleId, date, editingId ?? undefined) : false;
   const pastDate = date < today(); // can't allocate in the past — HARD block
 
   const openFor = (iso: string, presetDriver = '') => {
+    setEditingId(null);
     setDate(iso);
     setVehicleId('');
     setDriverId(presetDriver);
+    setOpen(true);
+  };
+
+  const openEdit = (a: { id: string; vehicleId: string; driverId: string; date: string }) => {
+    setEditingId(a.id);
+    setDate(a.date);
+    setVehicleId(a.vehicleId);
+    setDriverId(a.driverId);
     setOpen(true);
   };
 
@@ -93,9 +105,24 @@ export default function AllocationPage() {
   );
 
   const submit = () => {
-    /* v8 ignore next -- this guard mirrors the Allocate button's disabled prop, so it can't run while true */
+    /* v8 ignore next -- this guard mirrors the Save button's disabled prop, so it can't run while true */
     if (!vehicleId || !driverId || conflict || overCapacity || pastDate) return;
-    create.mutate({ vehicleId, driverId, date }, { onSuccess: () => setOpen(false) });
+    const input = { vehicleId, driverId, date };
+    const done = { onSuccess: () => setOpen(false) };
+    if (editingId) update.mutate({ id: editingId, input }, done);
+    else create.mutate(input, done);
+  };
+
+  const del = async () => {
+    /* v8 ignore next -- delete only renders in edit mode, so editingId is always set here */
+    if (!editingId) return;
+    const ok = await confirm({
+      title: 'Remove allocation?',
+      message: `Unassign ${vehicle.get(vehicleId)?.registration ?? 'this vehicle'} from ${driver.get(driverId)?.name ?? 'the driver'} on ${date}?`,
+      confirmLabel: 'Remove',
+      danger: true,
+    });
+    if (ok) remove.mutate(editingId, { onSuccess: () => setOpen(false) });
   };
 
   if (loading || allocations.isLoading || orders.isLoading) return <Spinner label="Loading allocations…" />;
@@ -111,23 +138,28 @@ export default function AllocationPage() {
           </Button>
         }
       />
-      <AllocationCalendar allocations={list} vehicle={vehicle} driver={driver} onPickDay={openFor} />
+      <AllocationCalendar allocations={list} vehicle={vehicle} driver={driver} onPickDay={openFor} onEditAllocation={openEdit} />
 
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title="Allocate Vehicle"
+        title={editingId ? 'Edit Allocation' : 'Allocate Vehicle'}
         footer={
           <>
+            {editingId && (
+              <Button variant="danger" icon={<Trash2 size={15} />} onClick={del} loading={remove.isPending}>
+                Remove
+              </Button>
+            )}
             <Button variant="ghost" onClick={() => setOpen(false)}>
               Cancel
             </Button>
             <Button
               onClick={submit}
-              loading={create.isPending}
+              loading={create.isPending || update.isPending}
               disabled={!vehicleId || !driverId || conflict || overCapacity || pastDate}
             >
-              Allocate
+              {editingId ? 'Save' : 'Allocate'}
             </Button>
           </>
         }
@@ -152,7 +184,7 @@ export default function AllocationPage() {
               {vehicles.map((v) => {
                 const tooSmall = dayLoad > 0 && v.capacity < dayLoad;
                 const inMaintenance = v.status === 'maintenance';
-                const booked = hasAllocationConflict(list, v.id, date);
+                const booked = hasAllocationConflict(list, v.id, date, editingId ?? undefined);
                 const reason = tooSmall ? 'too small' : inMaintenance ? 'maintenance' : booked ? 'booked' : '';
                 return (
                   <option key={v.id} value={v.id} disabled={Boolean(reason)}>
