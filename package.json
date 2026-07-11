@@ -11,7 +11,7 @@
     "seed": "node seed.js",
     "seed:snapshot": "SEED_DATE=2026-07-10 node seed.js && cp db.json src/mocks/db.seed.json",
     "build": "tsc -b && vite build",
-    "build:mock": "VITE_MOCK=true VITE_DEMO_DATE=2026-07-10 npm run build",
+    "build:mock": "VITE_MOCK=true npm run build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

@@ -471,6 +471,27 @@ These aren't library choices but they materially shape the app; recorded for tra
 - **Trade-off:** The curve is decorative, not road-accurate. If real turn-by-turn geometry is
   needed, `routePath()` is the single seam to swap for a routing-API call.
 
+## ADR-30 — Rolling demo (re-anchor the seed to today) + driver month summary
+
+- **Context:** The mock pinned "today" to the seed's base date (2026-07-10), so a reviewer opening
+  the app days later saw a coherent-but-obviously-stale snapshot ("today" stuck in the past). The
+  data is fully relative to that base, so it can be re-dated.
+- **Decision:**
+  - **Rolling demo:** `src/mocks/reanchor.ts` shifts every dated field (order `deliveryDate`/
+    `completedAt`, allocation/shift dates + timestamps, position `updatedAt`) by
+    `(DEMO_DATE − SEED_BASE)` days when the browser mock seeds. `DEMO_DATE` is back to the **real**
+    local day, and the localStorage cache is keyed by that anchor so it **re-seeds when the day
+    rolls over** (same-day edits persist). So any reviewer, any day, sees a current past/today/future.
+    The `VITE_DEMO_DATE` pins in netlify.toml/build:mock were removed (no longer needed).
+  - **Driver month summary:** `useDriverDay` adds a `month` roll-up (assigned/delivered/remaining +
+    next upcoming run); the Shift page shows it as a compact strip **above** — and secondary to —
+    today's shift.
+- **Reasoning:** The demo always looks live without a backend, and drivers get their broader
+  workload at a glance, not just today. Re-anchoring is pure/tested (`reanchor.test.ts`); tests use
+  the small fixture (not the snapshot), so they're unaffected.
+- **Trade-off:** Same-day mock edits reset when the calendar day changes (acceptable for a demo).
+  Full-stack mode (real json-server) is unchanged — it already tracks the real day.
+
 ## ADR-29 — Driver view as "trips" (load once, chained drops) + all-driver logins
 
 - **Context:** A driver's day is a **milk-run**: load once at a source, then drop at several hubs.

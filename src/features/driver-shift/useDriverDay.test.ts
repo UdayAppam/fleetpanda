@@ -1,13 +1,14 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { waitFor } from '@testing-library/react';
 import { useDriverDay } from './useDriverDay';
 import { renderHookWithProviders, makeStore } from '@/test/renderWithProviders';
 import { resetDb, getDb } from '@/test/mswServer';
 import { loginSuccess } from '@/store/slices/authSlice';
-import { today } from '@/utils/clock';
-import type { User } from '@/types';
+import { today, __setToday } from '@/utils/clock';
+import type { Order, User } from '@/types';
 
 const iso = today();
+afterEach(() => __setToday(iso)); // some cases pin "today"; always restore the real one
 const driverUser: User = { id: 'user-driver', email: 'd@x.com', name: 'John', role: 'driver', driverId: 'driver-1' };
 
 function driverStore() {
@@ -74,6 +75,33 @@ describe('useDriverDay', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.readiness.ready).toBe(false);
     expect(result.current.readiness.reason).toContain('ghost-hub');
+  });
+
+  it('summarises the driver\'s current-month orders with the next upcoming run', async () => {
+    __setToday('2026-07-15');
+    const db = getDb();
+    const mk = (over: Partial<Order> & { id: string }): Order => ({
+      sourceId: 'hub-1', destinationId: 'hub-3', product: 'diesel', quantity: 1000,
+      deliveryDate: '2026-07-15', assignedDriverId: 'driver-1', status: 'assigned', ...over,
+    });
+    db.orders = [
+      mk({ id: 'm-today' }), // today
+      mk({ id: 'm-done', deliveryDate: '2026-07-05', status: 'delivered' }),
+      mk({ id: 'm-fail', deliveryDate: '2026-07-08', status: 'failed' }),
+      mk({ id: 'm-next', deliveryDate: '2026-07-25' }), // upcoming → nextDate
+      mk({ id: 'm-other-month', deliveryDate: '2026-08-02' }), // excluded
+      mk({ id: 'm-other-driver', assignedDriverId: 'driver-2' }), // excluded
+    ];
+    const { result } = renderHookWithProviders(() => useDriverDay(), { store: driverStore() });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    const m = result.current.month;
+    expect(m.key).toBe('2026-07');
+    expect(m.total).toBe(4);
+    expect(m.delivered).toBe(1);
+    expect(m.failed).toBe(1);
+    expect(m.remaining).toBe(2);
+    expect(m.nextDate).toBe('2026-07-25');
   });
 
   it('has no allocation/orders for an unauthenticated (no driverId) user', async () => {

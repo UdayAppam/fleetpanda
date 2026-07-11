@@ -187,9 +187,9 @@ The deployed build runs its **own API inside the browser** via **MSW (Mock Servi
 so it hosts on any static host with **no server, no database, no cold starts**. The same
 handler code that backs the tests (`src/mocks/handlers.ts`) is served by a Service Worker
 (`src/mocks/browser.ts`), seeded from a frozen snapshot (`src/mocks/db.seed.json`) and
-persisted per-browser to `localStorage`. This is enabled by `VITE_MOCK=true` (wired in
-`netlify.toml`), which also pins `VITE_DEMO_DATE=2026-07-10` so the demo's "today" always
-matches the seed. See **ADR-28**.
+persisted per-browser to `localStorage`. Enabled by `VITE_MOCK=true` (wired in `netlify.toml`).
+The seed is **re-anchored to the real day at load** (`src/mocks/reanchor.ts`), so the demo always
+shows a current past/today/future no matter when it's opened. See **ADR-28** and **ADR-30**.
 
 ```bash
 npm run dev:mock       # run locally in serverless mode (no json-server needed)

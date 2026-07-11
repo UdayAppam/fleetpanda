@@ -24,6 +24,22 @@ export function useDriverDay() {
     (s: Shift) => s.driverId === driverId && s.date === iso && s.status === 'active',
   );
 
+  // This-month summary (secondary to today's shift): all of the driver's orders in the current
+  // month, so a driver sees their broader workload, not just today.
+  const month = useMemo(() => {
+    const key = iso.slice(0, 7); // YYYY-MM
+    const mine = (orders.data ?? []).filter(
+      (o) => o.assignedDriverId === driverId && o.deliveryDate.slice(0, 7) === key,
+    );
+    const delivered = mine.filter((o) => o.status === 'delivered').length;
+    const failed = mine.filter((o) => o.status === 'failed').length;
+    const nextDate = mine
+      .filter((o) => o.deliveryDate > iso)
+      .map((o) => o.deliveryDate)
+      .sort()[0];
+    return { key, total: mine.length, delivered, failed, remaining: mine.length - delivered - failed, nextDate: nextDate ?? null };
+  }, [orders.data, driverId, iso]);
+
   const hubInventory = useMemo(() => {
     const map: Record<string, Record<string, number>> = {};
     hub.forEach((h) => (map[h.id] = h.inventory));
@@ -42,6 +58,7 @@ export function useDriverDay() {
     allocation,
     allocatedVehicle: allocation ? vehicle.get(allocation.vehicleId) : undefined,
     orders: todaysOrders,
+    month,
     activeShift,
     readiness,
     hub,

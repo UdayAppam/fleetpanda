@@ -1,4 +1,5 @@
-import { Play, Square, Truck, Info, Clock, Route, MapPin, Package, CheckCircle2, Fuel } from 'lucide-react';
+import { Play, Square, Truck, Info, Clock, Route, MapPin, Package, CheckCircle2, Fuel, CalendarDays } from 'lucide-react';
+import { format } from 'date-fns';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, Spinner, ErrorState } from '@/components/ui/misc';
 import { Button } from '@/components/ui/Button';
@@ -57,6 +58,19 @@ export default function ShiftPage() {
   return (
     <div className={styles.wrap}>
       <PageHeader eyebrow={`Driver · ${fmtDate(today())}`} title="Shift & Deliveries" />
+
+      {/* This-month summary — secondary context above today's shift */}
+      {day.month.total > 0 && (
+        <div className={styles.monthBar}>
+          <span className={styles.monthLabel}>
+            <CalendarDays size={14} /> {format(new Date(day.month.key + '-01T00:00:00'), 'MMMM')}
+          </span>
+          <span><Package size={13} /> {day.month.total} assigned</span>
+          <span className={styles.mOk}><CheckCircle2 size={13} /> {day.month.delivered} done</span>
+          <span>{day.month.remaining} to go</span>
+          {day.month.nextDate && <span className={styles.mNext}>next {fmtDate(day.month.nextDate)}</span>}
+        </div>
+      )}
 
       {/* Shift status */}
       <Card className={styles.hero}>

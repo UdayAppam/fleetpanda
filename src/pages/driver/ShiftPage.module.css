@@ -88,6 +88,37 @@
   color: var(--ok);
   font-weight: 600;
 }
+.monthBar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  padding: var(--sp-2) var(--sp-3);
+  margin-bottom: var(--sp-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.monthBar span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.monthLabel {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text);
+}
+.mOk {
+  color: var(--ok);
+}
+.mNext {
+  margin-left: auto;
+  color: var(--brand);
+  font-weight: 600;
+}
 .tank {
   display: flex;
   align-items: center;

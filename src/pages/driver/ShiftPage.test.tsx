@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
@@ -7,10 +7,12 @@ import { renderWithProviders, makeStore } from '@/test/renderWithProviders';
 import { resetDb, getDb, server } from '@/test/mswServer';
 import { API_URL } from '@/config/env';
 import { loginSuccess } from '@/store/slices/authSlice';
-import { today } from '@/utils/clock';
+import { today, __setToday } from '@/utils/clock';
 import type { Order } from '@/types';
 
+const realToday = today();
 beforeEach(() => resetDb());
+afterEach(() => __setToday(realToday)); // some cases pin "today"; always restore the real one
 
 function authedStore() {
   const store = makeStore();
@@ -52,6 +54,23 @@ describe('ShiftPage', () => {
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent(/boom|failed/i);
     await userEvent.click(screen.getByRole('button', { name: /retry/i }));
+  });
+
+  it('shows the this-month summary with the next upcoming run', async () => {
+    __setToday('2026-07-15');
+    seedAllocationToday(); // uses today() = 2026-07-15
+    getDb().orders = [
+      order({ id: 'order-1', deliveryDate: '2026-07-15' }), // today
+      order({ id: 'order-done', deliveryDate: '2026-07-05', status: 'delivered' }),
+      order({ id: 'order-next', deliveryDate: '2026-07-22' }), // upcoming
+    ];
+    renderWithProviders(<ShiftPage />, { store: authedStore() });
+
+    await screen.findByText('Shift & Deliveries');
+    expect(screen.getByText('July')).toBeInTheDocument();
+    expect(screen.getByText(/3 assigned/)).toBeInTheDocument();
+    expect(screen.getByText(/1 done/)).toBeInTheDocument();
+    expect(screen.getByText(/^next /)).toBeInTheDocument(); // nextDate branch
   });
 
   it('disables Start Shift and explains why when the driver is not ready (stock short)', async () => {

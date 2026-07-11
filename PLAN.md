@@ -619,6 +619,17 @@ shift lifecycle, auth guard), not a blanket 70% across every file.
 
 ## 11. Revision Log
 
+**Rev 29 — rolling demo + driver month summary:**
+- **Rolling demo:** `src/mocks/reanchor.ts` re-dates the frozen seed to the real day at load, so a
+  reviewer opening the app any day sees a current past/today/future (not a snapshot stuck on
+  2026-07-10). Cache is keyed by the anchor day so it re-seeds when the day rolls over. Supersedes
+  Rev 28's date-pin: `DEMO_DATE` tracks the real day again; `VITE_DEMO_DATE` pins removed from
+  netlify.toml/build:mock.
+- **Driver month summary:** `useDriverDay` adds a `month` roll-up; the Shift page shows a compact
+  strip (assigned · done · to-go · next run) above and secondary to today's shift.
+- ADR-30. **427 tests, 100% coverage** (new `reanchor.test.ts`; month cases pin "today" via
+  `__setToday`).
+
 **Rev 28 — mock demo date pinned to the seed:** `npm run dev:mock` didn't pin `VITE_DEMO_DATE`, so
 local serverless treated the real calendar day as "today" while the frozen seed is dated
 2026-07-10 — so drivers (e.g. Amina) showed no shift/truck/deliveries. `env.ts` now defaults
