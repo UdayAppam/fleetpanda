@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>41/41</span>
+                <span class='fraction'>45/45</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>22/22</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>41/41</span>
+                <span class='fraction'>45/45</span>
             </div>
         
             
@@ -116,43 +116,53 @@
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">32x</span>
-<span class="cline-any cline-yes">32x</span>
-<span class="cline-any cline-yes">32x</span>
-<span class="cline-any cline-yes">32x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">911x</span>
-<span class="cline-any cline-yes">911x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">911x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">910x</span>
 <span class="cline-any cline-yes">910x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">910x</span>
+<span class="cline-any cline-yes">909x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">911x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">910x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">911x</span>
-<span class="cline-any cline-yes">911x</span>
+<span class="cline-any cline-yes">910x</span>
+<span class="cline-any cline-yes">910x</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">29x</span>
@@ -185,6 +195,7 @@ export class ApiError extends Error {
 // (index.html), which only happens in serverless demo mode when the MSW Service Worker has
 // been evicted while idle and the request fell through to the network instead of the mock.
 const looksLikeHtml = (text: string) =&gt; text.trimStart().startsWith('&lt;');
+const sleep = (ms: number) =&gt; new Promise((r) =&gt; setTimeout(r, ms));
 &nbsp;
 async function request&lt;T&gt;(path: string, init?: RequestInit): Promise&lt;T&gt; {
   const doFetch = () =&gt; fetch(`${API_URL}${path}`, { headers: { 'Content-Type': 'application/json' }, ...init });
@@ -193,14 +204,18 @@ async function request&lt;T&gt;(path: string, init?: RequestInit): Promise&lt;T&
   let text = await res.text();
 &nbsp;
   // Serverless demo self-heal: if the mock Service Worker was evicted while idle, the request
-  // fell through to index.html. Re-arm the worker and retry once before giving up.
+  // fell through to index.html. Re-arm the worker, then retry with backoff — the worker needs a
+  // moment to re-activate and re-take control of the page before it can intercept again.
   if (USE_MOCK &amp;&amp; looksLikeHtml(text)) {
     const { reviveMockWorker } = await import('@/mocks/browser');
     await reviveMockWorker();
-    res = await doFetch();
-    text = await res.text();
+    for (let attempt = 1; attempt &lt;= 4 &amp;&amp; looksLikeHtml(text); attempt++) {
+      await sleep(150 * attempt); // 150ms → 600ms
+      res = await doFetch();
+      text = await res.text();
+    }
     if (looksLikeHtml(text)) {
-      throw new ApiError(503, 'Demo API is waking up — please retry in a moment.');
+      throw new ApiError(503, 'Demo API is starting up — please retry in a moment.');
     }
   }
 &nbsp;
@@ -229,7 +244,7 @@ export const http = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-11T08:57:44.336Z
+                at 2026-07-11T09:08:13.942Z
             </div>
         <script src="../prettify.js"></script>
         <script>

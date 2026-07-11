@@ -66,12 +66,17 @@ export function startMockWorker() {
 // that fires in the gap before the Service Worker restarts falls through to the static host's
 // SPA fallback (index.html) and blows up JSON.parse. Called by httpClient's self-heal path.
 export async function reviveMockWorker() {
-  if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
-    try {
-      await navigator.serviceWorker.ready;
-    } catch {
-      /* no active registration — worker.start() below re-registers it */
-    }
+  // Re-registers + re-activates the worker and re-establishes the client↔worker message channel
+  // MSW uses to resolve handlers (which is what an idle eviction breaks).
+  await worker.start(startOptions);
+  // If this page isn't controlled yet (fresh/reclaimed worker), wait until it takes control so
+  // the very next request is actually intercepted rather than falling through again.
+  const sw = typeof navigator !== 'undefined' ? navigator.serviceWorker : undefined;
+  if (sw && !sw.controller) {
+    await new Promise<void>((resolve) => {
+      const done = () => resolve();
+      sw.addEventListener('controllerchange', done, { once: true });
+      setTimeout(done, 1500); // safety timeout — don't hang if control never changes
+    });
   }
-  return worker.start(startOptions);
 }

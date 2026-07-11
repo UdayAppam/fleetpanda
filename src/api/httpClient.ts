@@ -14,6 +14,7 @@ export class ApiError extends Error {
 // (index.html), which only happens in serverless demo mode when the MSW Service Worker has
 // been evicted while idle and the request fell through to the network instead of the mock.
 const looksLikeHtml = (text: string) => text.trimStart().startsWith('<');
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const doFetch = () => fetch(`${API_URL}${path}`, { headers: { 'Content-Type': 'application/json' }, ...init });
@@ -22,14 +23,18 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let text = await res.text();
 
   // Serverless demo self-heal: if the mock Service Worker was evicted while idle, the request
-  // fell through to index.html. Re-arm the worker and retry once before giving up.
+  // fell through to index.html. Re-arm the worker, then retry with backoff — the worker needs a
+  // moment to re-activate and re-take control of the page before it can intercept again.
   if (USE_MOCK && looksLikeHtml(text)) {
     const { reviveMockWorker } = await import('@/mocks/browser');
     await reviveMockWorker();
-    res = await doFetch();
-    text = await res.text();
+    for (let attempt = 1; attempt <= 4 && looksLikeHtml(text); attempt++) {
+      await sleep(150 * attempt); // 150ms → 600ms
+      res = await doFetch();
+      text = await res.text();
+    }
     if (looksLikeHtml(text)) {
-      throw new ApiError(503, 'Demo API is waking up — please retry in a moment.');
+      throw new ApiError(503, 'Demo API is starting up — please retry in a moment.');
     }
   }
 

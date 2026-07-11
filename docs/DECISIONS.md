@@ -562,6 +562,8 @@ These aren't library choices but they materially shape the app; recorded for tra
 - **Idle-eviction self-heal:** Browsers stop idle Service Workers, so a request that fires in the
   gap before the worker restarts (e.g. the 30 s Fleet Map poll) falls through to the static host's
   SPA fallback (`index.html`) and crashes `JSON.parse` (`Unexpected token '<'`). `httpClient`
-  guards this: in mock mode an HTML response triggers `reviveMockWorker()` (awaits
-  `navigator.serviceWorker.ready`, re-runs `worker.start()`) and **retries once**, else throws a
-  clear 503. Covered by `src/api/httpClient.selfheal.test.ts`.
+  guards this: in mock mode an HTML response triggers `reviveMockWorker()` — which re-runs
+  `worker.start()` (re-establishing the client↔worker channel MSW uses) and **waits for the worker
+  to re-take control of the page** (`controllerchange`) — then **retries with backoff** (a single
+  immediate retry raced the re-activation and still failed). Only if every retry still returns HTML
+  does it throw a clear 503. Covered by `src/api/httpClient.selfheal.test.ts`.

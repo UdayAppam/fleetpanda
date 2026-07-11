@@ -14,25 +14,38 @@ const jsonResponse = (body: unknown) => new Response(JSON.stringify(body), { sta
 
 describe('httpClient serverless self-heal', () => {
   beforeEach(() => revive.mockClear());
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
 
-  it('re-arms the worker and retries once when a request falls through to index.html', async () => {
-    const fetchMock = vi.fn().mockResolvedValueOnce(htmlResponse()).mockResolvedValueOnce(jsonResponse([{ id: 'order-1' }]));
+  it('re-arms the worker and retries with backoff after a fall-through to index.html', async () => {
+    // HTML on the first try, then JSON once the worker has re-taken control.
+    const fetchMock = vi.fn().mockResolvedValueOnce(htmlResponse()).mockResolvedValue(jsonResponse([{ id: 'order-1' }]));
     vi.stubGlobal('fetch', fetchMock);
+    vi.useFakeTimers();
 
-    const data = await http.get<{ id: string }[]>('/orders');
+    const p = http.get<{ id: string }[]>('/orders');
+    await vi.runAllTimersAsync(); // flush the backoff delay
+    const data = await p;
 
     expect(revive).toHaveBeenCalledOnce();
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(data[0].id).toBe('order-1');
   });
 
-  it('throws a clear 503 when the worker still cannot intercept after revival', async () => {
+  it('throws a clear 503 when the worker still cannot intercept after all retries', async () => {
     const fetchMock = vi.fn().mockImplementation(async () => htmlResponse());
     vi.stubGlobal('fetch', fetchMock);
+    vi.useFakeTimers();
 
-    await expect(http.get('/orders')).rejects.toMatchObject({ status: 503 });
+    const p = http.get('/orders').then(() => null, (e) => e);
+    await vi.runAllTimersAsync(); // flush all backoff delays
+    const err = await p;
+
+    expect(err).toBeInstanceOf(ApiError);
+    expect((err as ApiError).status).toBe(503);
     expect(revive).toHaveBeenCalledOnce();
-    await expect(http.get('/orders')).rejects.toBeInstanceOf(ApiError);
+    expect(fetchMock.mock.calls.length).toBeGreaterThan(2); // initial + several retries
   });
 });
