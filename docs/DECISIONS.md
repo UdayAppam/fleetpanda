@@ -498,3 +498,9 @@ These aren't library choices but they materially shape the app; recorded for tra
 - **Trade-off:** Mock data is **per-browser and ephemeral** (a "Reset demo" seam exists via
   `resetMockData()`), not shared across users/devices. For true shared state, run the full-stack
   option (`VITE_API_URL` → hosted `server.js`) — the app code is identical either way.
+- **Idle-eviction self-heal:** Browsers stop idle Service Workers, so a request that fires in the
+  gap before the worker restarts (e.g. the 30 s Fleet Map poll) falls through to the static host's
+  SPA fallback (`index.html`) and crashes `JSON.parse` (`Unexpected token '<'`). `httpClient`
+  guards this: in mock mode an HTML response triggers `reviveMockWorker()` (awaits
+  `navigator.serviceWorker.ready`, re-runs `worker.start()`) and **retries once**, else throws a
+  clear 503. Covered by `src/api/httpClient.selfheal.test.ts`.

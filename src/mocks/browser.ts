@@ -46,10 +46,26 @@ export function resetMockData() {
 
 const worker = setupWorker(...createHandlers(store));
 
+const startOptions = {
+  serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` },
+  onUnhandledRequest: 'bypass' as const,
+  quiet: true,
+};
+
 export function startMockWorker() {
-  return worker.start({
-    serviceWorker: { url: `${import.meta.env.BASE_URL}mockServiceWorker.js` },
-    onUnhandledRequest: 'bypass',
-    quiet: true,
-  });
+  return worker.start(startOptions);
+}
+
+// Re-arm the worker after the browser evicts it while the tab is idle. Without this, a request
+// that fires in the gap before the Service Worker restarts falls through to the static host's
+// SPA fallback (index.html) and blows up JSON.parse. Called by httpClient's self-heal path.
+export async function reviveMockWorker() {
+  if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
+    try {
+      await navigator.serviceWorker.ready;
+    } catch {
+      /* no active registration — worker.start() below re-registers it */
+    }
+  }
+  return worker.start(startOptions);
 }

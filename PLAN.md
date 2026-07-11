@@ -619,6 +619,14 @@ shift lifecycle, auth guard), not a blanket 70% across every file.
 
 ## 11. Revision Log
 
+**Rev 26 — serverless self-heal: recover from idle Service-Worker eviction:**
+- Fixed the deployed-demo error `Unexpected token '<', "<!doctype "... is not valid JSON` seen
+  **after the tab sat idle**: browsers stop idle Service Workers, so a request (e.g. the 30 s Fleet
+  Map poll) fell through to Netlify's SPA fallback (`index.html`) and crashed `JSON.parse`.
+- `httpClient` now self-heals in mock mode — an HTML response re-arms the worker
+  (`reviveMockWorker()` → `navigator.serviceWorker.ready` + `worker.start()`) and **retries once**,
+  otherwise throws a clear 503. New test `httpClient.selfheal.test.ts`; ADR-28 updated.
+
 **Rev 25 — serverless deploy: in-browser mock API (MSW):**
 - The app now ships a **serverless build** that runs its API **inside the browser** via a
   **Service Worker** (MSW), so it hosts on Netlify with **no backend, no DB, no cold start**

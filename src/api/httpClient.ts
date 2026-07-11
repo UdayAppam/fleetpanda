@@ -1,4 +1,4 @@
-import { API_URL } from '@/config/env';
+import { API_URL, USE_MOCK } from '@/config/env';
 
 export class ApiError extends Error {
   status: number;
@@ -10,12 +10,29 @@ export class ApiError extends Error {
   }
 }
 
+// A same-origin response whose body starts with '<' is the static host's SPA fallback
+// (index.html), which only happens in serverless demo mode when the MSW Service Worker has
+// been evicted while idle and the request fell through to the network instead of the mock.
+const looksLikeHtml = (text: string) => text.trimStart().startsWith('<');
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...init,
-  });
-  const text = await res.text();
+  const doFetch = () => fetch(`${API_URL}${path}`, { headers: { 'Content-Type': 'application/json' }, ...init });
+
+  let res = await doFetch();
+  let text = await res.text();
+
+  // Serverless demo self-heal: if the mock Service Worker was evicted while idle, the request
+  // fell through to index.html. Re-arm the worker and retry once before giving up.
+  if (USE_MOCK && looksLikeHtml(text)) {
+    const { reviveMockWorker } = await import('@/mocks/browser');
+    await reviveMockWorker();
+    res = await doFetch();
+    text = await res.text();
+    if (looksLikeHtml(text)) {
+      throw new ApiError(503, 'Demo API is waking up — please retry in a moment.');
+    }
+  }
+
   const data = text ? JSON.parse(text) : undefined;
   if (!res.ok) {
     const message = (data && (data.error || data.message)) || `Request failed (${res.status})`;
