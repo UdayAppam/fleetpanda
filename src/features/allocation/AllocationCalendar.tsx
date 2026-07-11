@@ -15,15 +15,18 @@ import { today } from '@/utils/clock';
 import type { Allocation, Driver, Vehicle } from '@/types';
 import styles from './AllocationCalendar.module.css';
 
+const MAX_CHIPS = 3; // keep cells readable; the rest open in a day modal
+
 interface Props {
   allocations: Allocation[];
   vehicle: Map<string, Vehicle>;
   driver: Map<string, Driver>;
   onPickDay: (isoDate: string) => void;
   onEditAllocation: (allocation: Allocation) => void;
+  onShowDay: (isoDate: string) => void;
 }
 
-export function AllocationCalendar({ allocations, vehicle, driver, onPickDay, onEditAllocation }: Props) {
+export function AllocationCalendar({ allocations, vehicle, driver, onPickDay, onEditAllocation, onShowDay }: Props) {
   const [cursor, setCursor] = useState(() => new Date(today() + 'T00:00:00'));
   const todayIso = today();
 
@@ -89,7 +92,7 @@ export function AllocationCalendar({ allocations, vehicle, driver, onPickDay, on
               </button>
               {list.length > 0 && (
                 <div className={styles.chips}>
-                  {list.map((a) =>
+                  {list.slice(0, MAX_CHIPS).map((a) =>
                     past ? (
                       <span key={a.id} className={styles.chip} title={labelFor(a)}>
                         {labelFor(a)}
@@ -105,6 +108,16 @@ export function AllocationCalendar({ allocations, vehicle, driver, onPickDay, on
                         {labelFor(a)}
                       </button>
                     ),
+                  )}
+                  {list.length > MAX_CHIPS && (
+                    <button
+                      type="button"
+                      className={styles.more}
+                      onClick={() => onShowDay(iso)}
+                      title={`Show all ${list.length} allocations on ${iso}`}
+                    >
+                      +{list.length - MAX_CHIPS} more
+                    </button>
                   )}
                 </div>
               )}

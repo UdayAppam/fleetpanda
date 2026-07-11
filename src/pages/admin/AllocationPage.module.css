@@ -1,0 +1,26 @@
+.dayList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.dayRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+.dayVeh {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dayDrv {
+  color: var(--text-muted);
+}
+.dayRow > :last-child {
+  margin-left: auto;
+}

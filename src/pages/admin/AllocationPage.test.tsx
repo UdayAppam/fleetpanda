@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { screen, fireEvent, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +7,12 @@ import AllocationPage from './AllocationPage';
 import { renderWithProviders } from '@/test/renderWithProviders';
 import { resetDb, getDb, server } from '@/test/mswServer';
 import { API_URL } from '@/config/env';
-import { today } from '@/utils/clock';
+import { today, __setToday } from '@/utils/clock';
 import type { Order } from '@/types';
 
+const realToday = today();
 beforeEach(() => resetDb());
+afterEach(() => __setToday(realToday)); // some cases pin "today"; always restore
 
 const d = () => today();
 
@@ -127,6 +129,64 @@ describe('AllocationPage', () => {
 
     const confirmDialog = await screen.findByRole('dialog', { name: /Remove allocation/i });
     expect(within(confirmDialog).getByText(/Unassign this vehicle from the driver/i)).toBeInTheDocument();
+  });
+
+  it('opens the day view from "+N more" and edits an allocation from it', async () => {
+    const db = getDb();
+    db.vehicles = [{ id: 'vehicle-1', registration: 'TRK-101', capacity: 8000, type: 'Tanker', status: 'available' }];
+    db.drivers = [{ id: 'driver-1', name: 'John', license: 'DL-1', phone: '+1', status: 'available' }];
+    db.orders = [];
+    db.allocations = Array.from({ length: 5 }, (_, i) => ({ id: `b${i}`, vehicleId: 'vehicle-1', driverId: 'driver-1', date: d() }));
+    const user = userEvent.setup();
+    renderWithProviders(<AllocationPage />);
+    await screen.findByRole('button', { name: /Allocate Vehicle/ });
+
+    await user.click(screen.getByRole('button', { name: /\+2 more/ }));
+    const dayDialog = await screen.findByRole('dialog', { name: /Allocations ·/ });
+    expect(within(dayDialog).getAllByRole('button', { name: /^Edit$/ })).toHaveLength(5);
+    expect(within(dayDialog).getByRole('button', { name: /Add allocation/ })).toBeInTheDocument();
+
+    await user.click(within(dayDialog).getAllByRole('button', { name: /^Edit$/ })[0]);
+    await screen.findByRole('dialog', { name: 'Edit Allocation' });
+  });
+
+  it('adds a new allocation for the day from the day view', async () => {
+    const db = getDb();
+    db.vehicles = [{ id: 'vehicle-1', registration: 'TRK-101', capacity: 8000, type: 'Tanker', status: 'available' }];
+    db.drivers = [{ id: 'driver-1', name: 'John', license: 'DL-1', phone: '+1', status: 'available' }];
+    db.orders = [];
+    db.allocations = Array.from({ length: 4 }, (_, i) => ({ id: `b${i}`, vehicleId: 'vehicle-1', driverId: 'driver-1', date: d() }));
+    const user = userEvent.setup();
+    renderWithProviders(<AllocationPage />);
+    await screen.findByRole('button', { name: /Allocate Vehicle/ });
+
+    await user.click(screen.getByRole('button', { name: /\+1 more/ }));
+    const dayDialog = await screen.findByRole('dialog', { name: /Allocations ·/ });
+    await user.click(within(dayDialog).getByRole('button', { name: /Add allocation/ }));
+    await screen.findByRole('dialog', { name: 'Allocate Vehicle' });
+  });
+
+  it('shows a past day view read-only, with id fallbacks and no add', async () => {
+    __setToday('2026-07-15');
+    const db = getDb();
+    db.vehicles = [];
+    db.drivers = [];
+    db.orders = [];
+    db.allocations = Array.from({ length: 4 }, (_, i) => ({ id: `p${i}`, vehicleId: 'veh-x', driverId: 'drv-x', date: '2026-07-10' }));
+    const user = userEvent.setup();
+    renderWithProviders(<AllocationPage />);
+    await screen.findByRole('button', { name: /Allocate Vehicle/ });
+
+    await user.click(screen.getByRole('button', { name: /\+1 more/ }));
+    const dayDialog = await screen.findByRole('dialog', { name: /Allocations · 2026-07-10/ });
+    expect(within(dayDialog).getAllByText('history').length).toBeGreaterThanOrEqual(1); // read-only
+    expect(within(dayDialog).queryByRole('button', { name: /Add allocation/ })).not.toBeInTheDocument();
+    expect(within(dayDialog).getAllByText('veh-x').length).toBeGreaterThanOrEqual(1); // vehicle id fallback
+    expect(within(dayDialog).getAllByText('drv-x').length).toBeGreaterThanOrEqual(1); // driver id fallback
+
+    // close the day view (a past day has no footer, only the header close control)
+    await user.click(within(dayDialog).getByRole('button', { name: /^close$/i }));
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: /Allocations · 2026-07-10/ })).not.toBeInTheDocument());
   });
 
   it('prefills the modal from deep-link location.state', async () => {

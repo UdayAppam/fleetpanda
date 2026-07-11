@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CalendarPlus, AlertTriangle, PackageCheck, Trash2 } from 'lucide-react';
+import { CalendarPlus, AlertTriangle, PackageCheck, Trash2, Truck, Pencil } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
@@ -16,8 +16,10 @@ import { driverDayPlan, fmtDuration, SHIFT_HOURS } from '@/services/logistics';
 import { today } from '@/utils/clock';
 import { fmtQty } from '@/utils/format';
 import { Clock, GaugeCircle } from 'lucide-react';
+import { Badge } from '@/components/ui/Badge';
 import type { Order } from '@/types';
 import formStyles from '@/features/master-data/forms.module.css';
+import styles from './AllocationPage.module.css';
 
 const ACTIVE = (o: Order) => o.status !== 'delivered' && o.status !== 'failed';
 
@@ -32,6 +34,7 @@ export default function AllocationPage() {
 
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [dayModal, setDayModal] = useState<string | null>(null);
   const [date, setDate] = useState(today());
   const [vehicleId, setVehicleId] = useState('');
   const [driverId, setDriverId] = useState('');
@@ -41,6 +44,7 @@ export default function AllocationPage() {
   const pastDate = date < today(); // can't allocate in the past — HARD block
 
   const openFor = (iso: string, presetDriver = '') => {
+    setDayModal(null);
     setEditingId(null);
     setDate(iso);
     setVehicleId('');
@@ -49,6 +53,7 @@ export default function AllocationPage() {
   };
 
   const openEdit = (a: { id: string; vehicleId: string; driverId: string; date: string }) => {
+    setDayModal(null);
     setEditingId(a.id);
     setDate(a.date);
     setVehicleId(a.vehicleId);
@@ -138,7 +143,14 @@ export default function AllocationPage() {
           </Button>
         }
       />
-      <AllocationCalendar allocations={list} vehicle={vehicle} driver={driver} onPickDay={openFor} onEditAllocation={openEdit} />
+      <AllocationCalendar
+        allocations={list}
+        vehicle={vehicle}
+        driver={driver}
+        onPickDay={openFor}
+        onEditAllocation={openEdit}
+        onShowDay={setDayModal}
+      />
 
       <Modal
         open={open}
@@ -256,6 +268,45 @@ export default function AllocationPage() {
               </span>
             </div>
           )}
+        </div>
+      </Modal>
+
+      {/* Day view: all allocations for one day, opened from the calendar "+N more". */}
+      <Modal
+        open={Boolean(dayModal)}
+        onClose={() => setDayModal(null)}
+        title={dayModal ? `Allocations · ${dayModal}` : ''}
+        footer={
+          dayModal && dayModal >= today() ? (
+            <Button icon={<CalendarPlus size={15} />} onClick={() => openFor(dayModal)}>
+              Add allocation
+            </Button>
+          ) : undefined
+        }
+      >
+        <div className={styles.dayList}>
+          {list
+            .filter((a) => a.date === dayModal)
+            .map((a) => {
+              const v = vehicle.get(a.vehicleId);
+              const dr = driver.get(a.driverId);
+              return (
+                <div key={a.id} className={styles.dayRow}>
+                  <span className={styles.dayVeh}>
+                    <Truck size={15} /> <strong className="mono">{v?.registration ?? a.vehicleId}</strong>
+                    {v && <span className="muted">{fmtQty(v.capacity)}</span>}
+                  </span>
+                  <span className={styles.dayDrv}>{dr?.name ?? a.driverId}</span>
+                  {dayModal && dayModal >= today() ? (
+                    <Button size="sm" variant="ghost" icon={<Pencil size={14} />} onClick={() => openEdit(a)}>
+                      Edit
+                    </Button>
+                  ) : (
+                    <Badge tone="neutral">history</Badge>
+                  )}
+                </div>
+              );
+            })}
         </div>
       </Modal>
     </div>

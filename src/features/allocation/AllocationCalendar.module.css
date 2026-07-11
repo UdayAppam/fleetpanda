@@ -83,13 +83,26 @@
   cursor: default;
   color: var(--text-muted);
 }
-/* All allocations for the day; scrolls when there are many. */
+/* A few readable chips; a "+N more" button opens the rest in a day modal. */
 .chips {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  max-height: 120px;
-  overflow-y: auto;
+}
+.more {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  cursor: pointer;
+}
+.more:hover {
+  border-color: var(--brand);
+  color: var(--brand);
 }
 .chip {
   display: block;
@@ -115,8 +128,5 @@ button.chip:hover {
 @media (max-width: 560px) {
   .day {
     min-height: 62px;
-  }
-  .chips {
-    max-height: 84px;
   }
 }

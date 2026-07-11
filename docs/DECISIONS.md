@@ -476,9 +476,10 @@ These aren't library choices but they materially shape the app; recorded for tra
 - **Context:** The allocation calendar capped a day at 3 chips with a `+N` overflow and showed only
   the vehicle registration (driver hidden in a tooltip), and allocations could only be **created** —
   no edit or delete. Dispatchers couldn't see a busy day's full roster or fix a mistake.
-- **Decision:** Each day cell now lists **all** allocations as `TRK-xxx · Driver` chips in a
-  scrollable list (no cap). The date number is the "add" affordance (keyboard-accessible button);
-  each chip is an "edit" button (past days render read-only text) — avoiding nested interactive
+- **Decision:** Each day cell shows up to **3** readable `TRK-xxx · Driver` chips; a **`+N more`**
+  button opens a **day modal** listing every allocation for that day (truck + capacity + driver,
+  each with **Edit**; past days are read-only). The date number is the "add" affordance
+  (keyboard-accessible button); each chip is an "edit" button — avoiding nested interactive
   elements. Editing reuses the allocation form (change vehicle/driver/date or **Remove**, behind a
   confirm) with the same conflict / past-date / capacity / feasibility guards, except the
   vehicle+date **clash check ignores the row being edited** (`hasAllocationConflict(..., excludeId)`).
