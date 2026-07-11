@@ -116,4 +116,34 @@ describe('LocationPicker', () => {
     expect(onChange).toHaveBeenCalledWith(41.5, -73.5);
     expect(reverseGeocode).not.toHaveBeenCalled();
   });
+
+  it('falls back to a default map centre when coordinates are not finite', () => {
+    render(<LocationPicker lat={Number.NaN} lng={Number.NaN} onChange={() => {}} />);
+    // Invalid coords → `valid` is false, so the centre fallback runs and no marker is drawn.
+    expect(screen.getByTestId('map')).toBeInTheDocument();
+  });
+
+  it('aborts a still-pending search when a newer query fires', async () => {
+    vi.mocked(searchAddress).mockResolvedValue([{ label: 'X', lat: 1, lng: 2 }]);
+    render(<LocationPicker lat={40} lng={-74} onChange={() => {}} />);
+    const input = screen.getByLabelText('Search address');
+
+    await userEvent.type(input, 'Main');
+    await waitFor(() => expect(searchAddress).toHaveBeenCalledTimes(1), { timeout: 2000 });
+    // A second debounce cycle finds abort.current already set and aborts it (line 61).
+    await userEvent.type(input, ' Street');
+    await waitFor(() => expect(searchAddress).toHaveBeenCalledTimes(2), { timeout: 2000 });
+  });
+
+  it('shows the "looking up address" hint while reverse-geocoding is in flight', async () => {
+    let resolve!: (v: string) => void;
+    vi.mocked(reverseGeocode).mockReturnValue(new Promise<string>((r) => (resolve = r)));
+    render(<LocationPicker lat={40} lng={-74} onChange={() => {}} onAddress={vi.fn()} />);
+    await clickMap(41.5, -73.5);
+    // While the promise is pending, `resolving` is true (forms hint, line 137).
+    expect(await screen.findByText(/looking up address/i)).toBeInTheDocument();
+    await act(async () => {
+      resolve('done');
+    });
+  });
 });

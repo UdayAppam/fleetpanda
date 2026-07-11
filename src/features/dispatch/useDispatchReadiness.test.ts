@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { waitFor } from '@testing-library/react';
-import { useDispatchReadiness } from './useDispatchReadiness';
+import { useDispatchReadiness, useReadinessResolver } from './useDispatchReadiness';
 import { renderHookWithProviders } from '@/test/renderWithProviders';
 import { resetDb, getDb } from '@/test/mswServer';
 import { today } from '@/utils/clock';
@@ -69,5 +69,39 @@ describe('useDispatchReadiness', () => {
     const { result } = renderHookWithProviders(() => useDispatchReadiness('1999-01-01'));
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.total).toBe(0);
+  });
+});
+
+describe('useReadinessResolver', () => {
+  it('is safe to call before the queries settle (data still undefined)', () => {
+    const { result } = renderHookWithProviders(() => useReadinessResolver());
+    // First synchronous render: orders/allocations data is undefined, so the resolver must
+    // fall back to empty lists and a zero source-stock for an unknown hub (lines 24,26,34).
+    const readiness = result.current.resolve({
+      id: 'x', sourceId: 'ghost-hub', destinationId: 'hub-3', product: 'diesel',
+      quantity: 1000, deliveryDate: iso, assignedDriverId: 'driver-1', status: 'assigned',
+    });
+    expect(readiness).toBeTruthy();
+    expect(result.current.isLoading).toBe(true);
+  });
+
+  it('treats a driver allocated to an unknown vehicle as zero capacity', async () => {
+    const db = getDb();
+    db.vehicles = []; // allocation points at a vehicle that no longer exists
+    db.allocations = [{ id: 'a1', vehicleId: 'ghost-vehicle', driverId: 'driver-1', date: iso }];
+    db.hubs = [
+      { id: 'hub-1', name: 'Downtown', locationType: 'hub', address: 'x', coordinates: { lat: 40, lng: -74 }, inventory: { diesel: 15000 } },
+      { id: 'hub-3', name: 'Northgate', locationType: 'hub', address: 'y', coordinates: { lat: 40.7, lng: -73.9 }, inventory: { diesel: 5000 } },
+    ];
+    db.orders = [{
+      id: 'o1', sourceId: 'hub-1', destinationId: 'hub-3', product: 'diesel',
+      quantity: 1000, deliveryDate: iso, assignedDriverId: 'driver-1', status: 'assigned',
+    }];
+
+    const { result } = renderHookWithProviders(() => useReadinessResolver());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    // capacity resolves via `vehicle.get(...)?.capacity ?? 0`, so a 1000L order over a 0 cap
+    // is flagged as over-capacity rather than ready.
+    expect(result.current.resolve(getDb().orders[0]).state).not.toBe('ready');
   });
 });

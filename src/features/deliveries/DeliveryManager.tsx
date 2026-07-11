@@ -26,6 +26,7 @@ export function DeliveryManager({
   const [reason, setReason] = useState('');
 
   const submitFail = () => {
+    /* v8 ignore next -- defensive: the submit button is disabled unless both hold */
     if (!failing || !reason.trim()) return;
     fail.mutate(
       { orderId: failing.id, reason: reason.trim() },

@@ -197,4 +197,38 @@ describe('OrdersPage', () => {
     renderWithProviders(<OrdersPage />);
     expect(await screen.findByRole('alert')).toHaveTextContent(/boom|failed/i);
   });
+
+  it('refetches the orders when the error-state retry is pressed', async () => {
+    server.use(http.get(`${API_URL}/orders`, () => HttpResponse.json({ error: 'boom' }, { status: 500 })));
+    renderWithProviders(<OrdersPage />);
+    await screen.findByRole('alert');
+    // Restore the healthy handler, then retry → onRetry calls orders.refetch() and the table loads.
+    server.resetHandlers();
+    await userEvent.click(screen.getByRole('button', { name: /retry/i }));
+    expect(await screen.findByText('order-1')).toBeInTheDocument();
+  });
+
+  it('dismisses the New Order drawer via its close control', async () => {
+    renderWithProviders(<OrdersPage />);
+    await screen.findByText('order-1');
+    await userEvent.click(screen.getByRole('button', { name: /New Order/ }));
+    const dialog = await screen.findByRole('dialog', { name: 'New Order' });
+    // The X control fires the drawer Modal's onClose prop (OrdersPage line 193).
+    await userEvent.click(within(dialog).getByRole('button', { name: /^close$/i }));
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: 'New Order' })).not.toBeInTheDocument());
+  });
+
+  it('dismisses the Edit drawer via its close control', async () => {
+    getDb().orders.push({
+      id: 'order-future', sourceId: 'hub-1', destinationId: 'hub-3', product: 'diesel',
+      quantity: 1000, deliveryDate: today(), assignedDriverId: 'driver-1', status: 'assigned',
+    });
+    renderWithProviders(<OrdersPage />);
+    await screen.findByText('order-future');
+    await userEvent.click(screen.getByLabelText('Edit order-future'));
+    const dialog = await screen.findByRole('dialog', { name: /Edit order-future/ });
+    // The X control fires the edit Modal's onClose prop (OrdersPage line 200).
+    await userEvent.click(within(dialog).getByRole('button', { name: /^close$/i }));
+    await waitFor(() => expect(screen.queryByRole('dialog', { name: /Edit order-future/ })).not.toBeInTheDocument());
+  });
 });

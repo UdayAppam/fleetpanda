@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AppShell } from './AppShell';
 import { renderWithProviders, makeStore } from '@/test/renderWithProviders';
 import { resetDb } from '@/test/mswServer';
+import { loginSuccess } from '@/store/slices/authSlice';
 
 beforeEach(() => resetDb());
 afterEach(() => {
@@ -68,6 +69,18 @@ describe('AppShell', () => {
   it('renders the routed outlet content', () => {
     renderShell('admin');
     expect(screen.getByText('page body')).toBeInTheDocument();
+  });
+
+  it('shows the signed-in user name in the top bar', () => {
+    const store = makeStore();
+    store.dispatch(
+      loginSuccess({
+        user: { id: 'u1', email: 'dana@fleetpanda.com', name: 'Dana', role: 'admin' },
+        token: 'tok',
+      }),
+    );
+    renderShell('admin', { store });
+    expect(screen.getByText('Dana')).toBeInTheDocument();
   });
 
   it('marks the nav link for the current route as active', () => {

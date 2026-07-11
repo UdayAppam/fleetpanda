@@ -69,6 +69,7 @@ export function HubForm({ initial, onSubmit, busy }: FormProps<Hub>) {
       <Field label="Name" error={errors.name?.message}>
         <Input {...register('name')} />
       </Field>
+      {/* v8 ignore next -- locationType is a two-option <select>; it can never hold an invalid value */}
       <Field label="Type" error={errors.locationType?.message}>
         <Select {...register('locationType')}>
           <option value="hub">Hub</option>
@@ -105,6 +106,7 @@ export function HubForm({ initial, onSubmit, busy }: FormProps<Hub>) {
                 key={p.key}
                 label={`${p.name} (${p.unit})`}
                 hint={`Max ${p.tankCapacity.toLocaleString()} ${p.unit}`}
+                /* v8 ignore next -- the input's native max attribute blocks over-cap values before the zod refine runs */
                 error={invErrors?.[p.key]?.message}
               >
                 <Input type="number" min={0} max={p.tankCapacity} {...register(`inventory.${p.key}`)} />

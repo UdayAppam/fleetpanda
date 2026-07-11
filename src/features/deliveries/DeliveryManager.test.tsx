@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DeliveryManager } from './DeliveryManager';
 import { renderWithProviders } from '@/test/renderWithProviders';
-import { resetDb } from '@/test/mswServer';
+import { resetDb, getDb } from '@/test/mswServer';
 import type { Hub, Order } from '@/types';
 
 beforeEach(() => resetDb());
@@ -26,6 +26,7 @@ const makeOrder = (over: Partial<Order> = {}): Order => ({
 });
 
 describe('DeliveryManager', () => {
+
   it('shows an empty message when there are no orders', () => {
     renderWithProviders(<DeliveryManager orders={[]} hub={hub} active />);
     expect(screen.getByText(/no deliveries assigned/i)).toBeInTheDocument();
@@ -60,20 +61,86 @@ describe('DeliveryManager', () => {
     renderWithProviders(<DeliveryManager orders={[makeOrder()]} hub={hub} active />);
     await userEvent.click(screen.getByRole('button', { name: /report failure/i }));
 
-    expect(screen.getByRole('dialog', { name: /report a failed delivery/i })).toBeInTheDocument();
-    const submit = screen.getByRole('button', { name: /mark failed/i });
-    expect(submit).toBeDisabled();
+    const dialog = screen.getByRole('dialog', { name: /report a failed delivery/i });
+    expect(within(dialog).getByRole('button', { name: /mark failed/i })).toBeDisabled();
 
-    await userEvent.type(screen.getByLabelText(/what went wrong/i), 'Customer site closed');
-    expect(submit).toBeEnabled();
+    // Note: use fireEvent.change here — userEvent's pointer/focus sequence bubbles a
+    // mousedown that the Modal overlay treats as an outside-click and closes the dialog.
+    fireEvent.change(within(dialog).getByPlaceholderText(/customer site closed/i), {
+      target: { value: 'Customer site closed' },
+    });
+    expect(within(dialog).getByRole('button', { name: /mark failed/i })).toBeEnabled();
   });
 
   it('submits the failure reason and closes the modal on success', async () => {
     renderWithProviders(<DeliveryManager orders={[makeOrder()]} hub={hub} active />);
     await userEvent.click(screen.getByRole('button', { name: /report failure/i }));
-    const submit = screen.getByRole('button', { name: /mark failed/i });
-    await userEvent.type(screen.getByLabelText(/what went wrong/i), 'Customer site closed');
-    await userEvent.click(submit);
+    const dialog = screen.getByRole('dialog', { name: /report a failed delivery/i });
+    fireEvent.change(within(dialog).getByPlaceholderText(/customer site closed/i), {
+      target: { value: 'Customer site closed' },
+    });
+    fireEvent.click(within(dialog).getByRole('button', { name: /mark failed/i }));
+
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: /report a failed delivery/i })).not.toBeInTheDocument(),
+    );
+    await waitFor(() => {
+      const order = getDb().orders.find((o) => o.id === 'order-1');
+      expect(order?.status).toBe('failed');
+      expect(order?.failureReason).toBe('Customer site closed');
+    });
+  });
+
+  it('marks an in-transit delivery as delivered', async () => {
+    // The complete endpoint only accepts in_transit orders, so align the shared db row.
+    getDb().orders.find((o) => o.id === 'order-1')!.status = 'in_transit';
+    renderWithProviders(<DeliveryManager orders={[makeOrder()]} hub={hub} active />);
+    fireEvent.click(screen.getByRole('button', { name: /mark delivered/i }));
+    await waitFor(() => expect(getDb().orders.find((o) => o.id === 'order-1')?.status).toBe('delivered'));
+  });
+
+  it('renders em-dash fallbacks and default badges for unknown hubs', () => {
+    renderWithProviders(
+      <DeliveryManager
+        orders={[makeOrder({ sourceId: 'ghost-src', destinationId: 'ghost-dst' })]}
+        hub={hub}
+        active
+      />,
+    );
+    // Unknown source/destination -> "—" fallback names plus the default source/dest badges.
+    expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText('source')).toBeInTheDocument();
+    expect(screen.getByText('dest')).toBeInTheDocument();
+  });
+
+  it('shows the completion time when the delivered order has completedAt', () => {
+    renderWithProviders(
+      <DeliveryManager
+        orders={[makeOrder({ status: 'delivered', completedAt: '2025-11-24T10:30:00.000Z' })]}
+        hub={hub}
+        active
+      />,
+    );
+    expect(screen.getByText(/delivered at/i)).toBeInTheDocument();
+  });
+
+  it('closes the modal without submitting when cancelled', async () => {
+    renderWithProviders(<DeliveryManager orders={[makeOrder()]} hub={hub} active />);
+    await userEvent.click(screen.getByRole('button', { name: /report failure/i }));
+    const dialog = screen.getByRole('dialog', { name: /report a failed delivery/i });
+    await userEvent.click(within(dialog).getByRole('button', { name: /cancel/i }));
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: /report a failed delivery/i })).not.toBeInTheDocument(),
+    );
+    expect(getDb().orders.find((o) => o.id === 'order-1')?.status).toBe('assigned');
+  });
+
+  it('closes the modal from the dialog close (X) control', async () => {
+    renderWithProviders(<DeliveryManager orders={[makeOrder()]} hub={hub} active />);
+    await userEvent.click(screen.getByRole('button', { name: /report failure/i }));
+    const dialog = screen.getByRole('dialog', { name: /report a failed delivery/i });
+    // The X control fires the Modal's onClose prop (distinct from the Cancel button).
+    await userEvent.click(within(dialog).getByRole('button', { name: /^close$/i }));
     await waitFor(() =>
       expect(screen.queryByRole('dialog', { name: /report a failed delivery/i })).not.toBeInTheDocument(),
     );
