@@ -13,6 +13,7 @@ const AllocationPage = lazy(() => import('@/pages/admin/AllocationPage'));
 const InventoryPage = lazy(() => import('@/pages/admin/InventoryPage'));
 const MasterDataPage = lazy(() => import('@/pages/admin/MasterDataPage'));
 const ShiftPage = lazy(() => import('@/pages/driver/ShiftPage'));
+const SchedulePage = lazy(() => import('@/pages/driver/SchedulePage'));
 const DriverMapPage = lazy(() => import('@/pages/driver/DriverMapPage'));
 const ShiftHistoryPage = lazy(() => import('@/pages/driver/ShiftHistoryPage'));
 
@@ -52,6 +53,7 @@ export const router = createBrowserRouter([
             element: <AppShell variant="driver" />,
             children: [
               { index: true, element: load(<ShiftPage />, 'shift') },
+              { path: 'schedule', element: load(<SchedulePage />, 'schedule') },
               { path: 'map', element: load(<DriverMapPage />, 'driver map') },
               { path: 'history', element: load(<ShiftHistoryPage />, 'history') },
             ],

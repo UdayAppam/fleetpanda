@@ -28,6 +28,7 @@ const ADMIN_NAV = [
 ];
 const DRIVER_NAV = [
   { to: '/driver', label: 'Shift', icon: Truck, end: true },
+  { to: '/driver/schedule', label: 'Schedule', icon: CalendarClock },
   { to: '/driver/map', label: 'Map', icon: Map },
   { to: '/driver/history', label: 'History', icon: History },
 ];

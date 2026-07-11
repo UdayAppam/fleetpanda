@@ -20,9 +20,10 @@ as a frontend take-home with a mock REST backend.
 - Inventory dashboard with fuel-gauge stock levels and low-stock alerts
 
 **Driver**
-- Today's shift cluster + **Start Shift** (guarded by allocation & stock)
+- Today's shift cluster + **Start Shift** (guarded by allocation & stock), with a this-month roll-up
+- Delivery management as **trips** — load once, chained drops, tank-fill; complete / fail, **End Shift**
+- **Schedule** — day-by-day month view: each day's orders + the truck allocated that day
 - Live map with destination markers, route line, and **Send GPS Update**
-- Delivery management — complete (updates inventory) / fail (reason modal), **End Shift**
 - Shift history
 
 ---

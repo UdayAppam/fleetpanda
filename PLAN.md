@@ -619,6 +619,12 @@ shift lifecycle, auth guard), not a blanket 70% across every file.
 
 ## 11. Revision Log
 
+**Rev 30 — driver Schedule page (day-wise month view):** new `/driver/schedule` (nav item +
+`SchedulePage` + `useDriverSchedule`) shows the driver's month **day by day** — each day's assigned
+orders (route · product · qty · status) plus the **truck allocated that day**, with a month
+navigator and past/today/upcoming states. Complements the Shift-page month strip (which was only
+counts). 432 tests, 100% coverage.
+
 **Rev 29 — rolling demo + driver month summary:**
 - **Rolling demo:** `src/mocks/reanchor.ts` re-dates the frozen seed to the real day at load, so a
   reviewer opening the app any day sees a current past/today/future (not a snapshot stuck on
